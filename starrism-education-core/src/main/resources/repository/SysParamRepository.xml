@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.core.repository.SysParamRepository">
+    <resultMap id="SysParamResultMap" type="nom.edu.starrism.core.domain.entity.SysParam">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="group_code" jdbcType="VARCHAR" property="groupCode"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="param_code" jdbcType="VARCHAR" property="paramCode"/>
+        <result column="param_value" jdbcType="VARCHAR" property="paramValue"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+    </resultMap>
+
+    <sql id="sys_param_all_columns">
+        <!--@sql select -->
+        param.id,
+        param.group_code,
+        param.group_name,
+        param.param_code,
+        param.param_value,
+        param.data_status,
+        param.gmt_create,
+        param.gmt_modify
+        <!--@sql from sys_param param -->
+    </sql>
+
+    <!-- 根据参数码获取参数信息 -->
+    <select id="findByParamCode" parameterType="string" resultMap="SysParamResultMap">
+        select
+        <include refid="sys_param_all_columns"/>
+        from sys_param param
+        where param.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+          and param.param_code = #{paramCode,jdbcType=VARCHAR}
+        limit 1
+    </select>
+
+    <!-- 根据组别和参数码(可选)获取参数信息 -->
+    <select id="findByGroupCode" resultMap="SysParamResultMap">
+        select
+        <include refid="sys_param_all_columns"/>
+        from sys_param param
+        where param.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+          and param.group_code = #{groupCode,jdbcType=VARCHAR}
+        <if test="paramCode != null and paramCode != ''">
+            and param.param_code = #{paramCode,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>
