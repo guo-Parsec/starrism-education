@@ -1,5 +1,6 @@
 package nom.edu.starrism.admin.api.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -39,6 +40,7 @@ public class SysUserVo extends AbstractDataVo {
     private String avatarUrl;
 
     @ApiModelProperty(value = "出生日期")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private LocalDate birthday;
 
     @ApiModelProperty(value = "用户类型")

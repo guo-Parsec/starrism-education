@@ -48,7 +48,7 @@
         <include refid="sys_dict_detail_all_column"/>
         from sys_dict_detail sdd
         where sdd.sys_dict_category_id = #{sysDictCategoryId,jdbcType=BIGINT}
-          and sdd.dict_code = #{dictCode,jdbcType=VARCHAR}
+          and sdd.dict_value = #{dictValue}
           and sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
         order by sdd.sort
         limit 1;

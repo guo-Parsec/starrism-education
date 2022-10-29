@@ -56,6 +56,6 @@ public class SeDictContext {
         if (Objects.isNull(detailVo)) {
             return null;
         }
-        return detailVo.getDictValue();
+        return detailVo.getDictName();
     }
 }

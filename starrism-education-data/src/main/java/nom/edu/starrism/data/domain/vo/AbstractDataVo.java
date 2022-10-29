@@ -1,5 +1,6 @@
 package nom.edu.starrism.data.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,9 +25,11 @@ public abstract class AbstractDataVo extends AbstractVo {
     protected String dataStatusName;
 
     @ApiModelProperty(value = "创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     protected LocalDateTime gmtCreate;
 
     @ApiModelProperty(value = "修改时间")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
     protected LocalDateTime gmtModify;
 
     /**

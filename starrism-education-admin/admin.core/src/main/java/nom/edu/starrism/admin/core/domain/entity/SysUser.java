@@ -70,14 +70,14 @@ public class SysUser extends AbstractDataEntity {
         SysUserVo vo = new SysUserVo();
         vo.setId(this.id);
         vo.setAccount(this.account);
-        vo.setAvatarUrl(this.nickname);
+        vo.setNickname(this.nickname);
         vo.setSex(this.sex);
         vo.setAvatarUrl(this.avatarUrl);
         vo.setBirthday(this.birthday);
         vo.setUserType(this.userType);
         vo.setDataStatus(this.dataStatus);
         vo.setGmtCreate(this.gmtCreate);
-        vo.setGmtCreate(this.gmtModify);
+        vo.setGmtModify(this.gmtModify);
         return vo;
     }
 
@@ -92,14 +92,14 @@ public class SysUser extends AbstractDataEntity {
         SeUser seUser = SeUser.empty();
         seUser.setId(this.id);
         seUser.setAccount(this.account);
-        seUser.setAvatarUrl(this.nickname);
+        seUser.setNickname(this.nickname);
         seUser.setSex(this.sex);
         seUser.setAvatarUrl(this.avatarUrl);
         seUser.setBirthday(this.birthday);
         seUser.setUserType(this.userType);
         seUser.setDataStatus(this.dataStatus);
         seUser.setGmtCreate(this.gmtCreate);
-        seUser.setGmtCreate(this.gmtModify);
+        seUser.setGmtModify(this.gmtModify);
         return seUser;
     }
 }

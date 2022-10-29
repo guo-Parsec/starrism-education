@@ -21,6 +21,8 @@
         <module>starrism-education-data</module>
         <module>starrism-education-core</module>
         <module>starrism-education-admin</module>
+        <module>starrism-education-gate</module>
+        <module>starrism-education-auth</module>
     </modules>
 
     <properties>

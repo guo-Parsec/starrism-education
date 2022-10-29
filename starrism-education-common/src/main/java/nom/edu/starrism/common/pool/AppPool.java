@@ -11,5 +11,5 @@ public interface AppPool {
 
     String APPLICATION_AUTH_NAME = "starrism-education-auth/auth";
 
-    String APPLICATION_GATEWAY_NAME = "starrism-education-gateway";
+    String APPLICATION_GATEWAY_NAME = "starrism-education-gate";
 }

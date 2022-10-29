@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          #使用小写service-id
+          lower-case-service-id: true
+      routes:
+        - id: starrism-education-admin
+          uri: lb://starrism-education-admin
+          predicates:
+            - Path=/se/v1/admin/**
+          filters:
+            - RewritePath=/se/v1(?<segment>/?.*), $\{segment}
+  redis:
+    database: 0
+    host: 1.15.57.220
+    port: 6379
+    password: Redis.166Gcq2431
+logging:
+  level:
+    nom.edu.starrism.gate: debug

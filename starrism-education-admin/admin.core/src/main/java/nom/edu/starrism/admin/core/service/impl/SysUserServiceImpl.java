@@ -5,12 +5,21 @@ import nom.edu.starrism.admin.core.mapper.SysUserMapper;
 import nom.edu.starrism.admin.core.service.SysUserService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
+import nom.edu.starrism.core.domain.entity.SysParam;
 import nom.edu.starrism.core.domain.vo.SeUser;
+import nom.edu.starrism.core.pool.ParamPool;
+import nom.edu.starrism.core.repository.SysParamRepository;
+import nom.edu.starrism.core.strategy.SePasswordStrategyOption;
 import nom.edu.starrism.core.strategy.SePasswordStrategy;
+import nom.edu.starrism.core.strategy.carrier.SePasswordMd5;
+import nom.edu.starrism.data.component.SpringBean;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 
 /**
  * <p>用户业务接口实现类</p>
@@ -23,6 +32,33 @@ public class SysUserServiceImpl implements SysUserService {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SysUserServiceImpl.class);
     @Resource
     private SysUserMapper sysUserMapper;
+    @Resource
+    SysParamRepository sysParamRepository;
+
+    private SePasswordStrategy defaultStrategy;
+
+    @Qualifier(value = "sePasswordMd5")
+    @Autowired
+    public void setDefaultStrategy(SePasswordStrategy defaultStrategy) {
+        this.defaultStrategy = defaultStrategy;
+    }
+
+    /**
+     * <p>根据账户查询用户信息</p>
+     *
+     * @param account  账户
+     * @param password 密码
+     * @return {@link SeUser}
+     * @author hedwing
+     * @since 2022/10/24
+     */
+    @Override
+    public SeUser findUserByAccount(String account, String password) {
+        String passwordStrategyBeanName = Optional.ofNullable(sysParamRepository.findByParamCode(ParamPool.PARAM_CODE_PASSWORD_STRATEGY))
+                .map(SysParam::getParamValue).orElse(ParamPool.DEFAULT_PASSWORD_STRATEGY);
+        SePasswordStrategy strategy = SpringBean.getBean(passwordStrategyBeanName, SePasswordStrategy.class);
+        return findUserByAccount(account, password, strategy);
+    }
 
     /**
      * <p>根据账户查询用户信息</p>
@@ -42,10 +78,8 @@ public class SysUserServiceImpl implements SysUserService {
             return SeUser.empty();
         }
         SeUser seUser = sysUser.toSeUser();
-        SePasswordStrategy.Option option = new SePasswordStrategy.Option();
-        option.setExist(true);
-        option.setSalt(sysUser.getAccount());
-        seUser.setAuthenticated(passwordStrategy.match(password, sysUser.getPassword(), option));
+        SePasswordStrategyOption sePasswordStrategyOption = SePasswordStrategyOption.builder().exist(true).salt(sysUser.getAccount()).build();
+        seUser.setAuthenticated(passwordStrategy.match(password, sysUser.getPassword(), sePasswordStrategyOption));
         // todo roles permissions
         return seUser;
     }

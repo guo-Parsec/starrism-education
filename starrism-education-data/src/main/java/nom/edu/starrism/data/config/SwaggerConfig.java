@@ -3,6 +3,7 @@ package nom.edu.starrism.data.config;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.common.pool.AuthPool;
+import nom.edu.starrism.common.pool.UrlPool;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +43,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .pathMapping(UrlPool.GLOBAL_URL_PREFIX);
 
     }
 

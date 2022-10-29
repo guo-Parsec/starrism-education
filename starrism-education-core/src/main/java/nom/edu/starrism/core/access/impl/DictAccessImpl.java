@@ -52,18 +52,18 @@ public class DictAccessImpl implements DictAccess {
      * <p>根据分类码与字典码查询字典</p>
      *
      * @param categoryCode 字典类别码
-     * @param dictCode     字典码
+     * @param dictValue    字典值
      * @return {@link SysDictDetailVo}
      * @author hedwing
      * @since 2022/10/23
      */
     @Override
-    @Cacheable(key = "#categoryCode+'-'+#dictCode", cacheNames = "dict:categoryCode")
-    public SysDictDetailVo findDictByCodes(String categoryCode, String dictCode) {
+    @Cacheable(key = "#categoryCode+'-'+#dictValue", cacheNames = "dict:categoryCode")
+    public SysDictDetailVo findDictByCodes(String categoryCode, String dictValue) {
         SysDictCategory category = sysDictCategoryRepository.findByCode(categoryCode);
         if (AbstractEntity.isEmpty(category)) {
             return null;
         }
-        return EntityConverters.convertToVo(sysDictDetailRepository.findByCodes(category.getId(), dictCode), SysDictDetailVo.class);
+        return EntityConverters.convertToVo(sysDictDetailRepository.findByCodes(category.getId(), dictValue), SysDictDetailVo.class);
     }
 }

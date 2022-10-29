@@ -25,10 +25,10 @@ public interface DictAccess {
      * <p>根据分类码与字典码查询字典</p>
      *
      * @param categoryCode 字典类别码
-     * @param dictCode     字典码
+     * @param dictValue     字典值
      * @return {@link SysDictDetailVo}
      * @author hedwing
      * @since 2022/10/23
      */
-    SysDictDetailVo findDictByCodes(String categoryCode, String dictCode);
+    SysDictDetailVo findDictByCodes(String categoryCode, String dictValue);
 }

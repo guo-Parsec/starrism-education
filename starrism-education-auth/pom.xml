@@ -9,23 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>starrism-education-admin</artifactId>
+    <artifactId>starrism-education-auth</artifactId>
     <packaging>pom</packaging>
-    <description>业务管理微服务模块 - 提供关于系统管理的相关服务</description>
     <modules>
-        <module>admin.api</module>
-        <module>admin.core</module>
+        <module>auth.api</module>
+        <module>auth.core</module>
     </modules>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>nom.edu.starrism</groupId>
-                <artifactId>starrism-education</artifactId>
-                <version>${starrism.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
