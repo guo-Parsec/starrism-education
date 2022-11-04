@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.admin.core.mapper.SysRoleMapper">
+    <resultMap id="SysRoleResultMap" type="nom.edu.starrism.admin.core.domain.entity.SysRole">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+    </resultMap>
+
+    <sql id="sys_role_all_column">
+        <!--@sql select -->
+        role.id,
+        role.role_code,
+        role.role_name,
+        role.`sort`,
+        role.remark,
+        role.data_status,
+        role.gmt_create,
+        role.gmt_modify
+        <!--@sql from sys_role role -->
+    </sql>
+
+    <select id="findByUserId" parameterType="long" resultMap="SysRoleResultMap">
+        select
+        <include refid="sys_role_all_column"/>
+        from sys_role role
+                 left join sys_user_role sur on role.id = sur.role_id
+        where sur.user_id = #{userId,jdbcType=BIGINT}
+          and role.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+    </select>
+
+    <select id="findRoleIdsByUserId" parameterType="long" resultType="long">
+        select distinct role.id
+        from sys_role role
+        left join sys_user_role sur on role.id = sur.role_id
+        where sur.user_id = #{userId,jdbcType=BIGINT}
+        and role.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+    </select>
+</mapper>

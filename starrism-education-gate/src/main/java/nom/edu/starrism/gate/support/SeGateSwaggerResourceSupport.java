@@ -1,6 +1,5 @@
 package nom.edu.starrism.gate.support;
 
-import lombok.AllArgsConstructor;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.support.NameUtils;
@@ -20,7 +19,6 @@ import java.util.List;
  **/
 @Primary
 @Component
-@AllArgsConstructor
 public class SeGateSwaggerResourceSupport implements SwaggerResourcesProvider {
     /**
      * swagger默认的url后缀
@@ -34,6 +32,11 @@ public class SeGateSwaggerResourceSupport implements SwaggerResourcesProvider {
      * 网关路由
      */
     private final RouteLocator routeLocator;
+
+    public SeGateSwaggerResourceSupport(GatewayProperties gatewayProperties, RouteLocator routeLocator) {
+        this.gatewayProperties = gatewayProperties;
+        this.routeLocator = routeLocator;
+    }
 
     @Override
     public List<SwaggerResource> get() {

@@ -38,7 +38,7 @@ public class DictAccessImpl implements DictAccess {
      * @since 2022/10/23
      */
     @Override
-    @Cacheable(key = "#categoryCode", cacheNames = "dict:categoryCode")
+    @Cacheable(key = "#categoryCode", cacheNames = "dict:categoryCode", unless = "#result == null || #result.isEmpty()")
     public List<SysDictDetailVo> findDictByCategoryCode(String categoryCode) {
         SysDictCategory category = sysDictCategoryRepository.findByCode(categoryCode);
         if (AbstractEntity.isEmpty(category)) {
@@ -58,7 +58,7 @@ public class DictAccessImpl implements DictAccess {
      * @since 2022/10/23
      */
     @Override
-    @Cacheable(key = "#categoryCode+'-'+#dictValue", cacheNames = "dict:categoryCode")
+    @Cacheable(key = "#categoryCode+'-'+#dictValue", cacheNames = "dict:categoryCode", unless = "#result == null")
     public SysDictDetailVo findDictByCodes(String categoryCode, String dictValue) {
         SysDictCategory category = sysDictCategoryRepository.findByCode(categoryCode);
         if (AbstractEntity.isEmpty(category)) {

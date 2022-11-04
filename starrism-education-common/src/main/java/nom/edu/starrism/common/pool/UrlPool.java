@@ -13,4 +13,6 @@ public interface UrlPool {
      * 全局统一路由
      */
     String GLOBAL_URL_PREFIX = "/se/v1";
+
+    String AUTH_TOKEN_PREFIX = "/sys/token";
 }

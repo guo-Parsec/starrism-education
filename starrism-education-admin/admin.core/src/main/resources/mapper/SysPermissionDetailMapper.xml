@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.admin.core.mapper.SysPermissionDetailMapper">
+    <resultMap id="SysPermissionDetailResultMap" type="nom.edu.starrism.admin.core.domain.entity.SysPermissionDetail">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="permission_category_id" jdbcType="BIGINT" property="permissionCategoryId"/>
+        <result column="permission_code" jdbcType="VARCHAR" property="permissionCode"/>
+        <result column="permission_name" jdbcType="VARCHAR" property="permissionName"/>
+        <result column="request_action_url" jdbcType="VARCHAR" property="requestActionUrl"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+        <association property="sysPermissionCategory"
+                     javaType="nom.edu.starrism.admin.core.domain.entity.SysPermissionCategory">
+            <id column="spc_id" jdbcType="BIGINT" property="id"/>
+            <result column="spc_category_code" jdbcType="VARCHAR" property="categoryCode"/>
+            <result column="spc_category_name" jdbcType="VARCHAR" property="categoryName"/>
+            <result column="spc_sort" jdbcType="INTEGER" property="sort"/>
+            <result column="spc_remark" jdbcType="VARCHAR" property="remark"/>
+            <result column="spc_data_status" jdbcType="INTEGER" property="dataStatus"/>
+            <result column="spc_gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+            <result column="spc_gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+        </association>
+    </resultMap>
+
+    <sql id="sys_permission_detail_all_column">
+        <!--@sql select -->
+        spd.id,
+        spd.permission_category_id,
+        spd.permission_code,
+        spd.permission_name,
+        spd.request_action_url,
+        spd.`sort`,
+        spd.remark,
+        spd.data_status,
+        spd.gmt_create,
+        spd.gmt_modify
+        <!--@sql from sys_permission_detail spd-->
+    </sql>
+
+    <sql id="sys_permission_category_all_column">
+        <!--@sql select -->
+        spc.id            as spc_id,
+        spc.category_code as spc_category_code,
+        spc.category_name as spc_category_name,
+        spc.`sort`        as spc_sort,
+        spc.remark        as spc_remark,
+        spc.data_status   as spc_data_status,
+        spc.gmt_create    as spc_gmt_create,
+        spc.gmt_modify    as spc_gmt_modify
+        <!--@sql from sys_permission_category spc-->
+    </sql>
+
+    <select id="find" parameterType="long" resultMap="SysPermissionDetailResultMap">
+        select
+        <include refid="sys_permission_detail_all_column"/>,
+        <include refid="sys_permission_category_all_column"/>
+        from sys_permission_detail spd
+                 left join sys_permission_category spc on spd.permission_category_id = spc.id
+        where spd.id = #{id,jdbcType=BIGINT} limit 1;
+    </select>
+
+    <select id="findByCategoryCode" parameterType="string" resultMap="SysPermissionDetailResultMap">
+        select
+        <include refid="sys_permission_detail_all_column"/>
+        from sys_permission_detail spd
+                 left join sys_permission_category spc on spd.permission_category_id = spc.id
+        where spc.category_code = #{categoryCode,jdbcType=VARCHAR}
+          and spc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+          and spd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+    </select>
+
+    <select id="findByCategoryCodesAndRoleIds" resultMap="SysPermissionDetailResultMap">
+        select
+        <include refid="sys_permission_detail_all_column"/>
+        from sys_permission_detail spd
+                 left join sys_permission_category spc on spd.permission_category_id = spc.id
+                 left join sys_role_permission srp on spd.id = srp.permission_id
+        where spc.category_code in
+        <foreach collection="categoryCodes" open="(" close=")" separator="," item="categoryCode">
+            #{categoryCode,jdbcType=VARCHAR}
+        </foreach>
+        and srp.role_id in
+        <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">
+            #{roleId,jdbcType=BIGINT}
+        </foreach>
+        and spc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        and spd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+    </select>
+</mapper>

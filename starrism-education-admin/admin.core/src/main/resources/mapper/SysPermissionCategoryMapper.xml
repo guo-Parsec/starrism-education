@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.admin.core.mapper.SysPermissionCategoryMapper">
+    <resultMap id="SysPermissionCategoryResultMap"
+               type="nom.edu.starrism.admin.core.domain.entity.SysPermissionCategory">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="category_code" jdbcType="VARCHAR" property="categoryCode"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+    </resultMap>
+
+    <sql id="sys_permission_category_all_column">
+        <!--@sql select -->
+        spc.id,
+        spc.category_code,
+        spc.category_name,
+        spc.`sort`,
+        spc.remark,
+        spc.data_status,
+        spc.gmt_create,
+        spc.gmt_modify
+        <!--@sql from sys_permission_category spc-->
+    </sql>
+
+    <select id="findByCode" parameterType="string" resultMap="SysPermissionCategoryResultMap">
+        select
+        <include refid="sys_permission_category_all_column"/>
+        from sys_permission_category spc
+        where spc.category_code = #{categoryCode,jdbcType=VARCHAR}
+          and spc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}' limit 1;
+    </select>
+</mapper>
