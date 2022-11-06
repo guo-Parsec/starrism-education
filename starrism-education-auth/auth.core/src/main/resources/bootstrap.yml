@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: starrism-education-auth
+  profiles:
+    active: dev

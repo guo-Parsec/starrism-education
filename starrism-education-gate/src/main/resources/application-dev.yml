@@ -13,6 +13,12 @@ spring:
             - Path=/se/v1/admin/**
           filters:
             - RewritePath=/se/v1(?<segment>/?.*), $\{segment}
+        - id: starrism-education-auth
+          uri: lb://starrism-education-auth
+          predicates:
+            - Path=/se/v1/auth/**
+          filters:
+            - RewritePath=/se/v1(?<segment>/?.*), $\{segment}
   redis:
     database: 0
     host: 1.15.57.220

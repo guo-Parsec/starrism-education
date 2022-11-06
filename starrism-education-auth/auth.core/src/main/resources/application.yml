@@ -1,7 +1,7 @@
 server:
-  port: 16100
+  port: 16200
   servlet:
-    context-path: /admin
+    context-path: /auth
 spring:
   profiles:
     active: dev

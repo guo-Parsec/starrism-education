@@ -31,7 +31,7 @@ public class GlobalExceptionConfig {
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public SeResultCarrier<Void> validException(MethodArgumentNotValidException exception) {
         ObjectError objectError = exception.getBindingResult().getAllErrors().get(0);
-        LOGGER.error("valid Param failed", exception);
+        LOGGER.error("参数校验失败", exception);
         return SeResultCarrier.validateFailed(objectError.getDefaultMessage());
     }
 

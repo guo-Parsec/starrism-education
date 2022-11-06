@@ -11,10 +11,22 @@
 
     <artifactId>auth.core</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <!-- 核心服务模块 -->
+        <dependency>
+            <groupId>nom.edu.starrism</groupId>
+            <artifactId>starrism-education-core</artifactId>
+        </dependency>
+        <!-- 业务管理微服务api模块 -->
+        <dependency>
+            <groupId>nom.edu.starrism</groupId>
+            <artifactId>admin.api</artifactId>
+        </dependency>
+        <!-- 认证中心微服务api模块 -->
+        <dependency>
+            <groupId>nom.edu.starrism</groupId>
+            <artifactId>auth.api</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

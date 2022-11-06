@@ -10,11 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>auth.api</artifactId>
+    <description>认证中心微服务api模块 - 向其它微服务提供对外接口</description>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>nom.edu.starrism</groupId>
+            <artifactId>starrism-education-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>

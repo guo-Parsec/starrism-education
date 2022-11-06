@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author guocq
  * @since 2022/10/24
  **/
-@FeignClient(name = AppPool.APPLICATION_ADMIN_NAME, contextId = "sysUserClient")
+@FeignClient(name = AppPool.APPLICATION_ADMIN_NAME + UrlPool.ADMIN_USER_PREFIX, contextId = "sysUserClient")
 public interface SysUserClient {
     /**
      * <p>根据{@code account}查询用户</p>
@@ -25,7 +25,7 @@ public interface SysUserClient {
      * @author guocq
      * @date 2022/10/24 15:07
      */
-    @GetMapping(value = UrlPool.ADMIN_USER_PREFIX + "/find/by/account")
+    @GetMapping(value = "/find/by/account")
     SeResultCarrier<SeUser> findUserByAccount(@RequestParam("account") String account,
                                               @RequestParam("password") String password);
 }

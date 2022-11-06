@@ -1,4 +1,4 @@
-package nom.edu.starrism.admin.core.web;
+package nom.edu.starrism.auth.core.web;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Sets;
@@ -12,6 +12,7 @@ import nom.edu.starrism.common.support.SeResultCarrier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,8 @@ import java.util.Set;
  * @since 2022/11/2
  **/
 @Api(value = "Token校验Web", tags = "Token校验接口")
-@RestController(value = UrlPool.AUTH_TOKEN_PREFIX)
+@RestController
+@RequestMapping(value = UrlPool.AUTH_TOKEN_PREFIX)
 public class TokenTestController {
 
     private JwtTokenService jwtTokenService;

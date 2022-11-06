@@ -6,8 +6,8 @@ import nom.edu.starrism.admin.core.service.SysUserService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
 import nom.edu.starrism.core.domain.vo.SeUser;
-import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2022/10/24
  **/
 @Api(value = "系统用户管理Web", tags = "系统用户管理接口")
-@RestController(value = UrlPool.ADMIN_USER_PREFIX)
+@RestController
+@RequestMapping(value = UrlPool.ADMIN_USER_PREFIX)
 public class SysUserController {
     private final SysUserService sysUserService;
 

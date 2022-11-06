@@ -13,6 +13,10 @@ import java.util.List;
  **/
 public class StringUtil extends StringUtils {
     /**
+     * 连接符
+     */
+    public static final String CONNECTOR = "-";
+    /**
      * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串
      *
      * @param str 指定字符串

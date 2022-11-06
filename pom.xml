@@ -158,6 +158,12 @@
                 <artifactId>admin.api</artifactId>
                 <version>${starrism.version}</version>
             </dependency>
+            <!-- 认证中心微服务api模块 -->
+            <dependency>
+                <groupId>nom.edu.starrism</groupId>
+                <artifactId>auth.api</artifactId>
+                <version>${starrism.version}</version>
+            </dependency>
             <!-- JWT解析库 -->
             <dependency>
                 <groupId>com.nimbusds</groupId>
