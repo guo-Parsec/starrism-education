@@ -18,6 +18,11 @@ public interface UrlPool {
     String ADMIN_PERMISSION_PREFIX = "/sys/permission";
 
     /**
+     * 系统权限管理url前缀
+     */
+    String ADMIN_ROLE_PREFIX = "/sys/role";
+
+    /**
      * 全局统一路由
      */
     String GLOBAL_URL_PREFIX = "/se/v1";

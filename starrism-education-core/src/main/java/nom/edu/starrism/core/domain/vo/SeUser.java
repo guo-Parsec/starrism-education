@@ -52,7 +52,6 @@ public class SeUser extends AbstractDataVo {
 
     @ApiModelProperty(value = "数据状态字典显示名称")
     private String dataStatusName;
-
     @ApiModelProperty(value = "用户认证是否成功", hidden = true)
     private boolean authenticated;
 

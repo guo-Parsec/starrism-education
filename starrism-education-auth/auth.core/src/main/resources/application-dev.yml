@@ -19,14 +19,13 @@ spring:
       max-file-size: 10MB #限制文件上传大小为10M
   redis:
     database: 0
-    host: 1.15.57.220
+    host: 127.0.0.1
     port: 6379
-    password: Redis.166Gcq2431
   cache:
     type: redis
     redis:
       use-key-prefix: true
-      key-prefix: "starrism:mall:"
+      key-prefix: "starrism:edu:"
       time-to-live: 60000 # ms
     cache-names: starrism
 feign:

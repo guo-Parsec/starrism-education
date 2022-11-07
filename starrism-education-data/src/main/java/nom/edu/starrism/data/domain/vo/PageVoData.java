@@ -48,7 +48,7 @@ public class PageVoData<E> implements Pageable<E> {
      *
      * @param records 当前页所有记录
      * @param total   总条数
-     * @return org.starrism.mall.data.domain.vo.Pageable<E>
+     * @return {@link PageVoData<E>}
      * @author hedwing
      * @since 2022/8/21
      */
@@ -61,7 +61,7 @@ public class PageVoData<E> implements Pageable<E> {
      *
      * @param records 当前页所有记录
      * @param total   总条数
-     * @return org.starrism.mall.data.domain.vo.Pageable<E>
+     * @return {@link PageVoData<E>}
      * @author hedwing
      * @since 2022/8/21
      */

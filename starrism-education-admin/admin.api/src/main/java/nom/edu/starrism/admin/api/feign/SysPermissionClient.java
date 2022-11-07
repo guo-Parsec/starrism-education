@@ -26,8 +26,8 @@ public interface SysPermissionClient {
      * @author hedwing
      * @since 2022/11/6
      */
-    @GetMapping(value = "/find/by/userId")
-    SeResultCarrier<Set<String>> findPermissionOfUser(@RequestParam(value = "userId") Long userId);
+    @GetMapping(value = "/find/url/by/userId")
+    SeResultCarrier<Set<String>> findPermissionUrlOfUser(@RequestParam(value = "userId") Long userId);
 
     /**
      * <p>查询角色权限：根据角色列表查询权限</p>
@@ -37,6 +37,16 @@ public interface SysPermissionClient {
      * @author hedwing
      * @since 2022/11/6
      */
-    @GetMapping(value = "/find/by/roles")
-    SeResultCarrier<Set<String>> findPermissionOfRoles(@RequestParam(value = "roles") Collection<Long> roles);
+    @GetMapping(value = "/find/url/by/roles")
+    SeResultCarrier<Set<String>> findPermissionUrlOfRoles(@RequestParam(value = "roles") Collection<Long> roles);
+
+    /**
+     * <p>查询角色权限：根据角色列表查询权限码</p>
+     * @param userId userId
+     * @return {@link SeResultCarrier<Set<String>>}
+     * @author hedwing
+     * @since 2022/11/7
+     */
+    @GetMapping(value = "/find/code/by/roles")
+    SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "roles") Long userId);
 }

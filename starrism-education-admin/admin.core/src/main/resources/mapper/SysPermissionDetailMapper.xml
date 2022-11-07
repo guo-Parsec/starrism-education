@@ -60,7 +60,8 @@
         <include refid="sys_permission_category_all_column"/>
         from sys_permission_detail spd
                  left join sys_permission_category spc on spd.permission_category_id = spc.id
-        where spd.id = #{id,jdbcType=BIGINT} limit 1;
+        where spd.id = #{id,jdbcType=BIGINT}
+        limit 1;
     </select>
 
     <select id="findByCategoryCode" parameterType="string" resultMap="SysPermissionDetailResultMap">
@@ -79,15 +80,21 @@
         from sys_permission_detail spd
                  left join sys_permission_category spc on spd.permission_category_id = spc.id
                  left join sys_role_permission srp on spd.id = srp.permission_id
-        where spc.category_code in
-        <foreach collection="categoryCodes" open="(" close=")" separator="," item="categoryCode">
-            #{categoryCode,jdbcType=VARCHAR}
-        </foreach>
-        and srp.role_id in
-        <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">
-            #{roleId,jdbcType=BIGINT}
-        </foreach>
-        and spc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
-        and spd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        <where>
+            <if test="categoryCodes != null and categoryCodes.size() != 0">
+                spc.category_code in
+                <foreach collection="categoryCodes" open="(" close=")" separator="," item="categoryCode">
+                    #{categoryCode,jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="roleIds != null and roleIds.size() != 0">
+                and srp.role_id in
+                <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">
+                    #{roleId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+            and spc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+            and spd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        </where>
     </select>
 </mapper>

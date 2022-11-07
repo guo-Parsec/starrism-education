@@ -21,9 +21,8 @@ spring:
             - RewritePath=/se/v1(?<segment>/?.*), $\{segment}
   redis:
     database: 0
-    host: 1.15.57.220
+    host: 127.0.0.1
     port: 6379
-    password: Redis.166Gcq2431
 logging:
   level:
     nom.edu.starrism.gate: debug

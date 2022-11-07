@@ -7,6 +7,8 @@ import lombok.Setter;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
+import java.util.Set;
+
 /**
  * <p>认证通过的用户</p>
  *
@@ -21,6 +23,12 @@ public class AuthenticatedUser extends AbstractVo {
 
     @ApiModelProperty(value = "核心用户")
     private SeUser userEntity;
+
+    @ApiModelProperty(value = "用户所拥有的角色")
+    private Set<String> roles;
+
+    @ApiModelProperty(value = "用户所拥有的权限")
+    private Set<String> permissions;
 
     @ApiModelProperty(value = "令牌名称")
     private String tokenName;

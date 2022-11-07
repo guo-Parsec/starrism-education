@@ -100,7 +100,7 @@ public class ReflectionUtil {
      *
      * @param clazz           类对象
      * @param annotationClass 指定注解类对象
-     * @return java.util.List<org.starrism.mall.common.util.ReflectionUtil.FieldAnnotationPair < A>>
+     * @return {@link List<FieldAnnotationPair<A>>}
      * @author hedwing
      * @since 2022/8/14
      */
@@ -122,7 +122,7 @@ public class ReflectionUtil {
      *
      * @param entity           对象
      * @param annotationClass 指定注解类对象
-     * @return java.util.List<org.starrism.mall.common.util.ReflectionUtil.FieldAnnotationPair < A>>
+     * @return {@link List<FieldAnnotationPair<A>>}
      * @author hedwing
      * @since 2022/8/14
      */

@@ -33,7 +33,7 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     private SysRoleMapper sysRoleMapper;
 
     /**
-     * <p>获取用户的权限列表</p>
+     * <p>获取用户的权限请求url列表</p>
      *
      * @param userId userId
      * @return java.util.Set<java.lang.String>
@@ -42,17 +42,17 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      */
     @Override
     @Cacheable(key = "#userId", cacheNames = "permission:action-url:of:user", unless = "#result == null || #result.isEmpty()")
-    public Set<String> findPermissionOfUser(Long userId) {
+    public Set<String> findPermissionUrlOfUser(Long userId) {
         Set<Long> roleIds = sysRoleMapper.findRoleIdsByUserId(userId);
         if (CollectionUtil.isEmpty(roleIds)) {
-            LOGGER.warn("根据[userId={}]查询到的角色为空", userId);
+            LOGGER.debug("根据[userId={}]查询到的角色为空", userId);
             return Sets.newHashSet();
         }
-        return findPermissionOfRoles(roleIds);
+        return findPermissionUrlOfRoles(roleIds);
     }
 
     /**
-     * <p>获取用户的权限列表</p>
+     * <p>获取用户的权限请求url列表</p>
      *
      * @param roles roles
      * @return java.util.Set<java.lang.String>
@@ -60,13 +60,38 @@ public class SysPermissionServiceImpl implements SysPermissionService {
      * @since 2022/11/4
      */
     @Override
-    public Set<String> findPermissionOfRoles(Collection<Long> roles) {
+    public Set<String> findPermissionUrlOfRoles(Collection<Long> roles) {
         Set<String> categoryAuth = PermissionPool.CATEGORY_AUTH;
         List<SysPermissionDetail> details = sysPermissionDetailMapper.findByCategoryCodesAndRoleIds(categoryAuth, roles);
         if (CollectionUtil.isEmpty(details)) {
-            LOGGER.warn("根据[categoryCodes={}和roles={}]查询到的权限为空", categoryAuth, roles);
+            LOGGER.debug("根据[categoryCodes={}和roles={}]查询到的权限为空", categoryAuth, roles);
             return Sets.newHashSet();
         }
         return details.stream().map(SysPermissionDetail::getRequestActionUrl).collect(Collectors.toSet());
+    }
+
+    /**
+     * <p>根据用户id查询权限码</p>
+     *
+     * @param userId userId
+     * @return java.util.Set<java.lang.String>
+     * @author hedwing
+     * @since 2022/11/7
+     */
+    @Override
+    @Cacheable(key = "#userId", cacheNames = "permission:code:of:user", unless = "#result == null || #result.isEmpty()")
+    public Set<String> findPermissionCodeOfUser(Long userId) {
+        Set<Long> roleIds = sysRoleMapper.findRoleIdsByUserId(userId);
+        if (CollectionUtil.isEmpty(roleIds)) {
+            LOGGER.debug("根据[userId={}]查询到的角色为空", userId);
+            return Sets.newHashSet();
+        }
+        Set<String> emptyAuth = Sets.newHashSet();
+        List<SysPermissionDetail> details = sysPermissionDetailMapper.findByCategoryCodesAndRoleIds(emptyAuth, roleIds);
+        if (CollectionUtil.isEmpty(details)) {
+            LOGGER.debug("根据[userId={}]查询到的权限为空", userId);
+            return Sets.newHashSet();
+        }
+        return details.stream().map(SysPermissionDetail::getPermissionCode).collect(Collectors.toSet());
     }
 }

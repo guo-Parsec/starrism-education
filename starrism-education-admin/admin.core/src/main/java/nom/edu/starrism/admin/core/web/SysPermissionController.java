@@ -29,15 +29,21 @@ public class SysPermissionController {
         this.sysPermissionService = sysPermissionService;
     }
 
-    @ApiOperation(value = "查询用户权限：根据用户id查询权限")
-    @GetMapping(value = "/find/by/userId")
-    public SeResultCarrier<Set<String>> findPermissionOfUser(@RequestParam(value = "userId") Long userId) {
-        return SeResultCarrier.success(sysPermissionService.findPermissionOfUser(userId));
+    @ApiOperation(value = "查询用户权限：根据用户id查询权限url")
+    @GetMapping(value = "/find/url/by/userId")
+    public SeResultCarrier<Set<String>> findPermissionUrlOfUser(@RequestParam(value = "userId") Long userId) {
+        return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfUser(userId));
     }
 
-    @ApiOperation(value = "查询角色权限：根据角色列表查询权限")
-    @GetMapping(value = "/find/by/roles")
-    public SeResultCarrier<Set<String>> findPermissionOfRoles(@RequestParam(value = "roles") Collection<Long> roles) {
-        return SeResultCarrier.success(sysPermissionService.findPermissionOfRoles(roles));
+    @ApiOperation(value = "查询角色权限：根据角色列表查询权限url")
+    @GetMapping(value = "/find/url/by/roles")
+    public SeResultCarrier<Set<String>> findPermissionUrlOfRoles(@RequestParam(value = "roles") Collection<Long> roles) {
+        return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfRoles(roles));
+    }
+
+    @ApiOperation(value = "查询角色权限：根据角色列表查询权限码")
+    @GetMapping(value = "/find/code/by/roles")
+    public SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "roles") Long userId) {
+        return SeResultCarrier.success(sysPermissionService.findPermissionCodeOfUser(userId));
     }
 }

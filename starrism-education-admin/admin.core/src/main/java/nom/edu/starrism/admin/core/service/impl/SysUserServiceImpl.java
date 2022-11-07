@@ -5,13 +5,12 @@ import nom.edu.starrism.admin.core.mapper.SysUserMapper;
 import nom.edu.starrism.admin.core.service.SysUserService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.core.domain.entity.SysParam;
+import nom.edu.starrism.core.access.ParamAccess;
 import nom.edu.starrism.core.domain.vo.SeUser;
+import nom.edu.starrism.core.domain.vo.SysParamVo;
 import nom.edu.starrism.core.pool.ParamPool;
-import nom.edu.starrism.core.repository.SysParamRepository;
-import nom.edu.starrism.core.strategy.SePasswordStrategyOption;
 import nom.edu.starrism.core.strategy.SePasswordStrategy;
-import nom.edu.starrism.core.strategy.carrier.SePasswordMd5;
+import nom.edu.starrism.core.strategy.SePasswordStrategyOption;
 import nom.edu.starrism.data.component.SpringBean;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +31,18 @@ public class SysUserServiceImpl implements SysUserService {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SysUserServiceImpl.class);
     @Resource
     private SysUserMapper sysUserMapper;
-    @Resource
-    SysParamRepository sysParamRepository;
-
+    private ParamAccess paramAccess;
     private SePasswordStrategy defaultStrategy;
 
     @Qualifier(value = "sePasswordMd5")
     @Autowired
     public void setDefaultStrategy(SePasswordStrategy defaultStrategy) {
         this.defaultStrategy = defaultStrategy;
+    }
+
+    @Autowired
+    public void setParamAccess(ParamAccess paramAccess) {
+        this.paramAccess = paramAccess;
     }
 
     /**
@@ -54,8 +56,8 @@ public class SysUserServiceImpl implements SysUserService {
      */
     @Override
     public SeUser findUserByAccount(String account, String password) {
-        String passwordStrategyBeanName = Optional.ofNullable(sysParamRepository.findByParamCode(ParamPool.PARAM_CODE_PASSWORD_STRATEGY))
-                .map(SysParam::getParamValue).orElse(ParamPool.DEFAULT_PASSWORD_STRATEGY);
+        String passwordStrategyBeanName = Optional.ofNullable(paramAccess.findByParamCode(ParamPool.PARAM_CODE_PASSWORD_STRATEGY))
+                .map(SysParamVo::getParamValue).orElse(ParamPool.DEFAULT_PASSWORD_STRATEGY);
         SePasswordStrategy strategy = SpringBean.getBean(passwordStrategyBeanName, SePasswordStrategy.class);
         return findUserByAccount(account, password, strategy);
     }

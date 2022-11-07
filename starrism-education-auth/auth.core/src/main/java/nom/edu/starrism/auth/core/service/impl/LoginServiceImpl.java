@@ -1,8 +1,7 @@
 package nom.edu.starrism.auth.core.service.impl;
 
-import com.alibaba.fastjson2.JSONObject;
-import com.google.common.collect.Sets;
 import nom.edu.starrism.admin.api.feign.SysPermissionClient;
+import nom.edu.starrism.admin.api.feign.SysRoleClient;
 import nom.edu.starrism.admin.api.feign.SysUserClient;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
 import nom.edu.starrism.auth.api.domain.vo.AuthenticatedUser;
@@ -14,18 +13,14 @@ import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.pool.CorePool;
 import nom.edu.starrism.common.properties.TokenProperties;
-import nom.edu.starrism.common.service.JwtTokenService;
 import nom.edu.starrism.common.service.RedisService;
-import nom.edu.starrism.common.support.SePayload;
 import nom.edu.starrism.common.support.SeResultCarrier;
 import nom.edu.starrism.common.util.UUIDGeneratorUtil;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -41,15 +36,10 @@ public class LoginServiceImpl implements LoginService {
     private SysUserClient sysUserClient;
     @Resource
     private SysPermissionClient sysPermissionClient;
-    private JwtTokenService jwtTokenService;
+    @Resource
+    private SysRoleClient sysRoleClient;
     private TokenProperties tokenProperties;
     private RedisService redisService;
-
-    @Autowired
-    @Qualifier(value = "defaultJwtTokenService")
-    public void setJwtTokenService(JwtTokenService jwtTokenService) {
-        this.jwtTokenService = jwtTokenService;
-    }
 
     @Autowired
     public void setTokenProperties(TokenProperties tokenProperties) {
@@ -87,6 +77,8 @@ public class LoginServiceImpl implements LoginService {
         AuthenticatedUser authenticatedUser = new AuthenticatedUser();
         authenticatedUser.setUserEntity(userEntity);
         authenticatedUser.setTokenName(AuthPool.JWT_TOKEN_HEADER);
+        fillPermissions(authenticatedUser);
+        fillRoles(authenticatedUser);
         createToken(authenticatedUser);
         return authenticatedUser;
     }
@@ -105,36 +97,38 @@ public class LoginServiceImpl implements LoginService {
         // 根据 token 内容作为key保存真实的token数据
         String tokenKey = AuthPool.TOKEN_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + tokenPlainContent;
         // 根据查询到的数据生成真实的token并保存在redis中 key为返回给前端的token
-        String tokenBody = jwtTokenService.generate(defaultPayloadTextGenerate(authenticatedUser.getUserEntity()));
-        redisService.set(tokenKey, tokenBody, tokenProperties.expire);
+        redisService.set(tokenKey, authenticatedUser, tokenProperties.expire);
         // 根据查询到的数据生成真实的token并保存在redis中 key为返回给前端的token
         Long userId = authenticatedUser.getUserEntity().getId();
         String permissionsOfUserKey = AuthPool.JWT_TOKEN_HEADER + CorePool.REDIS_KEY_SEPARATOR + userId;
-        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionOfUser(userId);
-        Set<String> permissionsOfUser = SeResultCarrier.getSuccessData(carrier);
-        redisService.set(permissionsOfUserKey, permissionsOfUser, tokenProperties.expire);
+        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
+        Set<String> permissionUrlsOfUser = SeResultCarrier.getSuccessData(carrier);
+        redisService.set(permissionsOfUserKey, permissionUrlsOfUser, tokenProperties.expire);
     }
 
     /**
-     * <p>默认有效载荷文本生成</p>
+     * <p>填充权限信息</p>
      *
-     * @param userEntity 用户实体
+     * @param authenticatedUser authenticatedUser
      * @author hedwing
-     * @since 2022/11/6
+     * @since 2022/11/7
      */
-    private String defaultPayloadTextGenerate(SeUser userEntity) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expire = now.plusSeconds(tokenProperties.expire);
-        Set<String> authorities = Sets.newHashSet();
-        String account = userEntity.getAccount();
-        SePayload sePayload = SePayload.builder()
-                .subject(account)
-                .iat(now)
-                .exp(expire)
-                .account(account)
-                .jwtId(String.valueOf(userEntity.getId()))
-                .authorities(authorities)
-                .build();
-        return JSONObject.toJSONString(sePayload);
+    private void fillPermissions(AuthenticatedUser authenticatedUser) {
+        Long userId = authenticatedUser.getUserEntity().getId();
+        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionCodeOfUser(userId);
+        authenticatedUser.setPermissions(SeResultCarrier.getSuccessData(carrier));
+    }
+
+    /**
+     * <p>填充角色信息</p>
+     *
+     * @param authenticatedUser authenticatedUser
+     * @author hedwing
+     * @since 2022/11/7
+     */
+    private void fillRoles(AuthenticatedUser authenticatedUser) {
+        Long userId = authenticatedUser.getUserEntity().getId();
+        SeResultCarrier<Set<String>> carrier = sysRoleClient.findRoleCodesOfUser(userId);
+        authenticatedUser.setRoles(SeResultCarrier.getSuccessData(carrier));
     }
 }

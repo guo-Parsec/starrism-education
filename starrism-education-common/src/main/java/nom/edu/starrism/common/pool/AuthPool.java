@@ -10,12 +10,17 @@ public interface AuthPool {
     /**
      * 认证信息Http请求头
      */
-    String JWT_TOKEN_HEADER = "Authorization";
+    String JWT_TOKEN_HEADER = AuthPool.BASE_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + "Authorization";
 
     /**
      * 用户标识
      */
     String USER_TOKEN_KEY = "token";
+
+    /**
+     * redis key统一前缀
+     */
+    String BASE_REDIS_KEY = "starrism:edu";
 
     /**
      * token redis key
