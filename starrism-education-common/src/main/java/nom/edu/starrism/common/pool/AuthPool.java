@@ -7,10 +7,12 @@ package nom.edu.starrism.common.pool;
  * @since 2022/8/25
  **/
 public interface AuthPool {
+    String TOKEN_REQ_HEAD = "Authorization";
+
     /**
      * 认证信息Http请求头
      */
-    String JWT_TOKEN_HEADER = AuthPool.BASE_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + "Authorization";
+    String JWT_TOKEN_HEADER = AuthPool.BASE_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + TOKEN_REQ_HEAD;
 
     /**
      * 用户标识

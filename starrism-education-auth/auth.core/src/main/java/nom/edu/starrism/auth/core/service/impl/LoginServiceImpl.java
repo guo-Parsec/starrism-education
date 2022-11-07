@@ -76,7 +76,7 @@ public class LoginServiceImpl implements LoginService {
         }
         AuthenticatedUser authenticatedUser = new AuthenticatedUser();
         authenticatedUser.setUserEntity(userEntity);
-        authenticatedUser.setTokenName(AuthPool.JWT_TOKEN_HEADER);
+        authenticatedUser.setTokenName(AuthPool.TOKEN_REQ_HEAD);
         fillPermissions(authenticatedUser);
         fillRoles(authenticatedUser);
         createToken(authenticatedUser);
