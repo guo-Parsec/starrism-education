@@ -4,7 +4,7 @@ import nom.edu.starrism.admin.api.feign.SysPermissionClient;
 import nom.edu.starrism.admin.api.feign.SysRoleClient;
 import nom.edu.starrism.admin.api.feign.SysUserClient;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
-import nom.edu.starrism.auth.api.domain.vo.AuthenticatedUser;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.auth.core.enums.SeAuthResultCode;
 import nom.edu.starrism.auth.core.exception.AuthException;
 import nom.edu.starrism.auth.core.service.LoginService;

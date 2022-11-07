@@ -49,7 +49,7 @@ public class SwaggerConfig {
     }
 
     private HttpAuthenticationScheme tokenScheme() {
-        return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(AuthPool.JWT_TOKEN_HEADER).build();
+        return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(AuthPool.TOKEN_REQ_HEAD).build();
     }
 
     private SecurityContext tokenContext() {

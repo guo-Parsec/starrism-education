@@ -1,10 +1,9 @@
-package nom.edu.starrism.auth.api.domain.vo;
+package nom.edu.starrism.core.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.core.domain.vo.SeUser;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
 import java.util.Set;
@@ -35,4 +34,28 @@ public class AuthenticatedUser extends AbstractVo {
 
     @ApiModelProperty(value = "令牌内容")
     private String tokenContent;
+
+    /**
+     * <p>判断是否为空</p>
+     *
+     * @param user user
+     * @return boolean
+     * @author hedwing
+     * @since 2022/11/7
+     */
+    public static boolean isEmpty(AuthenticatedUser user) {
+        return user == null || SeUser.isEmpty(user.getUserEntity());
+    }
+
+    /**
+     * <p>判断是否不为空</p>
+     *
+     * @param user user
+     * @return boolean
+     * @author hedwing
+     * @since 2022/11/7
+     */
+    public static boolean isNotEmpty(AuthenticatedUser user) {
+        return !isEmpty(user);
+    }
 }

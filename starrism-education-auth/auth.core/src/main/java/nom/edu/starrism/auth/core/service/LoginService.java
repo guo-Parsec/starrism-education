@@ -1,7 +1,7 @@
 package nom.edu.starrism.auth.core.service;
 
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
-import nom.edu.starrism.auth.api.domain.vo.AuthenticatedUser;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 
 /**
  * <p>登录服务接口</p>

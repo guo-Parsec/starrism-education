@@ -75,28 +75,6 @@ public class SeUser extends AbstractDataVo {
     }
 
     /**
-     * <p>是否禁用判断</p>
-     *
-     * @return boolean
-     * @author hedwing
-     * @since 2022/10/23
-     */
-    public boolean isDisabled() {
-        return DataPool.DISABLE.equals(this.dataStatus);
-    }
-
-    /**
-     * <p>是否启用判断</p>
-     *
-     * @return boolean
-     * @author hedwing
-     * @since 2022/10/23
-     */
-    public boolean isEnable() {
-        return DataPool.ENABLE.equals(this.dataStatus);
-    }
-
-    /**
      * <p>获取空用户对象</p>
      *
      * @return {@link SeUser}

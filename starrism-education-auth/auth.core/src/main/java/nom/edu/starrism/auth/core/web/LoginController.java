@@ -3,7 +3,7 @@ package nom.edu.starrism.auth.core.web;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
-import nom.edu.starrism.auth.api.domain.vo.AuthenticatedUser;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.auth.core.service.LoginService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
