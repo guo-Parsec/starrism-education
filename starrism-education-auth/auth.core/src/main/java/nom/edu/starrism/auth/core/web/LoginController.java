@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @Api(value = "登录Web", tags = "登录Web接口")
 @RestController
-@RequestMapping(value = UrlPool.AUTH_LOGIN_PREFIX)
 public class LoginController {
     private final LoginService loginService;
 

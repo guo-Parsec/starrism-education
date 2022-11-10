@@ -75,6 +75,7 @@ public class LoginServiceImpl implements LoginService {
             throw new AuthException(SeAuthResultCode.ACCOUNT_OR_PASSWORD_ERROR);
         }
         AuthenticatedUser authenticatedUser = new AuthenticatedUser();
+        authenticatedUser.setId(userEntity.getId());
         authenticatedUser.setUserEntity(userEntity);
         authenticatedUser.setTokenName(AuthPool.TOKEN_REQ_HEAD);
         fillPermissions(authenticatedUser);

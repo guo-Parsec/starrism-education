@@ -1,8 +1,12 @@
 package nom.edu.starrism.common.util;
 
+import nom.edu.starrism.common.pool.AuthPool;
+import nom.edu.starrism.common.pool.CorePool;
+import nom.edu.starrism.common.pool.RedisPool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,24 +20,20 @@ public class StringUtil extends StringUtils {
      * 连接符
      */
     public static final String CONNECTOR = "-";
+
     /**
      * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串
      *
-     * @param str 指定字符串
-     * @param strList 需要检查的字符串数组
+     * @param str           指定字符串
+     * @param strCollection 需要检查的字符串数组
      * @return boolean 是否匹配
      * @author guochengqiang
      */
-    public static boolean matches(String str, List<String> strList) {
-        if (isEmpty(str) || CollectionUtil.isEmpty(strList)) {
+    public static boolean matches(String str, Collection<String> strCollection) {
+        if (isEmpty(str) || CollectionUtil.isEmpty(strCollection)) {
             return false;
         }
-        for (String pattern : strList) {
-            if (isMatch(pattern, str)) {
-                return true;
-            }
-        }
-        return false;
+        return strCollection.stream().anyMatch(pattern -> isMatch(pattern, str));
     }
 
     /**
@@ -49,5 +49,21 @@ public class StringUtil extends StringUtils {
     public static boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
         return matcher.match(pattern, url);
+    }
+
+    /**
+    * <p>redis key 合并</p>
+    * @param array 字符数组
+    * @return java.lang.String
+    * @author guocq
+    * @date 2022/11/10 15:12
+    */
+    public static String redisKeyJoin(final Object... array) {
+        return joinWith(CorePool.REDIS_KEY_SEPARATOR, array);
+    }
+
+    public static void main(String[] args) {
+        System.out.println();
+
     }
 }

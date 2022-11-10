@@ -1,5 +1,6 @@
 package nom.edu.starrism.common.util;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Stream;
 

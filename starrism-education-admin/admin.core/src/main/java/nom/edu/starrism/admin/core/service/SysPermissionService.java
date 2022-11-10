@@ -39,4 +39,14 @@ public interface SysPermissionService {
      * @since 2022/11/7
      */
     Set<String> findPermissionCodeOfUser(Long userId);
+
+    /**
+     * <p>根据类别查询权限请求url路径</p>
+     *
+     * @param categoryCode 类别码
+     * @return java.util.Set<java.lang.String>
+     * @author guocq
+     * @date 2022/11/10 14:29
+     */
+    Set<String> findPermissionUrlByCategory(String categoryCode);
 }

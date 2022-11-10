@@ -27,6 +27,7 @@ spring:
       use-key-prefix: true
       key-prefix: "starrism:edu:"
       time-to-live: 60000 # ms
+      cache-null-values: false
     cache-names: starrism
 feign:
   okhttp:

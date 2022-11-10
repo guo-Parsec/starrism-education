@@ -12,17 +12,12 @@ public interface AuthPool {
     /**
      * 认证信息Http请求头
      */
-    String JWT_TOKEN_HEADER = AuthPool.BASE_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + TOKEN_REQ_HEAD;
+    String JWT_TOKEN_HEADER = RedisPool.BASE_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + TOKEN_REQ_HEAD;
 
     /**
      * 用户标识
      */
     String USER_TOKEN_KEY = "token";
-
-    /**
-     * redis key统一前缀
-     */
-    String BASE_REDIS_KEY = "starrism:edu";
 
     /**
      * token redis key
@@ -35,27 +30,13 @@ public interface AuthPool {
     String JWT_TOKEN_PREFIX = "Bearer ";
 
     /**
-     * 令牌秘钥
+     * 匿名认证
      */
-    String SECRET = "aGVkd2luZ3NlY3JldA==";
+    String PERMISSION_CATEGORY_ANONYMOUS = "anonymous";
 
     /**
-     * 用户id标识
+     * 登录认证
      */
-    String USER_ID = "LOGIN_USER_ID";
-
-    /**
-     * 用户名称标识
-     */
-    String USER_NAME = "LOGIN_USERNAME";
-
-    /**
-     * 请求来源
-     */
-    String FROM_SOURCE = "from-source";
-    /**
-     * 用户session
-     */
-    String USER_SESSION = "userInfo";
+    String PERMISSION_CATEGORY_AUTHENTICATED_COMMON = "authenticated_common";
 
 }

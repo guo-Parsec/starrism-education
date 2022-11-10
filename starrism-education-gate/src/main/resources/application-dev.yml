@@ -4,7 +4,6 @@ spring:
       discovery:
         locator:
           enabled: true
-          #使用小写service-id
           lower-case-service-id: true
       routes:
         - id: starrism-education-admin

@@ -4,9 +4,11 @@ import com.google.common.collect.Sets;
 import nom.edu.starrism.admin.core.domain.entity.SysPermissionDetail;
 import nom.edu.starrism.admin.core.mapper.SysPermissionDetailMapper;
 import nom.edu.starrism.admin.core.mapper.SysRoleMapper;
+import nom.edu.starrism.admin.core.pool.AdminPool;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
+import nom.edu.starrism.common.pool.RedisPool;
 import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.data.pool.PermissionPool;
 import org.springframework.cache.annotation.Cacheable;
@@ -93,5 +95,24 @@ public class SysPermissionServiceImpl implements SysPermissionService {
             return Sets.newHashSet();
         }
         return details.stream().map(SysPermissionDetail::getPermissionCode).collect(Collectors.toSet());
+    }
+
+    /**
+     * <p>根据类别查询权限请求url路径</p>
+     *
+     * @param categoryCode 类别码
+     * @return java.util.Set<java.lang.String>
+     * @author guocq
+     * @date 2022/11/10 14:29
+     */
+    @Override
+    @Cacheable(key = "#categoryCode", cacheNames = RedisPool.PERMISSION_QUERY_BY_CATEGORY_CODE_KEY, unless = "#result == null || #result.isEmpty()")
+    public Set<String> findPermissionUrlByCategory(String categoryCode) {
+        List<SysPermissionDetail> details = sysPermissionDetailMapper.findByCategoryCode(categoryCode);
+        if (CollectionUtil.isEmpty(details)) {
+            LOGGER.debug("根据[categoryCode={}]查询到的权限为空", categoryCode);
+            return Sets.newHashSet();
+        }
+        return details.stream().map(SysPermissionDetail::getRequestActionUrl).collect(Collectors.toSet());
     }
 }
