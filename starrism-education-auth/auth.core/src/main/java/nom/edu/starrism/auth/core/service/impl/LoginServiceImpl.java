@@ -4,18 +4,18 @@ import nom.edu.starrism.admin.api.feign.SysPermissionClient;
 import nom.edu.starrism.admin.api.feign.SysRoleClient;
 import nom.edu.starrism.admin.api.feign.SysUserClient;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
-import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.auth.core.enums.SeAuthResultCode;
 import nom.edu.starrism.auth.core.exception.AuthException;
 import nom.edu.starrism.auth.core.service.LoginService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
-import nom.edu.starrism.common.pool.CorePool;
 import nom.edu.starrism.common.properties.TokenProperties;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.support.SeResultCarrier;
 import nom.edu.starrism.common.util.UUIDGeneratorUtil;
+import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,16 +95,13 @@ public class LoginServiceImpl implements LoginService {
         String tokenPlainContent = UUIDGeneratorUtil.uuidRaw();
         // 设置返回给前端的 token 内容
         authenticatedUser.setTokenContent(AuthPool.JWT_TOKEN_PREFIX + tokenPlainContent);
-        // 根据 token 内容作为key保存真实的token数据
-        String tokenKey = AuthPool.TOKEN_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + tokenPlainContent;
         // 根据查询到的数据生成真实的token并保存在redis中 key为返回给前端的token
-        redisService.set(tokenKey, authenticatedUser, tokenProperties.expire);
+        redisService.set(AuthContext.getTokenKey(tokenPlainContent), authenticatedUser, tokenProperties.expire);
         // 根据查询到的数据生成真实的token并保存在redis中 key为返回给前端的token
         Long userId = authenticatedUser.getUserEntity().getId();
-        String permissionsOfUserKey = AuthPool.JWT_TOKEN_HEADER + CorePool.REDIS_KEY_SEPARATOR + userId;
         SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
         Set<String> permissionUrlsOfUser = SeResultCarrier.getSuccessData(carrier);
-        redisService.set(permissionsOfUserKey, permissionUrlsOfUser, tokenProperties.expire);
+        redisService.set(AuthContext.getUserUrlsKey(userId), permissionUrlsOfUser, tokenProperties.expire);
     }
 
     /**

@@ -7,19 +7,15 @@ import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
-import nom.edu.starrism.common.pool.CorePool;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.data.component.SpringBean;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.PushBuilder;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -122,7 +118,7 @@ public class AuthContext {
             throw new SeException(SeCommonResultCode.UNAUTHORIZED, "用户鉴权失败，原因：无法从当前系统请求中获取合法的token");
         }
         RedisService redisService = SpringBean.getBean(RedisService.class);
-        AuthenticatedUser loginUser = (AuthenticatedUser) redisService.get(AuthPool.TOKEN_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + realToken);
+        AuthenticatedUser loginUser = (AuthenticatedUser) redisService.get(getTokenKey(realToken));
         if (AuthenticatedUser.isEmpty(loginUser)) {
             LOGGER.error("用户鉴权失败，原因：无法获取到登录信息，可能因为token已过期");
             throw new SeException(SeCommonResultCode.UNAUTHORIZED, "用户鉴权失败，原因：无法获取到登录信息，可能因为token已过期");
@@ -173,10 +169,27 @@ public class AuthContext {
             return;
         }
         RedisService redisService = SpringBean.getBean(RedisService.class);
-        String tokenKey = StringUtil.redisKeyJoin(AuthPool.TOKEN_REDIS_KEY, realToken);
-        String urlsKey = StringUtil.redisKeyJoin(AuthPool.JWT_TOKEN_HEADER, cacheId);
-        redisService.del(Lists.newArrayList(tokenKey, urlsKey));
+        redisService.del(Lists.newArrayList(getTokenKey(realToken), getUserUrlsKey(cacheId)));
+    }
 
+    /**
+     * 获取 token 存储的redis key
+     *
+     * @param tokenContent token内容 同返回给前端的tokenContent
+     * @return token 存储的redis key
+     */
+    public static String getTokenKey(String tokenContent) {
+        return StringUtil.redisKeyJoin(AuthPool.TOKEN_REDIS_KEY, tokenContent);
+    }
+
+    /**
+     * 获取 用户权限url 存储的redis key
+     *
+     * @param userId 用户id
+     * @return 用户权限url 存储的redis key
+     */
+    public static String getUserUrlsKey(Long userId) {
+        return StringUtil.redisKeyJoin(AuthPool.JWT_TOKEN_HEADER, userId);
     }
 
 }

@@ -1,7 +1,5 @@
 package nom.edu.starrism.auth.core.service;
 
-import org.springframework.stereotype.Service;
-
 /**
  * <p>登出Service</p>
  *

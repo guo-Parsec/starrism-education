@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import nom.edu.starrism.admin.core.domain.entity.SysPermissionDetail;
 import nom.edu.starrism.admin.core.mapper.SysPermissionDetailMapper;
 import nom.edu.starrism.admin.core.mapper.SysRoleMapper;
-import nom.edu.starrism.admin.core.pool.AdminPool;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;

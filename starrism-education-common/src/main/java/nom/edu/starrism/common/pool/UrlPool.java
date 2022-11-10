@@ -31,9 +31,4 @@ public interface UrlPool {
      * token管理url前缀
      */
     String AUTH_TOKEN_PREFIX = "/token";
-
-    /**
-     * token管理url前缀
-     */
-    String AUTH_LOGIN_PREFIX = "/login";
 }

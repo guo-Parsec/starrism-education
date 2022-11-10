@@ -3,14 +3,12 @@ package nom.edu.starrism.auth.core.web;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
-import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.auth.core.service.LoginService;
-import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**

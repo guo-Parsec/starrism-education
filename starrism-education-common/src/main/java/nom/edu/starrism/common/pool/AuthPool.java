@@ -1,5 +1,7 @@
 package nom.edu.starrism.common.pool;
 
+import nom.edu.starrism.common.util.StringUtil;
+
 /**
  * <p>权限相关常量定义池</p>
  *
@@ -12,7 +14,7 @@ public interface AuthPool {
     /**
      * 认证信息Http请求头
      */
-    String JWT_TOKEN_HEADER = RedisPool.BASE_REDIS_KEY + CorePool.REDIS_KEY_SEPARATOR + TOKEN_REQ_HEAD;
+    String JWT_TOKEN_HEADER = StringUtil.redisKeyJoin(RedisPool.BASE_REDIS_KEY, TOKEN_REQ_HEAD);
 
     /**
      * 用户标识
@@ -22,7 +24,7 @@ public interface AuthPool {
     /**
      * token redis key
      */
-    String TOKEN_REDIS_KEY = JWT_TOKEN_HEADER + CorePool.REDIS_KEY_SEPARATOR + USER_TOKEN_KEY;
+    String TOKEN_REDIS_KEY = StringUtil.redisKeyJoin(JWT_TOKEN_HEADER, USER_TOKEN_KEY);
 
     /**
      * JWT令牌前缀
@@ -38,5 +40,4 @@ public interface AuthPool {
      * 登录认证
      */
     String PERMISSION_CATEGORY_AUTHENTICATED_COMMON = "authenticated_common";
-
 }

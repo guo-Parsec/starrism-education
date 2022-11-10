@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * <p></p>
+ * <p>反射工具类</p>
  *
  * @author hedwing
  * @since 2022/8/13
@@ -130,6 +130,10 @@ public class ReflectionUtil {
         return getAnnotationPair(entity.getClass(), annotationClass);
     }
 
+    /**
+     * 属性注解对
+     * @param <A> 注解
+     */
     public static class FieldAnnotationPair<A extends Annotation> {
         private Field field;
 

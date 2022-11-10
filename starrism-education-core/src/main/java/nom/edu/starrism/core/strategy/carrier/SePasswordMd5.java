@@ -4,8 +4,8 @@ import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.util.Md5Util;
 import nom.edu.starrism.common.util.StringUtil;
-import nom.edu.starrism.core.strategy.SePasswordStrategyOption;
 import nom.edu.starrism.core.strategy.SePasswordStrategy;
+import nom.edu.starrism.core.strategy.SePasswordStrategyOption;
 import org.springframework.stereotype.Component;
 
 /**

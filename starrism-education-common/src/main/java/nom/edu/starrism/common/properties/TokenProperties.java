@@ -35,6 +35,4 @@ public class TokenProperties {
      * 有效期
      */
     public Long expire;
-
-
 }

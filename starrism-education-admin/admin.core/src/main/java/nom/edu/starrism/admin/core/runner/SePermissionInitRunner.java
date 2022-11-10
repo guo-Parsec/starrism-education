@@ -1,21 +1,14 @@
 package nom.edu.starrism.admin.core.runner;
 
-import nom.edu.starrism.admin.core.mapper.SysPermissionCategoryMapper;
-import nom.edu.starrism.admin.core.pool.AdminPool;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
-import nom.edu.starrism.common.pool.CorePool;
-import nom.edu.starrism.common.service.RedisService;
-import nom.edu.starrism.core.pool.OtherPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 /**
  * <p></p>
@@ -27,8 +20,6 @@ import java.util.Set;
 @Order(value = 0)
 public class SePermissionInitRunner implements ApplicationRunner {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SePermissionInitRunner.class);
-
-    private RedisService redisService;
 
     private SysPermissionService sysPermissionService;
 
@@ -51,10 +42,5 @@ public class SePermissionInitRunner implements ApplicationRunner {
     @Autowired
     public void setSysPermissionService(SysPermissionService sysPermissionService) {
         this.sysPermissionService = sysPermissionService;
-    }
-
-    @Autowired
-    public void setRedisService(RedisService redisService) {
-        this.redisService = redisService;
     }
 }

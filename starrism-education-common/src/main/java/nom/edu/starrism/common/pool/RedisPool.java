@@ -8,6 +8,10 @@ package nom.edu.starrism.common.pool;
  **/
 public interface RedisPool {
     /**
+     * redis key的间隔符
+     */
+    String REDIS_KEY_SEPARATOR = ":";
+    /**
      * redis key统一前缀
      */
     String BASE_REDIS_KEY = "starrism:edu";
@@ -16,6 +20,4 @@ public interface RedisPool {
      * 根据categoryCode查询权限缓存的key
      */
     String PERMISSION_QUERY_BY_CATEGORY_CODE_KEY = "permission:categoryCode";
-
-
 }

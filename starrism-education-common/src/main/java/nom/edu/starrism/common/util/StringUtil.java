@@ -1,16 +1,13 @@
 package nom.edu.starrism.common.util;
 
-import nom.edu.starrism.common.pool.AuthPool;
-import nom.edu.starrism.common.pool.CorePool;
 import nom.edu.starrism.common.pool.RedisPool;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
- * <p></p>
+ * <p>字符串工具类</p>
  *
  * @author hedwing
  * @since 2022/8/13
@@ -59,11 +56,6 @@ public class StringUtil extends StringUtils {
     * @date 2022/11/10 15:12
     */
     public static String redisKeyJoin(final Object... array) {
-        return joinWith(CorePool.REDIS_KEY_SEPARATOR, array);
-    }
-
-    public static void main(String[] args) {
-        System.out.println();
-
+        return joinWith(RedisPool.REDIS_KEY_SEPARATOR, array);
     }
 }

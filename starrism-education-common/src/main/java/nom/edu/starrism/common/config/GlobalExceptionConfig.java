@@ -62,6 +62,4 @@ public class GlobalExceptionConfig {
         LOGGER.error("The application run exception", exception);
         return SeResultCarrier.failed();
     }
-
-
 }
