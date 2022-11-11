@@ -1,5 +1,8 @@
 package nom.edu.starrism.admin.core.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Sets;
 import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
 import nom.edu.starrism.admin.api.domain.vo.SysRoleVo;
@@ -9,13 +12,18 @@ import nom.edu.starrism.admin.core.service.SysRoleService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.util.CollectionUtil;
+import nom.edu.starrism.core.annotation.PageQuery;
+import nom.edu.starrism.core.util.PageUtil;
 import nom.edu.starrism.data.domain.vo.Pageable;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -53,13 +61,16 @@ public class SysRoleServiceImpl implements SysRoleService {
      * <p>角色分页查询</p>
      *
      * @param param 分页查询参数
-     * @return {@link Pageable < SysRoleVo >}
+     * @return {@link Page<SysRoleVo>}
      * @author guocq
      * @date 2022/11/11 14:44
      */
     @Override
-    public Pageable<SysRoleVo> sysRolePageQuery(SysRolePageParam param) {
-        List<SysRole> sysRoles = sysRoleMapper.paginationQuery(param);
-        return null;
+    @PageQuery
+    public PageInfo<SysRoleVo> sysRolePageQuery(SysRolePageParam param) {
+        Page<SysRole> pageData = sysRoleMapper.paginationQuery(param);
+        List<SysRoleVo> sysRoleVos = pageData.stream().map(SysRole::toVo).collect(Collectors.toList());
+        return PageUtil.toVoPage(sysRoleVos, new PageInfo<>(pageData));
     }
+
 }

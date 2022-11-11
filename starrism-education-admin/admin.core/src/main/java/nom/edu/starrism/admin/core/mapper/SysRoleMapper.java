@@ -1,8 +1,8 @@
 package nom.edu.starrism.admin.core.mapper;
 
+import com.github.pagehelper.Page;
 import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
 import nom.edu.starrism.admin.core.domain.entity.SysRole;
-import nom.edu.starrism.core.annotation.PageQuery;
 import nom.edu.starrism.data.mapper.CoreMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -48,6 +48,5 @@ public interface SysRoleMapper extends CoreMapper<SysRole> {
      * @author guocq
      * @date 2022/11/11 14:18
      */
-    @PageQuery
-    List<SysRole> paginationQuery(@Param("queryParam") SysRolePageParam queryParam);
+    Page<SysRole> paginationQuery(@Param("queryParam") SysRolePageParam queryParam);
 }

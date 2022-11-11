@@ -47,10 +47,14 @@ public class SysRole extends AbstractDataEntity {
     @Override
     public SysRoleVo toVo() {
         SysRoleVo vo = new SysRoleVo();
+        vo.setId(this.id);
         vo.setRoleCode(this.roleCode);
         vo.setRoleName(this.roleName);
         vo.setSort(this.sort);
         vo.setRemark(this.remark);
+        vo.setDataStatus(this.dataStatus);
+        vo.setGmtCreate(this.gmtCreate);
+        vo.setGmtModify(this.gmtModify);
         return vo;
     }
 }

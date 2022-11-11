@@ -53,7 +53,7 @@
             and role.role_code = #{queryParam.roleCode,jdbcType=VARCHAR}
         </if>
         <if test="queryParam.roleName != null">
-            and role.role_name like concat('%', #{queryParam.roleName,jdbcType=VARCHAR}, '%') #{queryParam.roleCode}
+            and role.role_name like concat('%', #{queryParam.roleName,jdbcType=VARCHAR}, '%')
         </if>
         order by role.`sort`
     </select>

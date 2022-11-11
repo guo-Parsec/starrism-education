@@ -1,5 +1,7 @@
 package nom.edu.starrism.admin.core.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
 import nom.edu.starrism.admin.api.domain.vo.SysRoleVo;
 import nom.edu.starrism.admin.core.domain.entity.SysRole;
@@ -28,9 +30,9 @@ public interface SysRoleService {
      * <p>角色分页查询</p>
      *
      * @param param 分页查询参数
-     * @return {@link Pageable<SysRoleVo>}
+     * @return {@link Page<SysRoleVo>}
      * @author guocq
      * @date 2022/11/11 14:44
      */
-    Pageable<SysRoleVo> sysRolePageQuery(SysRolePageParam param);
+    PageInfo<SysRoleVo> sysRolePageQuery(SysRolePageParam param);
 }

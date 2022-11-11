@@ -1,5 +1,6 @@
 package nom.edu.starrism.admin.core.web;
 
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
@@ -39,7 +40,7 @@ public class SysRoleController {
 
     @ApiOperation(value = "角色分页查询")
     @GetMapping(value = "/query")
-    public SeResultCarrier<Pageable<SysRoleVo>> sysRolePageQuery(SysRolePageParam param) {
+    public SeResultCarrier<PageInfo<SysRoleVo>> sysRolePageQuery(SysRolePageParam param) {
         return SeResultCarrier.success(sysRoleService.sysRolePageQuery(param));
     }
 }

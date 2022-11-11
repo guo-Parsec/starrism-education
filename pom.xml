@@ -48,6 +48,7 @@
         <nacos-client.version>2.1.0</nacos-client.version>
         <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
         <feign-form.version>3.8.0</feign-form.version>
+        <pagehelper.version>1.4.5</pagehelper.version>
     </properties>
 
     <dependencyManagement>
@@ -177,6 +178,13 @@
                 <artifactId>feign-form</artifactId>
                 <version>${feign-form.version}</version>
             </dependency>
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
