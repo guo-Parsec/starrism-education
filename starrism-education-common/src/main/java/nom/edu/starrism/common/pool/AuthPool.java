@@ -40,4 +40,14 @@ public interface AuthPool {
      * 登录认证
      */
     String PERMISSION_CATEGORY_AUTHENTICATED_COMMON = "authenticated_common";
+
+    /**
+     * 默认全权限
+     */
+    String DEFAULT_ALL_PERMISSION = "*:*:*";
+
+    /**
+     * 默认管理员
+     */
+    String DEFAULT_ADMIN = "admin";
 }

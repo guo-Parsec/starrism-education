@@ -34,6 +34,19 @@ public class StringUtil extends StringUtils {
     }
 
     /**
+     * 从 source 中查询是否包含 target 的元素
+     * @param source source
+     * @param target target
+     * @return true 包含 false 不包含
+     */
+    public static boolean matches(Collection<String> source, Collection<String> target) {
+        if (CollectionUtil.isEmpty(source) || CollectionUtil.isEmpty(target)) {
+            return false;
+        }
+        return source.stream().anyMatch(str -> matches(str, target));
+    }
+
+    /**
      * 判断url是否与规则配置:
      * ? 表示单个字符;
      * * 表示一层路径内的任意字符串，不可跨层级;

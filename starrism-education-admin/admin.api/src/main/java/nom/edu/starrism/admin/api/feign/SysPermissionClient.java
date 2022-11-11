@@ -47,6 +47,6 @@ public interface SysPermissionClient {
      * @author hedwing
      * @since 2022/11/7
      */
-    @GetMapping(value = "/find/code/by/roles")
-    SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "roles") Long userId);
+    @GetMapping(value = "/find/code/by/userId")
+    SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "userId") Long userId);
 }

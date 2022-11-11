@@ -10,6 +10,7 @@ import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.common.util.StringUtil;
+import nom.edu.starrism.common.util.UUIDGeneratorUtil;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.data.component.SpringBean;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -90,19 +91,22 @@ public class AuthContext {
         return true;
     }
 
+    public static HttpServletRequest getHttpServletRequest() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes == null) {
+            LOGGER.error("用户鉴权失败，原因：无法获取当前系统请求");
+            throw new SeException(SeCommonResultCode.UNAUTHORIZED, "用户鉴权失败，原因：无法获取当前系统请求");
+        }
+        return requestAttributes.getRequest();
+    }
+
     /**
      * 获取认证用户信息
      *
      * @return 认证用户信息
      */
     public static AuthenticatedUser getAuthenticatedUser() {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (requestAttributes == null) {
-            LOGGER.error("用户鉴权失败，原因：无法获取当前系统请求");
-            throw new SeException(SeCommonResultCode.UNAUTHORIZED, "用户鉴权失败，原因：无法获取当前系统请求");
-        }
-        HttpServletRequest request = requestAttributes.getRequest();
-        return getAuthenticatedUser(request.getHeader(AuthPool.TOKEN_REQ_HEAD));
+        return getAuthenticatedUser(getHttpServletRequest().getHeader(AuthPool.TOKEN_REQ_HEAD));
     }
 
     /**

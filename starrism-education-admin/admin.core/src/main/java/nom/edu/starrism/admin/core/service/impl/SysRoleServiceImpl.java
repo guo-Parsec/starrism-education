@@ -1,12 +1,15 @@
 package nom.edu.starrism.admin.core.service.impl;
 
 import com.google.common.collect.Sets;
+import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
+import nom.edu.starrism.admin.api.domain.vo.SysRoleVo;
 import nom.edu.starrism.admin.core.domain.entity.SysRole;
 import nom.edu.starrism.admin.core.mapper.SysRoleMapper;
 import nom.edu.starrism.admin.core.service.SysRoleService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.util.CollectionUtil;
+import nom.edu.starrism.data.domain.vo.Pageable;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +47,19 @@ public class SysRoleServiceImpl implements SysRoleService {
             return Sets.newHashSet();
         }
         return roles.stream().map(SysRole::getRoleCode).collect(Collectors.toSet());
+    }
+
+    /**
+     * <p>角色分页查询</p>
+     *
+     * @param param 分页查询参数
+     * @return {@link Pageable < SysRoleVo >}
+     * @author guocq
+     * @date 2022/11/11 14:44
+     */
+    @Override
+    public Pageable<SysRoleVo> sysRolePageQuery(SysRolePageParam param) {
+        List<SysRole> sysRoles = sysRoleMapper.paginationQuery(param);
+        return null;
     }
 }

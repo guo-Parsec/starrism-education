@@ -11,7 +11,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * <p></p>
+ * <p>权限初始化启动器</p>
  *
  * @author guocq
  * @since 2022/11/10

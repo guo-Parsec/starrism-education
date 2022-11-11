@@ -76,6 +76,7 @@ public class LoginServiceImpl implements LoginService {
         }
         AuthenticatedUser authenticatedUser = new AuthenticatedUser();
         authenticatedUser.setId(userEntity.getId());
+        authenticatedUser.setSubject(userEntity.getAccount());
         authenticatedUser.setUserEntity(userEntity);
         authenticatedUser.setTokenName(AuthPool.TOKEN_REQ_HEAD);
         fillPermissions(authenticatedUser);

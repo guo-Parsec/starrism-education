@@ -58,5 +58,10 @@
             <artifactId>feign-okhttp</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.openfeign.form</groupId>
+            <artifactId>feign-form</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

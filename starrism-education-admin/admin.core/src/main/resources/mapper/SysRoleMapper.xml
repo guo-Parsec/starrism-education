@@ -38,8 +38,23 @@
     <select id="findRoleIdsByUserId" parameterType="long" resultType="long">
         select distinct role.id
         from sys_role role
-        left join sys_user_role sur on role.id = sur.role_id
+                 left join sys_user_role sur on role.id = sur.role_id
         where sur.user_id = #{userId,jdbcType=BIGINT}
-        and role.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+          and role.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+    </select>
+
+    <select id="paginationQuery" parameterType="nom.edu.starrism.admin.core.domain.entity.SysRole"
+            resultMap="SysRoleResultMap">
+        select
+        <include refid="sys_role_all_column"/>
+        from sys_role role
+        where role.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        <if test="queryParam.roleCode != null">
+            and role.role_code = #{queryParam.roleCode,jdbcType=VARCHAR}
+        </if>
+        <if test="queryParam.roleName != null">
+            and role.role_name like concat('%', #{queryParam.roleName,jdbcType=VARCHAR}, '%') #{queryParam.roleCode}
+        </if>
+        order by role.`sort`
     </select>
 </mapper>

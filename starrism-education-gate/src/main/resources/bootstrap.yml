@@ -3,4 +3,3 @@ spring:
     name: starrism-education-gate
   profiles:
     active: dev
-debug: true

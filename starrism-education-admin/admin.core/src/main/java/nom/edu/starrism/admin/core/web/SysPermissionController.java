@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.core.annotation.CheckPermission;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ public class SysPermissionController {
 
     @ApiOperation(value = "查询用户权限：根据用户id查询权限url")
     @GetMapping(value = "/find/url/by/userId")
+    // @CheckPermission("admin:self-permission:query")
     public SeResultCarrier<Set<String>> findPermissionUrlOfUser(@RequestParam(value = "userId") Long userId) {
         return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfUser(userId));
     }
@@ -41,9 +43,9 @@ public class SysPermissionController {
         return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfRoles(roles));
     }
 
-    @ApiOperation(value = "查询角色权限：根据角色列表查询权限码")
-    @GetMapping(value = "/find/code/by/roles")
-    public SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "roles") Long userId) {
+    @ApiOperation(value = "查询角色权限：根据用户id查询权限码")
+    @GetMapping(value = "/find/code/by/userId")
+    public SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "userId") Long userId) {
         return SeResultCarrier.success(sysPermissionService.findPermissionCodeOfUser(userId));
     }
 }

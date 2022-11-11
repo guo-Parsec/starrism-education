@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -22,6 +23,9 @@ public class AuthenticatedUser extends AbstractVo {
 
     @ApiModelProperty(value = "核心用户")
     private SeUser userEntity;
+
+    @ApiModelProperty(value = "主体")
+    private Serializable subject;
 
     @ApiModelProperty(value = "用户所拥有的角色")
     private Set<String> roles;

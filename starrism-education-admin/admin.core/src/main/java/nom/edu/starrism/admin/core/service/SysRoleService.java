@@ -1,5 +1,10 @@
 package nom.edu.starrism.admin.core.service;
 
+import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
+import nom.edu.starrism.admin.api.domain.vo.SysRoleVo;
+import nom.edu.starrism.admin.core.domain.entity.SysRole;
+import nom.edu.starrism.data.domain.vo.Pageable;
+
 import java.util.Set;
 
 /**
@@ -11,10 +16,21 @@ import java.util.Set;
 public interface SysRoleService {
     /**
      * <p>获取角色码：根据用户id获取</p>
+     *
      * @param userId userId
      * @return java.util.Set<java.lang.String>
      * @author hedwing
      * @since 2022/11/7
      */
     Set<String> findRoleCodesOfUser(Long userId);
+
+    /**
+     * <p>角色分页查询</p>
+     *
+     * @param param 分页查询参数
+     * @return {@link Pageable<SysRoleVo>}
+     * @author guocq
+     * @date 2022/11/11 14:44
+     */
+    Pageable<SysRoleVo> sysRolePageQuery(SysRolePageParam param);
 }
