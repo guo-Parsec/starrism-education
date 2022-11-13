@@ -5,6 +5,7 @@ import nom.edu.starrism.core.domain.entity.SysDictCategory;
 import nom.edu.starrism.core.domain.entity.SysDictDetail;
 import nom.edu.starrism.core.domain.vo.SysDictDetailVo;
 import nom.edu.starrism.core.pool.BeanPool;
+import nom.edu.starrism.core.pool.CachePool;
 import nom.edu.starrism.core.repository.SysDictCategoryRepository;
 import nom.edu.starrism.core.repository.SysDictDetailRepository;
 import nom.edu.starrism.data.domain.entity.AbstractEntity;
@@ -38,7 +39,7 @@ public class DictAccessImpl implements DictAccess {
      * @since 2022/10/23
      */
     @Override
-    @Cacheable(key = "#categoryCode", cacheNames = "dict:categoryCode", unless = "#result == null || #result.isEmpty()")
+    @Cacheable(cacheNames = CachePool.CN_SYS_DICT, key = "'categoryCode:'+#categoryCode", unless = "#result == null || #result.isEmpty()")
     public List<SysDictDetailVo> findDictByCategoryCode(String categoryCode) {
         SysDictCategory category = sysDictCategoryRepository.findByCode(categoryCode);
         if (AbstractEntity.isEmpty(category)) {
@@ -49,7 +50,7 @@ public class DictAccessImpl implements DictAccess {
     }
 
     /**
-     * <p>根据分类码与字典码查询字典</p>
+     * <p>根据分类码与字典值查询字典</p>
      *
      * @param categoryCode 字典类别码
      * @param dictValue    字典值
@@ -58,12 +59,31 @@ public class DictAccessImpl implements DictAccess {
      * @since 2022/10/23
      */
     @Override
-    @Cacheable(key = "#categoryCode+'-'+#dictValue", cacheNames = "dict:categoryCode", unless = "#result == null")
-    public SysDictDetailVo findDictByCodes(String categoryCode, String dictValue) {
+    @Cacheable(cacheNames = CachePool.CN_SYS_DICT, key = "'categoryCode:'+#categoryCode+':dictValue:'+#dictValue", unless = "#result == null")
+    public SysDictDetailVo findDictByCategoryCodeAndDictValue(String categoryCode, String dictValue) {
         SysDictCategory category = sysDictCategoryRepository.findByCode(categoryCode);
         if (AbstractEntity.isEmpty(category)) {
             return null;
         }
-        return EntityConverters.convertToVo(sysDictDetailRepository.findByCodes(category.getId(), dictValue), SysDictDetailVo.class);
+        return EntityConverters.convertToVo(sysDictDetailRepository.findByCategoryCodeAndDictValue(category.getId(), dictValue), SysDictDetailVo.class);
     }
+
+    /**
+     * <p>根据分类码与字典码查询字典</p>
+     *
+     * @param categoryCode 字典类别码
+     * @param dictCode     字典码
+     * @return {@link SysDictDetailVo}
+     * @author hedwing
+     * @since 2022/11/12
+     */
+    @Override
+    public SysDictDetailVo findDictByCategoryCodeAndDictCode(String categoryCode, String dictCode) {
+        SysDictCategory category = sysDictCategoryRepository.findByCode(categoryCode);
+        if (AbstractEntity.isEmpty(category)) {
+            return null;
+        }
+        return EntityConverters.convertToVo(sysDictDetailRepository.findByCategoryCodeAndDictCode(category.getId(), dictCode), SysDictDetailVo.class);
+    }
+
 }

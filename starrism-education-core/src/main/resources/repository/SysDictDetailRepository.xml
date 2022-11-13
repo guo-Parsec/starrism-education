@@ -42,13 +42,25 @@
         order by sdd.sort;
     </select>
 
-    <!-- 根据类别Id以及字典码查询字典详情 -->
-    <select id="findByCodes" resultMap="SysDictDetailResultMap">
+    <!-- 根据类别Id以及字典值查询字典详情 -->
+    <select id="findByCategoryCodeAndDictValue" resultMap="SysDictDetailResultMap">
         select
         <include refid="sys_dict_detail_all_column"/>
         from sys_dict_detail sdd
         where sdd.sys_dict_category_id = #{sysDictCategoryId,jdbcType=BIGINT}
-          and sdd.dict_value = #{dictValue}
+          and sdd.dict_value = #{dictValue,jdbcType=VARCHAR}
+          and sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        order by sdd.sort
+        limit 1;
+    </select>
+
+    <!-- 根据类别Id以及字典码查询字典详情 -->
+    <select id="findByCategoryCodeAndDictCode" resultMap="SysDictDetailResultMap">
+        select
+        <include refid="sys_dict_detail_all_column"/>
+        from sys_dict_detail sdd
+        where sdd.sys_dict_category_id = #{sysDictCategoryId,jdbcType=BIGINT}
+          and sdd.dict_value = #{dictCode,jdbcType=VARCHAR}
           and sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
         order by sdd.sort
         limit 1;

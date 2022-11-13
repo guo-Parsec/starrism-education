@@ -26,8 +26,8 @@ public class SeMySqlMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         LOGGER.debug("开始填充插入字段...");
-        this.strictInsertFill(metaObject, "addTime", LocalDateTime.class, LocalDateTime.now());
-        this.strictInsertFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject, "gmtCreate", LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject, "gmtModify", LocalDateTime.class, LocalDateTime.now());
     }
 
     /**
@@ -38,6 +38,6 @@ public class SeMySqlMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         LOGGER.debug("开始填充更新字段...");
-        this.strictUpdateFill(metaObject, "modifyTime", LocalDateTime.class, LocalDateTime.now());
+        this.strictUpdateFill(metaObject, "gmtModify", LocalDateTime.class, LocalDateTime.now());
     }
 }

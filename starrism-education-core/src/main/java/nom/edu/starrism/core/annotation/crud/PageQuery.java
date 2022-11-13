@@ -1,4 +1,4 @@
-package nom.edu.starrism.core.annotation;
+package nom.edu.starrism.core.annotation.crud;
 
 import java.lang.annotation.*;
 

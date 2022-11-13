@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class PageHelperAspect {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(CheckLoginAspect.class);
 
-    @Pointcut("@annotation(nom.edu.starrism.core.annotation.PageQuery)")
+    @Pointcut("@annotation(nom.edu.starrism.core.annotation.crud.PageQuery)")
     public void pointCut() {
     }
 

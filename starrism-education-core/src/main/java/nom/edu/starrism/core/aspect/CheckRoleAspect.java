@@ -7,8 +7,8 @@ import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.util.StringUtil;
-import nom.edu.starrism.core.annotation.CheckPermission;
-import nom.edu.starrism.core.annotation.CheckRole;
+import nom.edu.starrism.core.annotation.security.CheckRole;
+import nom.edu.starrism.core.context.AppCoreContext;
 import nom.edu.starrism.core.context.AuthContext;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class CheckRoleAspect {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(CheckRoleAspect.class);
 
-    @Pointcut("@annotation(nom.edu.starrism.core.annotation.CheckRole)")
+    @Pointcut("@annotation(nom.edu.starrism.core.annotation.security.CheckRole)")
     public void pointCut() {
     }
 
@@ -47,6 +47,10 @@ public class CheckRoleAspect {
         String methodName = methodSignature.getName();
         LOGGER.debug("请求[{}]方法[{}]正在校验角色", requestPath, methodName);
         Object[] args = joinPoint.getArgs();
+        if (AppCoreContext.isFeign()) {
+            LOGGER.debug("请求[{}]方法[{}]来自服务间调用，将不进行权限校验", requestPath, methodName);
+            return joinPoint.proceed(args);
+        }
         Method method = methodSignature.getMethod();
         CheckRole checkRole = method.getAnnotation(CheckRole.class);
         Set<String> roleCodes = findRoleCodes(checkRole);

@@ -28,7 +28,18 @@ public enum SeCommonResultCode implements SeRestEnum {
     /**
      * 没有相关权限
      */
-    FORBIDDEN(403, "没有相关权限");
+    FORBIDDEN(403, "没有相关权限"),
+
+    DATA_EXIST(501, "数据已维护"),
+
+    DATA_NOT_EXIST(502, "数据不存在"),
+
+    ADD_FAILED(503, "新增数据失败"),
+
+    EDIT_FAILED(504, "编辑数据失败"),
+
+    REMOVE_FAILED(505, "删除数据失败"),
+    ;
 
     @Getter
     private final Long code;

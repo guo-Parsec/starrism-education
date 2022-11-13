@@ -20,6 +20,11 @@ public interface UrlPool {
     /**
      * 系统权限管理url前缀
      */
+    String ADMIN_DICT_PREFIX = "/sys/dict";
+
+    /**
+     * 系统权限管理url前缀
+     */
     String ADMIN_ROLE_PREFIX = "/sys/role";
 
     /**

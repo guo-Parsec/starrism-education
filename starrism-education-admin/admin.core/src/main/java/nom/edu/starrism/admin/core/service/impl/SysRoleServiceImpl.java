@@ -1,7 +1,6 @@
 package nom.edu.starrism.admin.core.service.impl;
 
 import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Sets;
 import nom.edu.starrism.admin.api.domain.param.SysRolePageParam;
@@ -12,22 +11,18 @@ import nom.edu.starrism.admin.core.service.SysRoleService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.util.CollectionUtil;
-import nom.edu.starrism.core.annotation.PageQuery;
+import nom.edu.starrism.core.annotation.crud.PageQuery;
 import nom.edu.starrism.core.util.PageUtil;
-import nom.edu.starrism.data.domain.vo.Pageable;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Supplier;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- * <p></p>
+ * <p>角色服务类</p>
  *
  * @author hedwing
  * @since 2022/11/7

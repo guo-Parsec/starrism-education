@@ -1,4 +1,4 @@
-package nom.edu.starrism.core.annotation;
+package nom.edu.starrism.core.annotation.security;
 
 import java.lang.annotation.*;
 

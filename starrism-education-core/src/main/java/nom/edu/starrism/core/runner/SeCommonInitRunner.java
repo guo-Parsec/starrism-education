@@ -2,10 +2,17 @@ package nom.edu.starrism.core.runner;
 
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
+import nom.edu.starrism.common.pool.AuthPool;
+import nom.edu.starrism.common.pool.RedisPool;
+import nom.edu.starrism.common.service.RedisService;
+import nom.edu.starrism.common.util.StringUtil;
+import nom.edu.starrism.common.util.UUIDGeneratorUtil;
 import nom.edu.starrism.core.access.ParamAccess;
+import nom.edu.starrism.core.context.AppCoreContext;
 import nom.edu.starrism.core.context.PageContext;
 import nom.edu.starrism.core.domain.vo.SysParamVo;
 import nom.edu.starrism.core.pool.ParamPool;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
@@ -29,6 +36,7 @@ public class SeCommonInitRunner implements ApplicationRunner {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SeCommonInitRunner.class);
     @Resource
     private ParamAccess paramAccess;
+    private RedisService redisService;
 
     private static final Map<String, Consumer<SysParamVo>> C_MAP = new HashMap<>(16);
 
@@ -69,9 +77,32 @@ public class SeCommonInitRunner implements ApplicationRunner {
         C_MAP.put(ParamPool.PARAM_CODE_PAGE_SIZE, this::fillDefaultPageSize);
     }
 
+    /**
+     * 初始化feign秘钥
+     */
+    private void initFeignSecret() {
+        LOGGER.debug("初始化feign秘钥");
+        String key = StringUtil.redisKeyJoin(RedisPool.BASE_REDIS_KEY, AuthPool.FEIGN_HEAD);
+        String value = (String) redisService.get(key);
+        if (StringUtil.isNotBlank(value)) {
+            AppCoreContext.feignSecret = value;
+            LOGGER.debug("已读取到feign秘钥为{}", value);
+            return;
+        }
+        AppCoreContext.feignSecret = UUIDGeneratorUtil.uuid();
+        redisService.set(key, AppCoreContext.feignSecret);
+        LOGGER.debug("第一次初始化feign秘钥为{}", AppCoreContext.feignSecret);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        initFeignSecret();
         cMapInit();
         initPageProperties();
+    }
+
+    @Autowired
+    public void setRedisService(RedisService redisService) {
+        this.redisService = redisService;
     }
 }

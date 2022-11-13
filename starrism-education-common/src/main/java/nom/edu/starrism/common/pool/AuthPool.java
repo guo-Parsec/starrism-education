@@ -50,4 +50,9 @@ public interface AuthPool {
      * 默认管理员
      */
     String DEFAULT_ADMIN = "admin";
+
+    /**
+     * 服务间调用请求头
+     */
+    String FEIGN_HEAD = "feign-client";
 }

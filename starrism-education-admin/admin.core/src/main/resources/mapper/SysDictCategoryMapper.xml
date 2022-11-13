@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.admin.core.mapper.SysDictCategoryMapper">
+    <resultMap id="SysDictCategoryResultMap" type="nom.edu.starrism.core.domain.entity.SysDictCategory">
+        <!--@mbg.generated-->
+        <!--@Table sys_dict_category-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="category_code" jdbcType="VARCHAR" property="categoryCode"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+    </resultMap>
+
+    <sql id="sys_dict_category_all_columns">
+        <!--@sql select -->
+        sdc.id,
+        sdc.category_code,
+        sdc.category_name,
+        sdc.sort,
+        sdc.data_status,
+        sdc.gmt_create,
+        sdc.gmt_modify
+        <!--@sql from sys_dict_category sdc -->
+    </sql>
+
+    <insert id="addDictCategory" parameterType="nom.edu.starrism.core.domain.entity.SysDictCategory">
+        insert into sys_dict_category (id, category_code, category_name,
+                                       sort, data_status, gmt_create,
+                                       gmt_modify)
+        values (#{id,jdbcType=BIGINT}, #{categoryCode,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR},
+                #{sort,jdbcType=INTEGER}, #{dataStatus,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
+                #{gmtModify,jdbcType=TIMESTAMP})
+    </insert>
+</mapper>

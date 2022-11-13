@@ -28,7 +28,7 @@ public interface SysDictDetailRepository extends CoreMapper<SysDictDetail> {
     List<SysDictDetail> findByCategoryId(@Param("sysDictCategoryId") Long sysDictCategoryId);
 
     /**
-     * <p>根据类别Id以及字典码查询字典详情</p>
+     * <p>根据类别Id以及字典值查询字典详情</p>
      *
      * @param sysDictCategoryId 类别id
      * @param dictValue         字典值
@@ -36,6 +36,18 @@ public interface SysDictDetailRepository extends CoreMapper<SysDictDetail> {
      * @author hedwing
      * @since 2022/10/23
      */
-    SysDictDetail findByCodes(@Param("sysDictCategoryId") Long sysDictCategoryId,
+    SysDictDetail findByCategoryCodeAndDictValue(@Param("sysDictCategoryId") Long sysDictCategoryId,
                               @Param("dictValue") String dictValue);
+
+    /**
+     * <p>根据类别Id以及字典码查询字典详情</p>
+     *
+     * @param sysDictCategoryId 类别id
+     * @param dictCode         字典码
+     * @return {@link SysDictDetail}
+     * @author hedwing
+     * @since 2022/10/23
+     */
+    SysDictDetail findByCategoryCodeAndDictCode(@Param("sysDictCategoryId") Long sysDictCategoryId,
+                                                 @Param("dictCode") String dictCode);
 }

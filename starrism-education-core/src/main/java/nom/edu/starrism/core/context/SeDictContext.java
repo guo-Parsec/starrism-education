@@ -52,7 +52,7 @@ public class SeDictContext {
         }
         ApplicationContext context = SpringBean.getApplicationContext();
         DictAccess dictAccess = context.getBean(BeanPool.DICT_ACCESS_BEAN_NAME, DictAccess.class);
-        SysDictDetailVo detailVo = dictAccess.findDictByCodes(categoryCode, dictCode);
+        SysDictDetailVo detailVo = dictAccess.findDictByCategoryCodeAndDictValue(categoryCode, dictCode);
         if (Objects.isNull(detailVo)) {
             return null;
         }

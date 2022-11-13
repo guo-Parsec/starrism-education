@@ -7,16 +7,13 @@ import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.util.StringUtil;
-import nom.edu.starrism.common.util.TextFormat;
-import nom.edu.starrism.core.annotation.CheckPermission;
+import nom.edu.starrism.core.annotation.security.CheckPermission;
+import nom.edu.starrism.core.context.AppCoreContext;
 import nom.edu.starrism.core.context.AuthContext;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
@@ -38,7 +35,7 @@ import java.util.stream.Collectors;
 public class CheckPermissionAspect {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(CheckPermissionAspect.class);
 
-    @Pointcut("@annotation(nom.edu.starrism.core.annotation.CheckPermission)")
+    @Pointcut("@annotation(nom.edu.starrism.core.annotation.security.CheckPermission)")
     public void pointCut() {
     }
 
@@ -50,6 +47,10 @@ public class CheckPermissionAspect {
         String methodName = methodSignature.getName();
         LOGGER.debug("请求[{}]方法[{}]正在校验权限", requestPath, methodName);
         Object[] args = joinPoint.getArgs();
+        if (AppCoreContext.isFeign()) {
+            LOGGER.debug("请求[{}]方法[{}]来自服务间调用，将不进行权限校验", requestPath, methodName);
+            return joinPoint.proceed(args);
+        }
         Method method = methodSignature.getMethod();
         CheckPermission checkPermission = method.getAnnotation(CheckPermission.class);
         Set<String> permissionCodes = findPermissionCodes(checkPermission);

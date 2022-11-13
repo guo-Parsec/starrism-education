@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
-import nom.edu.starrism.core.annotation.CheckPermission;
+import nom.edu.starrism.core.annotation.security.CheckPermission;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +32,7 @@ public class SysPermissionController {
 
     @ApiOperation(value = "查询用户权限：根据用户id查询权限url")
     @GetMapping(value = "/find/url/by/userId")
-    // @CheckPermission("admin:self-permission:query")
+    @CheckPermission("admin:self-permission:query")
     public SeResultCarrier<Set<String>> findPermissionUrlOfUser(@RequestParam(value = "userId") Long userId) {
         return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfUser(userId));
     }

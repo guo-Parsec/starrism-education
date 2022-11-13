@@ -10,7 +10,6 @@ import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.common.util.StringUtil;
-import nom.edu.starrism.common.util.UUIDGeneratorUtil;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.data.component.SpringBean;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -91,6 +90,11 @@ public class AuthContext {
         return true;
     }
 
+    /**
+     * 获取HttpServletRequest
+     *
+     * @return HttpServletRequest
+     */
     public static HttpServletRequest getHttpServletRequest() {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
