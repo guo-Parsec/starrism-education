@@ -11,7 +11,8 @@ import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.common.util.PathUtil;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.common.util.WebfluxServletUtil;
-import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.context.SecurityContext;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.gate.properties.IgnoreUrlProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -65,7 +66,8 @@ public class AuthCoreFilter implements GlobalFilter, Ordered {
      * @return boolean 是否放行 true 放行 false 不放行
      */
     private boolean authRelease(String requestActionUrl, String token) {
-        Set<String> releaseUrlOfUser = AuthContext.getReleaseUrlOfUser(token);
+        AuthenticatedUser certificate = SecurityContext.findCertificate(token);
+        Set<String> releaseUrlOfUser = certificate.getUrls();
         return StringUtil.matches(PathUtil.autoPopulateRequestRootPath(requestActionUrl), releaseUrlOfUser);
     }
 
@@ -82,7 +84,7 @@ public class AuthCoreFilter implements GlobalFilter, Ordered {
      * @date 2022/11/10 15:56
      */
     private Mono<Void> checkPermission(String requestActionUrl, String token, ServerHttpResponse response, ServerWebExchange exchange, GatewayFilterChain chain) {
-        if (!AuthContext.isLogin(token)) {
+        if (!SecurityContext.isCertificated(token)) {
             return WebfluxServletUtil.write(response, SeCommonResultCode.UNAUTHORIZED.getMessage(), SeCommonResultCode.UNAUTHORIZED);
         }
         if (authRelease(requestActionUrl, token)) {

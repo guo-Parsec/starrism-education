@@ -2,18 +2,14 @@ package nom.edu.starrism.core.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import nom.edu.starrism.common.exception.SeException;
-import nom.edu.starrism.common.support.CodeHelper;
-import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.entity.SysLog;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.repository.SysLogRepository;
 import nom.edu.starrism.core.service.LogService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>日志处理service</p>
@@ -63,11 +59,11 @@ public class LogServiceImpl implements LogService {
         if (result != null) {
             sysLog.setRequestResult(JSON.toJSONString(result));
         }
-        AuthenticatedUser authenticatedUser = AuthContext.getAuthenticatedUser();
+        AuthenticatedUser authenticatedUser = SecurityContext.findCertificate();
         sysLog.setOpUserId(authenticatedUser.getId());
         sysLog.setOpUserAccount(authenticatedUser.getSubject());
         if (error != null) {
-            sysLog.setErrorCode(error.getCode());
+            sysLog.setErrorCode(error.getCode() == null ? error.getBaseRestEnum().getCode() : error.getCode());
             sysLog.setErrorMessage(error.getMessage());
             sysLog.setSuccess(SysLog.FAILED);
         } else {

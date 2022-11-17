@@ -12,7 +12,7 @@ public interface AuthPool {
     String TOKEN_REQ_HEAD = "Authorization";
 
     /**
-     * 认证信息Http请求头
+     * 认证信息Http请求头 se:Authorization
      */
     String JWT_TOKEN_HEADER = StringUtil.redisKeyJoin(RedisPool.BASE_REDIS_KEY, TOKEN_REQ_HEAD);
 

@@ -1,16 +1,13 @@
 package nom.edu.starrism.core.aspect;
 
-import com.alibaba.fastjson2.JSON;
 import com.google.common.collect.Lists;
 import nom.edu.starrism.common.enums.SeCommonResultCode;
 import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.support.CodeHelper;
+import nom.edu.starrism.common.support.SeResultCarrier;
 import nom.edu.starrism.core.annotation.log.LogWrite;
-import nom.edu.starrism.core.context.AuthContext;
-import nom.edu.starrism.core.domain.entity.SysLog;
-import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.service.LogService;
 import nom.edu.starrism.data.type.RequestType;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -48,10 +45,12 @@ public class LogWriteAspect {
             result = joinPoint.proceed();
         } catch (SeException exception) {
             error = exception;
+            result = SeResultCarrier.failed(error.getBaseRestEnum(), error.getMessage());
         } catch (Throwable exception) {
             error = new SeException(SeCommonResultCode.FAILED, exception.getMessage());
+            result = SeResultCarrier.failed(error.getBaseRestEnum(), error.getMessage());
         }
-        String url = request.getRequestURL().toString();
+        String url = request.getRequestURI();
         long endMillis = System.currentTimeMillis();
         if (requestTypes.contains(RequestType.findRequestType(method))) {
             logService.write(url, method, endMillis - startMillis, args, result, error);

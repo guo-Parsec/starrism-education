@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.core.annotation.log.LogWrite;
 import nom.edu.starrism.core.annotation.security.CheckPermission;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

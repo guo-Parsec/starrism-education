@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * <p>redis操作服务类</p>
@@ -31,6 +32,20 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Set<String> keys(String pattern) {
         return redisTemplate.keys(pattern);
+    }
+
+    /**
+     * <p>根据匹配符获取所有value</p>
+     *
+     * @param pattern 匹配符
+     * @return java.util.List<java.lang.Object>
+     * @author guocq
+     * @date 2022/11/17 15:46
+     */
+    @Override
+    public List<Object> getByPattern(String pattern) {
+        Set<String> keys = keys(pattern);
+        return keys.stream().map(this::get).collect(Collectors.toList());
     }
 
     @Override

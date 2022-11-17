@@ -3,7 +3,7 @@ package nom.edu.starrism.auth.core.service.impl;
 import nom.edu.starrism.auth.core.service.LogoutService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.context.SecurityContext;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,7 +27,7 @@ public class LogoutServiceImpl implements LogoutService {
     @Override
     public boolean logout(Long id) {
         try {
-            AuthContext.logout(id);
+            SecurityContext.kickOut(id);
         } catch (Exception e) {
             LOGGER.error("登出系统失败", e);
             return false;
@@ -45,7 +45,7 @@ public class LogoutServiceImpl implements LogoutService {
     @Override
     public boolean logout() {
         try {
-            AuthContext.logout();
+            SecurityContext.logout();
         } catch (Exception e) {
             LOGGER.error("登出系统失败", e);
             return false;

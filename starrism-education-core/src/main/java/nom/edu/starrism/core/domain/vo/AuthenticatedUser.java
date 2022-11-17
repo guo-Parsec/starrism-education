@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import nom.edu.starrism.core.pool.SecurityPool;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
 import java.io.Serializable;
@@ -33,11 +34,28 @@ public class AuthenticatedUser extends AbstractVo {
     @ApiModelProperty(value = "用户所拥有的权限")
     private Set<String> permissions;
 
+    @ApiModelProperty(value = "用户所拥有的请求路径")
+    private Set<String> urls;
+
     @ApiModelProperty(value = "令牌名称")
     private String tokenName;
 
     @ApiModelProperty(value = "令牌内容")
+    @Deprecated
     private String tokenContent;
+
+    @ApiModelProperty(value = "令牌id")
+    private String tokenId;
+
+    public AuthenticatedUser() {
+    }
+
+    public AuthenticatedUser(SeUser userEntity) {
+        this.id = userEntity.getId();
+        this.subject = userEntity.getAccount();
+        this.userEntity = userEntity;
+        this.tokenName = SecurityPool.AUTHORIZATION;
+    }
 
     /**
      * <p>判断是否为空</p>

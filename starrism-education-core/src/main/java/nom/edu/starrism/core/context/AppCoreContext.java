@@ -3,6 +3,7 @@ package nom.edu.starrism.core.context;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
+import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.common.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class AppCoreContext {
      * @return boolean
      */
     public static boolean isFeign() {
-        HttpServletRequest request = AuthContext.getHttpServletRequest();
+        HttpServletRequest request = CodeHelper.getHttpServletRequest();
         String feignHead = request.getHeader(AuthPool.FEIGN_HEAD);
         if (StringUtil.isNotBlank(feignHead) && feignSecret.equals(feignHead)) {
             LOGGER.debug("当前请求来自客户端");

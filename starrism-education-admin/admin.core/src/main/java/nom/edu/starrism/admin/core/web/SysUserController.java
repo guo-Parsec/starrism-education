@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysUserService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
-import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +48,6 @@ public class SysUserController {
     @ApiOperation(value = "当前用户是否登录成功")
     @GetMapping(value = "/login")
     public SeResultCarrier<Boolean> isLogin() {
-        return SeResultCarrier.success(AuthContext.isLogin());
+        return SeResultCarrier.success(SecurityContext.isCertificated());
     }
 }

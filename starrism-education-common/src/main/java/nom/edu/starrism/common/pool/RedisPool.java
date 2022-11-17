@@ -20,4 +20,9 @@ public interface RedisPool {
      * 根据categoryCode查询权限缓存的key
      */
     String PERMISSION_QUERY_BY_CATEGORY_CODE_KEY = "permission:categoryCode";
+
+    /**
+     * 全匹配符
+     */
+    String ALL_MATCHER = "*";
 }

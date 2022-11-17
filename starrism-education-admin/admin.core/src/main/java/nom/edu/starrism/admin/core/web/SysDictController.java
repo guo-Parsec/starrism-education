@@ -34,37 +34,42 @@ public class SysDictController {
     private SysDictDetailService dictDetailService;
 
 
-    @ApiOperation(value = "字典类别数据新增")
     @LogWrite
+    @ApiOperation(value = "字典类别数据新增")
     @PostMapping(value = "/category/create.do")
     public SeResultCarrier<SysDictCategoryVo> addSysDictCategory(@Validated @RequestBody SysDictCategoryParam param) {
         return SeResultCarrier.success(dictCategoryService.create(param));
     }
 
+    @LogWrite
     @ApiOperation(value = "字典类别数据更新")
     @PutMapping(value = "/category/put.do")
     public SeResultCarrier<SysDictCategoryVo> updateSysDictCategory(@Validated(CrudValidGroup.Update.class) @RequestBody SysDictCategoryParam param) {
         return SeResultCarrier.success(dictCategoryService.update(param));
     }
 
+    @LogWrite
     @ApiOperation(value = "字典类别数据删除")
     @DeleteMapping(value = "/category/delete.do")
     public SeResultCarrier<SysDictCategoryVo> deleteSysDictCategory(@RequestBody Long id) {
         return SeResultCarrier.success(dictCategoryService.delete(id));
     }
 
+    @LogWrite
     @ApiOperation(value = "字典详情数据新增")
     @PostMapping(value = "/detail/create.do")
     public SeResultCarrier<SysDictDetailVo> addSysDictDetail(@Validated(CrudValidGroup.Create.class) @RequestBody SysDictDetailParam param) {
         return SeResultCarrier.success(dictDetailService.create(param));
     }
 
+    @LogWrite
     @ApiOperation(value = "字典详情数据更新")
     @PutMapping(value = "/detail/put.do")
     public SeResultCarrier<SysDictDetailVo> updateSysDictDetail(@Validated(CrudValidGroup.Update.class) @RequestBody SysDictDetailParam param) {
         return SeResultCarrier.success(dictDetailService.update(param));
     }
 
+    @LogWrite
     @ApiOperation(value = "字典详情数据删除")
     @DeleteMapping(value = "/detail/delete.do")
     public SeResultCarrier<SysDictDetailVo> deleteSysDictDetail(@RequestBody Long id) {

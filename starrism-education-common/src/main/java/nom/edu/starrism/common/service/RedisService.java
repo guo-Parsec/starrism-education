@@ -23,6 +23,16 @@ public interface RedisService {
     Set<String> keys(String pattern);
 
     /**
+     * <p>根据匹配符获取所有value</p>
+     *
+     * @param pattern 匹配符
+     * @return java.util.List<java.lang.Object>
+     * @author guocq
+     * @date 2022/11/17 15:46
+     */
+    List<Object> getByPattern(String pattern);
+
+    /**
      * <p>保存属性</p>
      *
      * @param key   key

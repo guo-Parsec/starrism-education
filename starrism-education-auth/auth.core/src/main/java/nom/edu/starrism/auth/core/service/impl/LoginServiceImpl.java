@@ -9,12 +9,10 @@ import nom.edu.starrism.auth.core.exception.AuthException;
 import nom.edu.starrism.auth.core.service.LoginService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.properties.TokenProperties;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.support.SeResultCarrier;
-import nom.edu.starrism.common.util.UUIDGeneratorUtil;
-import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,35 +72,12 @@ public class LoginServiceImpl implements LoginService {
             LOGGER.error("账户{}密码验证失败", account);
             throw new AuthException(SeAuthResultCode.ACCOUNT_OR_PASSWORD_ERROR);
         }
-        AuthenticatedUser authenticatedUser = new AuthenticatedUser();
-        authenticatedUser.setId(userEntity.getId());
-        authenticatedUser.setSubject(userEntity.getAccount());
-        authenticatedUser.setUserEntity(userEntity);
-        authenticatedUser.setTokenName(AuthPool.TOKEN_REQ_HEAD);
+        AuthenticatedUser authenticatedUser = new AuthenticatedUser(userEntity);
         fillPermissions(authenticatedUser);
         fillRoles(authenticatedUser);
-        createToken(authenticatedUser);
+        fillUrls(authenticatedUser);
+        SecurityContext.login(authenticatedUser);
         return authenticatedUser;
-    }
-
-    /**
-     * <p>令牌生成</p>
-     *
-     * @param authenticatedUser 认证用户
-     * @author hedwing
-     * @since 2022/11/6
-     */
-    private void createToken(AuthenticatedUser authenticatedUser) {
-        String tokenPlainContent = UUIDGeneratorUtil.uuidRaw();
-        // 设置返回给前端的 token 内容
-        authenticatedUser.setTokenContent(AuthPool.JWT_TOKEN_PREFIX + tokenPlainContent);
-        // 根据查询到的数据生成真实的token并保存在redis中 key为返回给前端的token
-        redisService.set(AuthContext.getTokenKey(tokenPlainContent), authenticatedUser, tokenProperties.expire);
-        // 根据查询到的数据生成真实的token并保存在redis中 key为返回给前端的token
-        Long userId = authenticatedUser.getUserEntity().getId();
-        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
-        Set<String> permissionUrlsOfUser = SeResultCarrier.getSuccessData(carrier);
-        redisService.set(AuthContext.getUserUrlsKey(userId), permissionUrlsOfUser, tokenProperties.expire);
     }
 
     /**
@@ -113,7 +88,7 @@ public class LoginServiceImpl implements LoginService {
      * @since 2022/11/7
      */
     private void fillPermissions(AuthenticatedUser authenticatedUser) {
-        Long userId = authenticatedUser.getUserEntity().getId();
+        Long userId = authenticatedUser.getId();
         SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionCodeOfUser(userId);
         authenticatedUser.setPermissions(SeResultCarrier.getSuccessData(carrier));
     }
@@ -126,8 +101,21 @@ public class LoginServiceImpl implements LoginService {
      * @since 2022/11/7
      */
     private void fillRoles(AuthenticatedUser authenticatedUser) {
-        Long userId = authenticatedUser.getUserEntity().getId();
+        Long userId = authenticatedUser.getId();
         SeResultCarrier<Set<String>> carrier = sysRoleClient.findRoleCodesOfUser(userId);
         authenticatedUser.setRoles(SeResultCarrier.getSuccessData(carrier));
+    }
+
+    /**
+     * <p>填充urls信息</p>
+     *
+     * @param authenticatedUser 认证用户
+     * @author guocq
+     * @date 2022/11/17 14:42
+     */
+    private void fillUrls(AuthenticatedUser authenticatedUser) {
+        Long userId = authenticatedUser.getId();
+        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
+        authenticatedUser.setUrls(SeResultCarrier.getSuccessData(carrier));
     }
 }

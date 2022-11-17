@@ -18,6 +18,10 @@ import java.util.regex.Pattern;
 public class TextHelper {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(TextHelper.class);
     /**
+     * 非携带变量填充占位符
+     */
+    public static final String EMPTY_VAR_PLACEHOLDER = "{}";
+    /**
      * 非携带变量填充正则模板 e.g. "this is a {} {name}" 将填充 "{}"并且忽略"{name}"
      */
     private static final String TEMPLATE_EMPTY_VAR_REGEX = "\\{\\}";

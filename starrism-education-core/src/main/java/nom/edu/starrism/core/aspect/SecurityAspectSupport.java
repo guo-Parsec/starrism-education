@@ -6,12 +6,13 @@ import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
+import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.core.annotation.security.CheckLogin;
 import nom.edu.starrism.core.annotation.security.CheckPermission;
 import nom.edu.starrism.core.annotation.security.CheckRole;
 import nom.edu.starrism.core.context.AppCoreContext;
-import nom.edu.starrism.core.context.AuthContext;
+import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,7 +47,7 @@ public class SecurityAspectSupport {
      */
     @Around(value = "@annotation(checkLogin)", argNames = "joinPoint,checkLogin")
     public Object checkLoginAround(ProceedingJoinPoint joinPoint, CheckLogin checkLogin) throws Throwable {
-        HttpServletRequest request = AuthContext.getHttpServletRequest();
+        HttpServletRequest request = CodeHelper.getHttpServletRequest();
         String requestPath = request.getRequestURI();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodName = methodSignature.getName();
@@ -56,7 +57,7 @@ public class SecurityAspectSupport {
             LOGGER.debug("请求[{}]方法[{}]来自服务间调用，将不进行权限校验", requestPath, methodName);
             return joinPoint.proceed(args);
         }
-        if (checkLogin != null) {
+        if (SecurityContext.isCertificated()) {
             LOGGER.debug("请求[{}]方法[{}]校验登录成功", requestPath, methodName);
             return joinPoint.proceed(args);
         }
@@ -75,7 +76,7 @@ public class SecurityAspectSupport {
      */
     @Around(value = "@annotation(checkPermission)", argNames = "joinPoint,checkPermission")
     public Object checkPermissionAround(ProceedingJoinPoint joinPoint, CheckPermission checkPermission) throws Throwable {
-        HttpServletRequest request = AuthContext.getHttpServletRequest();
+        HttpServletRequest request = CodeHelper.getHttpServletRequest();
         String requestPath = request.getRequestURI();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodName = methodSignature.getName();
@@ -90,7 +91,7 @@ public class SecurityAspectSupport {
             LOGGER.debug("方法[{}]校验权限{}成功", methodName, AuthPool.DEFAULT_ALL_PERMISSION);
             return joinPoint.proceed(args);
         }
-        AuthenticatedUser authenticatedUser = AuthContext.getAuthenticatedUser();
+        AuthenticatedUser authenticatedUser = SecurityContext.findCertificate();
         Set<String> permissions = authenticatedUser.getPermissions();
         if (StringUtil.matches(permissions, permissionCodes)) {
             LOGGER.debug("请求[{}]方法[{}]校验权限{}成功", requestPath, methodName, permissionCodes);
@@ -111,7 +112,7 @@ public class SecurityAspectSupport {
      */
     @Around(value = "@annotation(checkRole)", argNames = "joinPoint,checkRole")
     public Object doCheckRoleAround(ProceedingJoinPoint joinPoint, CheckRole checkRole) throws Throwable {
-        HttpServletRequest request = AuthContext.getHttpServletRequest();
+        HttpServletRequest request = CodeHelper.getHttpServletRequest();
         String requestPath = request.getRequestURI();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String methodName = methodSignature.getName();
@@ -126,7 +127,7 @@ public class SecurityAspectSupport {
             LOGGER.debug("方法[{}]校验角色{}成功", methodName, AuthPool.DEFAULT_ALL_PERMISSION);
             return joinPoint.proceed(args);
         }
-        AuthenticatedUser authenticatedUser = AuthContext.getAuthenticatedUser();
+        AuthenticatedUser authenticatedUser = SecurityContext.findCertificate();
         Set<String> roles = authenticatedUser.getRoles();
         if (StringUtil.matches(roles, roleCodes)) {
             LOGGER.debug("请求[{}]方法[{}]校验角色{}成功", requestPath, methodName, roleCodes);
