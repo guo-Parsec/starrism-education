@@ -1,0 +1,79 @@
+package nom.edu.starrism.common.support;
+
+import nom.edu.starrism.common.enums.SeCommonResultCode;
+import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.logger.SeLogger;
+
+/**
+ * <p>代码辅助类</p>
+ *
+ * @author guocq
+ * @since 2022/11/17
+ **/
+public class CodeHelper {
+    /**
+     * <p>错误信息抛出</p>
+     *
+     * @param logger  日志
+     * @param message 错误信息提示
+     * @param arg     参数
+     * @author guocq
+     * @date 2022/11/17 10:13
+     */
+    public static void throwError(final SeLogger logger, SeCommonResultCode code, String message, Object arg) {
+        logger.error(message, arg);
+        throw new SeException(code, TextHelper.build().format(message, arg));
+    }
+
+    /**
+     * <p>错误信息抛出</p>
+     *
+     * @param logger  日志
+     * @param message 错误信息提示
+     * @param arg     参数
+     * @author guocq
+     * @date 2022/11/17 10:13
+     */
+    public static void throwError(final SeLogger logger, SeCommonResultCode code, String message, Object... arg) {
+        logger.error(message, arg);
+        throw new SeException(code, TextHelper.build().format(message, arg));
+    }
+
+    /**
+     * <p>错误信息抛出 使用默认错误码</p>
+     *
+     * @param logger  日志
+     * @param message 错误信息提示
+     * @param arg     参数
+     * @author guocq
+     * @date 2022/11/17 10:23
+     */
+    public static void throwError(final SeLogger logger, String message, Object... arg) {
+        throwError(logger, SeCommonResultCode.FAILED, message, arg);
+    }
+
+    /**
+     * <p>错误信息抛出 使用默认错误信息</p>
+     *
+     * @param logger 日志
+     * @param code   错误码
+     * @param arg    参数
+     * @author guocq
+     * @date 2022/11/17 10:24
+     */
+    public static void throwError(final SeLogger logger, SeCommonResultCode code, Object... arg) {
+        throwError(logger, code, code.getMessage(), arg);
+    }
+
+    /**
+     * <p>错误信息抛出 使用默认错误信息</p>
+     *
+     * @param logger 日志
+     * @param arg    参数
+     * @author guocq
+     * @date 2022/11/17 10:24
+     */
+    public static void throwError(final SeLogger logger, Object... arg) {
+        throwError(logger, SeCommonResultCode.FAILED, arg);
+    }
+}

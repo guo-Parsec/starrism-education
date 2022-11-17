@@ -6,10 +6,9 @@ import nom.edu.starrism.admin.core.domain.param.SysDictDetailParam;
 import nom.edu.starrism.admin.core.mapper.SysDictDetailMapper;
 import nom.edu.starrism.admin.core.service.SysDictDetailService;
 import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.util.TextFormat;
+import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.core.access.DictAccess;
 import nom.edu.starrism.core.annotation.cache.CacheClear;
 import nom.edu.starrism.core.annotation.cache.CacheGroup;
@@ -21,9 +20,6 @@ import nom.edu.starrism.core.pool.CacheNamesPool;
 import nom.edu.starrism.core.repository.SysDictCategoryRepository;
 import nom.edu.starrism.core.service.AbstractCoreService;
 import nom.edu.starrism.core.util.PageUtil;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -162,8 +158,8 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
     private SysDictDetailVo checkDictIdExist(Long id) {
         SysDictDetailVo detail = dictAccess.findDetail(id);
         if (Objects.isNull(detail)) {
-            LOGGER.error("不存在id为{}的字典", id);
-            throw new SeException(SeCommonResultCode.DATA_NOT_EXIST, String.format("不存在id为%s的字典", id));
+            String errorMessage = "不存在id为{}的字典";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_NOT_EXIST, errorMessage, id);
         }
         return detail;
     }
@@ -178,8 +174,8 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
     private SysDictCategory checkCategoryCodeExist(String categoryCode) {
         SysDictCategory category = categoryRepository.findByCode(categoryCode);
         if (SysDictCategory.isEmpty(category)) {
-            LOGGER.error("不存在分类码为{}的字典", categoryCode);
-            throw new SeException(SeCommonResultCode.DATA_NOT_EXIST, TextFormat.format("不存在分类码为{categoryCode}的字典", categoryCode));
+            String errorMessage = "不存在分类码为{}的字典";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_NOT_EXIST, errorMessage, categoryCode);
         }
         return category;
     }
@@ -195,8 +191,8 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
     private void checkDictCodeExist(String categoryCode, String dictCode) {
         SysDictDetailVo dict = dictAccess.findDictByCategoryCodeAndDictCode(categoryCode, dictCode);
         if (SysDictDetailVo.isNotEmpty(dict)) {
-            LOGGER.error("[categoryCode={},dictCode={}]已维护", categoryCode, dictCode);
-            throw new SeException(SeCommonResultCode.DATA_EXIST, String.format("[categoryCode=%s,dictCode=%s]已维护", categoryCode, dictCode));
+            String errorMessage = "[categoryCode={},dictCode={}]已维护";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_EXIST, errorMessage, categoryCode, dictCode);
         }
     }
 
@@ -211,8 +207,8 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
     private void checkDictCodeNotExist(String categoryCode, String dictCode) {
         SysDictDetailVo dict = dictAccess.findDictByCategoryCodeAndDictCode(categoryCode, dictCode);
         if (SysDictDetailVo.isEmpty(dict)) {
-            LOGGER.error("[categoryCode={},dictCode={}]不存在", categoryCode, dictCode);
-            throw new SeException(SeCommonResultCode.DATA_NOT_EXIST, String.format("[categoryCode=%s,dictCode=%s]不存在", categoryCode, dictCode));
+            String errorMessage = "[categoryCode={},dictCode={}]不存在";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_NOT_EXIST, errorMessage, categoryCode, dictCode);
         }
     }
 
@@ -227,8 +223,8 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
     private void checkDictValueExist(String categoryCode, String dictValue, String dictCode) {
         SysDictDetailVo dict = dictAccess.findDictByCategoryCodeAndDictValue(categoryCode, dictValue);
         if (SysDictDetailVo.isNotEmpty(dict) && !dict.getDictCode().equals(dictCode)) {
-            LOGGER.error("[categoryCode={},dictValue={}]已维护", categoryCode, dictValue);
-            throw new SeException(SeCommonResultCode.DATA_EXIST, String.format("[categoryCode=%s,dictValue=%s]已维护", categoryCode, dictValue));
+            String errorMessage = "[categoryCode={},dictValue={}]已维护";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_EXIST, errorMessage, categoryCode, dictValue);
         }
     }
 }

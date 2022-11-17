@@ -5,10 +5,9 @@ import nom.edu.starrism.admin.core.mapper.SysDictCategoryMapper;
 import nom.edu.starrism.admin.core.mapper.SysDictDetailMapper;
 import nom.edu.starrism.admin.core.service.SysDictCategoryService;
 import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.util.TextFormat;
+import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.core.access.DictAccess;
 import nom.edu.starrism.core.annotation.cache.CacheClear;
 import nom.edu.starrism.core.annotation.cache.CacheGroup;
@@ -105,8 +104,8 @@ public class SysDictCategoryServiceImpl extends AbstractCoreService<SysDictCateg
     public SysDictCategoryVo delete(Long id) {
         SysDictCategoryVo category = dictAccess.findCategory(id);
         if (category == null) {
-            LOGGER.error("id为{}的字典类别不存在", id);
-            throw new SeException(SeCommonResultCode.DATA_NOT_EXIST);
+            String errorMessage = "id为{}的字典类别不存在";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_EXIST, errorMessage, id);
         }
         sysDictCategoryMapper.delete(id);
         sysDictDetailMapper.deleteByCategoryId(id);
@@ -124,8 +123,8 @@ public class SysDictCategoryServiceImpl extends AbstractCoreService<SysDictCateg
     private void checkCategoryIsExist(String categoryCode, boolean emptyError) {
         SysDictCategoryVo category = dictAccess.findCategoryByCategoryCode(categoryCode);
         if (SysDictCategory.isNotEmpty(category) && !emptyError) {
-            LOGGER.error("分类码为{}的字典类别已存在", categoryCode);
-            throw new SeException(SeCommonResultCode.DATA_EXIST, TextFormat.format("分类码为{categoryCode}的字典类别已存在", categoryCode));
+            String errorMessage = "分类码为{}的字典类别已存在";
+            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_EXIST, errorMessage, categoryCode);
         }
     }
 }
