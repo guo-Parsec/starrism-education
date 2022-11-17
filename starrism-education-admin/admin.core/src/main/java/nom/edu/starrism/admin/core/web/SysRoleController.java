@@ -8,7 +8,6 @@ import nom.edu.starrism.admin.api.domain.vo.SysRoleVo;
 import nom.edu.starrism.admin.core.service.SysRoleService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
-import nom.edu.starrism.data.domain.vo.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

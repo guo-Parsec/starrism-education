@@ -16,6 +16,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -187,7 +188,7 @@ public class AuthContext {
      * @return token 存储的redis key
      */
     public static String getTokenKey(String tokenContent) {
-        return StringUtil.redisKeyJoin(AuthPool.TOKEN_REDIS_KEY, tokenContent);
+        return StringUtil.redisKeyJoin(AuthPool.TOKEN_REDIS_KEY.toLowerCase(Locale.ROOT), tokenContent);
     }
 
     /**
@@ -197,7 +198,7 @@ public class AuthContext {
      * @return 用户权限url 存储的redis key
      */
     public static String getUserUrlsKey(Long userId) {
-        return StringUtil.redisKeyJoin(AuthPool.JWT_TOKEN_HEADER, userId);
+        return StringUtil.redisKeyJoin(AuthPool.JWT_TOKEN_HEADER.toLowerCase(Locale.ROOT), userId);
     }
 
 }

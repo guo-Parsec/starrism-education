@@ -25,7 +25,7 @@ spring:
     type: redis
     redis:
       use-key-prefix: true
-      key-prefix: "starrism:edu:"
+      key-prefix: "se:"
       time-to-live: 60000 # ms
       cache-null-values: false
     cache-names: starrism

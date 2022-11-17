@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class PageHelperAspect {
-    private static final SeLogger LOGGER = SeLoggerFactory.getLogger(CheckLoginAspect.class);
+    private static final SeLogger LOGGER = SeLoggerFactory.getLogger(PageHelperAspect.class);
 
     @Pointcut("@annotation(nom.edu.starrism.core.annotation.crud.PageQuery)")
     public void pointCut() {

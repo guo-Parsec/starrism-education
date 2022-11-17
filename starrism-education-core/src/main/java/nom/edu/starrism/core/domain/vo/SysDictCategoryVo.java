@@ -18,6 +18,13 @@ import nom.edu.starrism.data.domain.vo.AbstractVo;
 public class SysDictCategoryVo extends AbstractVo {
     private static final long serialVersionUID = -7201667741565247332L;
 
+    public SysDictCategoryVo() {
+    }
+
+    public SysDictCategoryVo(Long id) {
+        this.id = id;
+    }
+
     /**
      * 类别码
      */

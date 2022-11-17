@@ -1,5 +1,6 @@
 package nom.edu.starrism.common.service.impl;
 
+import com.google.common.collect.Lists;
 import nom.edu.starrism.common.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -18,6 +19,19 @@ import java.util.concurrent.TimeUnit;
 public class RedisServiceImpl implements RedisService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    /**
+     * <p>获取全部key</p>
+     *
+     * @param pattern pattern
+     * @return java.util.Set<java.lang.String>
+     * @author guocq
+     * @date 2022/11/16 17:03
+     */
+    @Override
+    public Set<String> keys(String pattern) {
+        return redisTemplate.keys(pattern);
+    }
 
     @Override
     public void set(String key, Object value, long time) {
@@ -70,6 +84,19 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Long del(List<String> keys) {
         return redisTemplate.delete(keys);
+    }
+
+    /**
+     * <p>根据匹配条件删除所有键</p>
+     *
+     * @param pattern pattern
+     * @return java.lang.Long
+     * @author guocq
+     * @date 2022/11/16 17:05
+     */
+    @Override
+    public Long delByPattern(String pattern) {
+        return del(Lists.newArrayList(keys(pattern)));
     }
 
     @Override

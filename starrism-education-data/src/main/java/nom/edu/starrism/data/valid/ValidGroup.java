@@ -1,4 +1,4 @@
-package nom.edu.starrism.core.valid;
+package nom.edu.starrism.data.valid;
 
 import javax.validation.groups.Default;
 

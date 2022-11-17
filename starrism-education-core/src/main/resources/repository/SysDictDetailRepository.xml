@@ -15,6 +15,15 @@
         <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
         <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+        <association property="category" javaType="nom.edu.starrism.core.domain.entity.SysDictCategory">
+            <id column="sdc_id" jdbcType="BIGINT" property="id"/>
+            <result column="sdc_category_code" jdbcType="VARCHAR" property="categoryCode"/>
+            <result column="sdc_category_name" jdbcType="VARCHAR" property="categoryName"/>
+            <result column="sdc_sort" jdbcType="INTEGER" property="sort"/>
+            <result column="sdc_data_status" jdbcType="INTEGER" property="dataStatus"/>
+            <result column="sdc_gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+            <result column="sdc_gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+        </association>
     </resultMap>
 
     <sql id="sys_dict_detail_all_column">
@@ -31,6 +40,29 @@
         sdd.gmt_modify
         <!--@sql from sys_dict_detail sdd-->
     </sql>
+
+    <sql id="sys_dict_category_all_columns">
+        <!--@sql select -->
+        sdc.id as sdc_id,
+        sdc.category_code as sdc_category_code,
+        sdc.category_name as sdc_category_name,
+        sdc.sort as sdc_sort,
+        sdc.data_status as sdc_data_status,
+        sdc.gmt_create as sdc_gmt_create,
+        sdc.gmt_modify as sdc_gmt_modify
+        <!--@sql from sys_dict_category sdc -->
+    </sql>
+
+    <select id="find" parameterType="long" resultMap="SysDictDetailResultMap">
+        select
+        <include refid="sys_dict_detail_all_column"/>,
+        <include refid="sys_dict_category_all_columns"/>
+        from sys_dict_detail sdd
+                 left join sys_dict_category sdc on sdd.sys_dict_category_id = sdc.id
+        where sdd.id = #{id,jdbcType=BIGINT}
+          and sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        limit 1
+    </select>
 
     <!-- 根据类别Id查询字典详情 -->
     <select id="findByCategoryId" parameterType="long" resultMap="SysDictDetailResultMap">
@@ -60,7 +92,7 @@
         <include refid="sys_dict_detail_all_column"/>
         from sys_dict_detail sdd
         where sdd.sys_dict_category_id = #{sysDictCategoryId,jdbcType=BIGINT}
-          and sdd.dict_value = #{dictCode,jdbcType=VARCHAR}
+          and sdd.dict_code = #{dictCode,jdbcType=VARCHAR}
           and sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
         order by sdd.sort
         limit 1;

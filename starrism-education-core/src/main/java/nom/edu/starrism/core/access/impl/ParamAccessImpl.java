@@ -79,4 +79,22 @@ public class ParamAccessImpl implements ParamAccess {
     public List<SysParamVo> findByGroupCode(String groupCode) {
         return this.findByGroupCode(groupCode, null);
     }
+
+    /**
+     * <p>根据主键id查询</p>
+     *
+     * @param id id
+     * @return {@link SysParamVo}
+     * @author guocq
+     * @date 2022/11/15 17:47
+     */
+    @Override
+    public SysParamVo find(Long id) {
+        SysParam sysParam = sysParamRepository.find(id);
+        if (SysParam.isEmpty(sysParam)) {
+            LOGGER.debug("根据[id={}]未查询系统参数", id);
+            return null;
+        }
+        return sysParam.toVo();
+    }
 }

@@ -1,4 +1,4 @@
-package nom.edu.starrism.core.valid;
+package nom.edu.starrism.data.valid;
 
 /**
  * <p>增删改查校验组</p>
@@ -15,6 +15,8 @@ public interface CrudValidGroup extends ValidGroup {
 
     interface Query extends CrudValidGroup {
     }
+
+    interface PageQuery extends CrudValidGroup {}
 
     interface Delete extends CrudValidGroup {
     }

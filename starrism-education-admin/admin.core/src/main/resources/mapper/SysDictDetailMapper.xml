@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.admin.core.mapper.SysDictDetailMapper">
+    <resultMap id="SysDictDetailResultMap" type="nom.edu.starrism.core.domain.entity.SysDictDetail">
+        <!--@mbg.generated-->
+        <!--@Table sys_dict_detail-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="sys_dict_category_id" jdbcType="BIGINT" property="sysDictCategoryId"/>
+        <result column="dict_code" jdbcType="VARCHAR" property="dictCode"/>
+        <result column="dict_value" jdbcType="VARCHAR" property="dictValue"/>
+        <result column="dict_name" jdbcType="VARCHAR" property="dictName"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+        <association property="category" javaType="nom.edu.starrism.core.domain.entity.SysDictCategory">
+            <id column="sdc_id" jdbcType="BIGINT" property="id"/>
+            <result column="sdc_category_code" jdbcType="VARCHAR" property="categoryCode"/>
+            <result column="sdc_category_name" jdbcType="VARCHAR" property="categoryName"/>
+            <result column="sdc_sort" jdbcType="INTEGER" property="sort"/>
+            <result column="sdc_data_status" jdbcType="INTEGER" property="dataStatus"/>
+            <result column="sdc_gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+            <result column="sdc_gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+        </association>
+    </resultMap>
+
+    <sql id="sys_dict_detail_all_column">
+        <!--@sql select -->
+        sdd.id,
+        sdd.sys_dict_category_id,
+        sdd.dict_code,
+        sdd.dict_value,
+        sdd.dict_name,
+        sdd.sort,
+        sdd.parent_id,
+        sdd.data_status,
+        sdd.gmt_create,
+        sdd.gmt_modify
+        <!--@sql from sys_dict_detail sdd-->
+    </sql>
+
+    <sql id="sys_dict_category_all_columns">
+        <!--@sql select -->
+        sdc.id            as sdc_id,
+        sdc.category_code as sdc_category_code,
+        sdc.category_name as sdc_category_name,
+        sdc.sort          as sdc_sort,
+        sdc.data_status   as sdc_data_status,
+        sdc.gmt_create    as sdc_gmt_create,
+        sdc.gmt_modify    as sdc_gmt_modify
+        <!--@sql from sys_dict_category sdc -->
+    </sql>
+
+    <select id="paginationQuery" resultMap="SysDictDetailResultMap">
+        select
+        <include refid="sys_dict_detail_all_column"/>
+        from sys_dict_detail sdd
+        where sdd.sys_dict_category_id = #{queryParam.dictCategoryId,jdbcType=BIGINT}
+          and sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        <if test="queryParam.dictCode != null and queryParam.dictCode != ''">
+            and sdd.dict_code = #{queryParam.dictCode,jdbcType=VARCHAR}
+        </if>
+        <if test="queryParam.dictName != null and queryParam.dictName != ''">
+            and sdd.dict_name like concat('%', #{queryParam.dictName,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="queryParam.parentId != null">
+            and sdd.parent_id = #{queryParam.parentId,jdbcType=BIGINT}
+        </if>
+        order by sdd.sort
+    </select>
+
+    <select id="listQuery" resultMap="SysDictDetailResultMap">
+        select
+        <include refid="sys_dict_detail_all_column"/>,
+        <include refid="sys_dict_category_all_columns"/>
+        from sys_dict_detail sdd
+                 left join sys_dict_category sdc on sdc.id = sdd.sys_dict_category_id
+        where sdd.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+          and sdc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        <if test="queryParam.dictCode != null and queryParam.dictCode != ''">
+            and sdd.dict_code = #{queryParam.dictCode,jdbcType=VARCHAR}
+        </if>
+        <if test="queryParam.dictName != null and queryParam.dictName != ''">
+            and sdd.dict_name like concat('%', #{queryParam.dictName,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="queryParam.categoryCode != null and queryParam.categoryCode != ''">
+            and sdc.category_code = #{queryParam.categoryCode,jdbcType=VARCHAR}
+        </if>
+        <if test="queryParam.categoryName != null and queryParam.categoryName != ''">
+            and sdc.category_name = concat('%', #{queryParam.categoryName,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="queryParam.parentId != null">
+            and sdd.parent_id = #{queryParam.parentId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <update id="deleteByCategoryId" parameterType="long">
+        update sys_dict_detail
+        set data_status = '${@nom.edu.starrism.data.pool.DataPool@DELETE}'
+        where sys_dict_category_id = #{categoryId,jdbcType=BIGINT};
+    </update>
+
+    <update id="update">
+        update sys_dict_detail
+        <set>
+            <if test="dictCode != null and dictCode != ''">
+                dict_code = #{dictCode,jdbcType=VARCHAR},
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                dict_value = #{dictValue,jdbcType=VARCHAR},
+            </if>
+            <if test="dictName != null and dictName != ''">
+                dict_name = #{dictName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="dataStatus != null">
+                data_status = #{dataStatus,jdbcType=INTEGER},
+            </if>
+            <if test="gmtModify != null">
+                gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="delete" parameterType="long">
+        update sys_dict_detail
+        set data_status = '${@nom.edu.starrism.data.pool.DataPool@DELETE}'
+        where id = #{id,jdbcType=BIGINT};
+    </update>
+</mapper>

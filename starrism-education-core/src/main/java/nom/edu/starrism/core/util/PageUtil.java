@@ -1,13 +1,11 @@
 package nom.edu.starrism.core.util;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
 import nom.edu.starrism.data.domain.vo.AbstractDataVo;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>分页工具类</p>
@@ -22,7 +20,7 @@ public class PageUtil {
      * @param data      vo数据 list
      * @param ePageInfo 原始分页
      */
-    public static <V extends AbstractDataVo, E extends AbstractDataEntity> PageInfo<V> toVoPage(List<V> data, PageInfo<E> ePageInfo) {
+    public static <V extends AbstractVo, E extends AbstractDataEntity> PageInfo<V> toVoPage(List<V> data, PageInfo<E> ePageInfo) {
         PageInfo<V> pageInfo = PageInfo.emptyPageInfo();
         pageInfo.setPages(ePageInfo.getPages());
         pageInfo.setList(data);

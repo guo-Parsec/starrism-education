@@ -26,6 +26,14 @@
         <!--@sql from sys_param param -->
     </sql>
 
+    <select id="find" parameterType="long" resultMap="SysParamResultMap">
+        select
+        <include refid="sys_param_all_columns"/>
+        from sys_param param
+        where param.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        and param.id = #{id,jdbcType=BIGINT} limit 1;
+    </select>
+
     <!-- 根据参数码获取参数信息 -->
     <select id="findByParamCode" parameterType="string" resultMap="SysParamResultMap">
         select

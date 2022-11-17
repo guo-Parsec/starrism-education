@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
+import nom.edu.starrism.common.support.ChainHelper;
+import nom.edu.starrism.core.domain.vo.SysDictCategoryVo;
 import nom.edu.starrism.core.domain.vo.SysDictDetailVo;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
 
@@ -11,7 +13,7 @@ import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
  * <p>系统字典详情表</p>
  *
  * @author hedwing
- * @since  2022/10/22
+ * @since 2022/10/22
  **/
 @Getter
 @Setter
@@ -22,6 +24,9 @@ public class SysDictDetail extends AbstractDataEntity {
      * 字典类别表主键
      */
     private Long sysDictCategoryId;
+
+    @TableField(exist = false)
+    private SysDictCategory category;
 
     /**
      * 字典码
@@ -65,6 +70,9 @@ public class SysDictDetail extends AbstractDataEntity {
         vo.setDictName(this.dictName);
         vo.setSort(this.sort);
         vo.setParentId(this.parentId);
+        ChainHelper.condition(SysDictDetail.isNotEmpty(category))
+                .success(() -> vo.setCategoryVo(category.toVo()))
+                .fail(() -> vo.setCategoryVo(new SysDictCategoryVo(this.sysDictCategoryId)));
         return vo;
     }
 

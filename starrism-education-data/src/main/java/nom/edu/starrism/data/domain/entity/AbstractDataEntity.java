@@ -2,9 +2,11 @@ package nom.edu.starrism.data.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Getter;
 import lombok.Setter;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
+import nom.edu.starrism.data.pool.DataPool;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

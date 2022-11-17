@@ -26,12 +26,31 @@
         <!--@sql from sys_dict_category sdc -->
     </sql>
 
-    <insert id="addDictCategory" parameterType="nom.edu.starrism.core.domain.entity.SysDictCategory">
-        insert into sys_dict_category (id, category_code, category_name,
-                                       sort, data_status, gmt_create,
-                                       gmt_modify)
-        values (#{id,jdbcType=BIGINT}, #{categoryCode,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR},
-                #{sort,jdbcType=INTEGER}, #{dataStatus,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP},
-                #{gmtModify,jdbcType=TIMESTAMP})
-    </insert>
+    <update id="update">
+        update sys_dict_category
+        <set>
+            <if test="categoryCode != null and categoryCode != ''">
+                category_code = #{categoryCode,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryName != null and categoryName != ''">
+                category_name = #{categoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="dataStatus != null">
+                data_status = #{dataStatus,jdbcType=INTEGER},
+            </if>
+            <if test="gmtModify != null">
+                gmt_modify = #{gmtModify,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="delete" parameterType="long">
+        update sys_dict_category
+        set data_status = '${@nom.edu.starrism.data.pool.DataPool@DELETE}'
+        where id = #{id,jdbcType=BIGINT};
+    </update>
 </mapper>

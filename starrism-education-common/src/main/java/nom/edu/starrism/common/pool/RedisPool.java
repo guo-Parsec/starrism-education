@@ -14,7 +14,7 @@ public interface RedisPool {
     /**
      * redis key统一前缀
      */
-    String BASE_REDIS_KEY = "starrism:edu";
+    String BASE_REDIS_KEY = "se";
 
     /**
      * 根据categoryCode查询权限缓存的key

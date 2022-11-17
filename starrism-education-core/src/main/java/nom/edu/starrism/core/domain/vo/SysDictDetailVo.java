@@ -24,6 +24,9 @@ public class SysDictDetailVo extends AbstractVo {
     @ApiModelProperty(value = "字典类别表主键")
     private Long sysDictCategoryId;
 
+    @ApiModelProperty(value = "字典类别信息")
+    private SysDictCategoryVo categoryVo;
+
     /**
      * 字典码
      */

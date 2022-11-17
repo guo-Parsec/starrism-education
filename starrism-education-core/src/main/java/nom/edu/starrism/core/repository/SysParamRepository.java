@@ -18,6 +18,16 @@ import java.util.List;
 @Repository(value = "sysParamRepository")
 public interface SysParamRepository extends CoreMapper<SysParam> {
     /**
+     * <p>根据主键id查询参数</p>
+     *
+     * @param id 主键id
+     * @return {@link SysParam}
+     * @author guocq
+     * @date 2022/11/15 17:45
+     */
+    SysParam find(Long id);
+
+    /**
      * <p>根据参数码获取参数信息</p>
      *
      * @param paramCode {@link String}

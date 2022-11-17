@@ -41,4 +41,14 @@ public interface ParamAccess {
      * @date 2022/11/11 13:51
      */
     List<SysParamVo> findByGroupCode(String groupCode);
+
+    /**
+     * <p>根据主键id查询</p>
+     *
+     * @param id id
+     * @return {@link SysParamVo}
+     * @author guocq
+     * @date 2022/11/15 17:47
+     */
+    SysParamVo find(Long id);
 }

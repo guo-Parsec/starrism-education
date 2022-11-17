@@ -24,4 +24,14 @@ public interface SysDictCategoryRepository extends CoreMapper<SysDictCategory> {
      * @since 2022/10/23
      */
     SysDictCategory findByCode(@Param("categoryCode") String categoryCode);
+
+    /**
+     * <p>根据主键查询字典分类</p>
+     *
+     * @param id 主键
+     * @return {@link SysDictCategory}
+     * @author guocq
+     * @date 2022/11/15 17:07
+     */
+    SysDictCategory find(@Param("id") Long id);
 }

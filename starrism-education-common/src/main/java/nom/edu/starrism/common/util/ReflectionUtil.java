@@ -26,6 +26,22 @@ public class ReflectionUtil {
     private static final String GETTER_METHOD_PREFIX = "get";
 
     /**
+     * <p>获取方法上的注解</p>
+     *
+     * @param method 方法
+     * @param clazz 注解的class对象
+     * @return A
+     * @author guocq
+     * @date 2022/11/16 16:41
+     */
+    public static <A> A findMethodAnnotation(Method method, Class<? extends Annotation> clazz) {
+        if (method == null) {
+            throw new IllegalArgumentException("method cannot be null");
+        }
+        return (A) method.getAnnotation(clazz);
+    }
+
+    /**
      * <p>获取全部属性 包括父类</p>
      *
      * @param clazz 类对象
@@ -120,7 +136,7 @@ public class ReflectionUtil {
     /**
      * <p>获取指定注解下的全部属性 包括父类</p>
      *
-     * @param entity           对象
+     * @param entity          对象
      * @param annotationClass 指定注解类对象
      * @return {@link List<FieldAnnotationPair<A>>}
      * @author hedwing
@@ -132,6 +148,7 @@ public class ReflectionUtil {
 
     /**
      * 属性注解对
+     *
      * @param <A> 注解
      */
     public static class FieldAnnotationPair<A extends Annotation> {

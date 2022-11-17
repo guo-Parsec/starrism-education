@@ -17,6 +17,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.util.List;
+
 import static java.util.Collections.singletonList;
 
 /**
@@ -37,7 +39,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .enable(swaggerEnable)
-                .securitySchemes(singletonList(tokenScheme()))
+                .securitySchemes(singletonList(apiKey()))
                 .securityContexts(singletonList(tokenContext()))
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
@@ -52,14 +54,22 @@ public class SwaggerConfig {
         return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(AuthPool.TOKEN_REQ_HEAD).build();
     }
 
+    private ApiKey apiKey() {
+        return new ApiKey(AuthPool.TOKEN_REQ_HEAD, AuthPool.TOKEN_REQ_HEAD, "header");
+    }
+
     private SecurityContext tokenContext() {
         return SecurityContext.builder()
-                .securityReferences(singletonList(SecurityReference.builder()
-                        .scopes(new AuthorizationScope[0])
-                        .reference(AuthPool.JWT_TOKEN_HEADER)
-                        .build()))
+                .securityReferences(defaultAuth())
                 .operationSelector(o -> o.requestMappingPattern().matches("/.*"))
                 .build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return singletonList(new SecurityReference("Authorization", authorizationScopes));
     }
 
     private ApiInfo apiInfo() {

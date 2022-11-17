@@ -18,6 +18,16 @@ import java.util.List;
 @Repository(value = "sysDictDetailRepository")
 public interface SysDictDetailRepository extends CoreMapper<SysDictDetail> {
     /**
+     * <p>根据主键查询唯一数据</p>
+     *
+     * @param id 主键
+     * @return {@link SysDictDetail}
+     * @author guocq
+     * @date 2022/11/15 16:08
+     */
+    SysDictDetail find(@Param("id") Long id);
+
+    /**
      * <p>根据类别Id查询字典详情</p>
      *
      * @param sysDictCategoryId 类别id
@@ -37,17 +47,17 @@ public interface SysDictDetailRepository extends CoreMapper<SysDictDetail> {
      * @since 2022/10/23
      */
     SysDictDetail findByCategoryCodeAndDictValue(@Param("sysDictCategoryId") Long sysDictCategoryId,
-                              @Param("dictValue") String dictValue);
+                                                 @Param("dictValue") String dictValue);
 
     /**
      * <p>根据类别Id以及字典码查询字典详情</p>
      *
      * @param sysDictCategoryId 类别id
-     * @param dictCode         字典码
+     * @param dictCode          字典码
      * @return {@link SysDictDetail}
      * @author hedwing
      * @since 2022/10/23
      */
     SysDictDetail findByCategoryCodeAndDictCode(@Param("sysDictCategoryId") Long sysDictCategoryId,
-                                                 @Param("dictCode") String dictCode);
+                                                @Param("dictCode") String dictCode);
 }

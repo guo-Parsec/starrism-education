@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import nom.edu.starrism.common.pool.RedisPool;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.service.impl.RedisServiceImpl;
 import org.springframework.cache.annotation.EnableCaching;
@@ -72,7 +73,7 @@ public class RedisConfig {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
         //设置Redis缓存有效期为1小时
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .computePrefixWith(name -> "starrism:edu:" + name + ":")
+                .computePrefixWith(name -> RedisPool.BASE_REDIS_KEY + RedisPool.REDIS_KEY_SEPARATOR + name + RedisPool.REDIS_KEY_SEPARATOR)
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer())).entryTtl(Duration.ofHours(1));
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }

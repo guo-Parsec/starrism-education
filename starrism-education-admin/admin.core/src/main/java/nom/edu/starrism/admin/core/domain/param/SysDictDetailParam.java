@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import nom.edu.starrism.core.domain.entity.SysDictCategory;
 import nom.edu.starrism.core.domain.entity.SysDictDetail;
-import nom.edu.starrism.core.valid.CrudValidGroup;
-import nom.edu.starrism.data.domain.param.AbstractParam;
+import nom.edu.starrism.data.domain.param.AbstractPageParam;
+import nom.edu.starrism.data.valid.CrudValidGroup;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,17 +23,24 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ApiModel(value = "系统字典详情新增参数")
-public class SysDictDetailParam extends AbstractParam {
+public class SysDictDetailParam extends AbstractPageParam {
 
     private static final long serialVersionUID = 4707764530402055701L;
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "主键id", required = false)
     @NotNull(message = "id不能为空", groups = {CrudValidGroup.Update.class, CrudValidGroup.Delete.class})
     private Long id;
+
+    @ApiModelProperty(value = "字典类别主键", required = false)
+    @NotNull(message = "字典类别主键不能为空", groups = CrudValidGroup.PageQuery.class)
+    private Long dictCategoryId;
 
     @NotEmpty(message = "字典类别码不能为空", groups = {CrudValidGroup.Create.class, CrudValidGroup.Update.class, CrudValidGroup.Delete.class})
     @ApiModelProperty(value = "字典类别码")
     private String categoryCode;
+
+    @ApiModelProperty(value = "字典类别名称")
+    private String categoryName;
 
     @NotEmpty(message = "字典码不能为空", groups = {CrudValidGroup.Create.class, CrudValidGroup.Update.class, CrudValidGroup.Delete.class})
     @ApiModelProperty(value = "字典码")
@@ -55,13 +62,9 @@ public class SysDictDetailParam extends AbstractParam {
     @ApiModelProperty(value = "上级字典id")
     private Long parentId;
 
-    /**
-     * 转换为entity
-     *
-     * @return SysDictDetail
-     */
     public SysDictDetail toEntity(SysDictCategory category) {
         SysDictDetail detail = new SysDictDetail();
+        detail.setId(this.id);
         detail.setSysDictCategoryId(category.getId());
         detail.setDictCode(this.dictCode);
         detail.setDictValue(this.dictValue);

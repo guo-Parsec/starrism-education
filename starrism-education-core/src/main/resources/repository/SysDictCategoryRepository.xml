@@ -36,4 +36,13 @@
         order by sdc.sort
         limit 1;
     </select>
+
+    <select id="find" parameterType="long" resultMap="SysDictCategoryResultMap">
+        select
+        <include refid="sys_dict_category_all_columns"/>
+        from sys_dict_category sdc
+        where sdc.id = #{id,jdbcType=BIGINT}
+        and sdc.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+        limit 1
+    </select>
 </mapper>

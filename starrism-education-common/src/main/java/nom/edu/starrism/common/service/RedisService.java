@@ -11,6 +11,17 @@ import java.util.Set;
  * @since 2022/8/25
  **/
 public interface RedisService {
+
+    /**
+     * <p>获取全部key</p>
+     *
+     * @param pattern pattern
+     * @return java.util.Set<java.lang.String>
+     * @author guocq
+     * @date 2022/11/16 17:03
+     */
+    Set<String> keys(String pattern);
+
     /**
      * <p>保存属性</p>
      *
@@ -25,8 +36,8 @@ public interface RedisService {
     /**
      * <p>保存属性 设置分钟数</p>
      *
-     * @param key    key
-     * @param value  value
+     * @param key     key
+     * @param value   value
      * @param minutes minutes
      * @author hedwing
      * @since 2022/9/17
@@ -36,8 +47,8 @@ public interface RedisService {
     /**
      * <p>保存属性 设置小时数</p>
      *
-     * @param key    key
-     * @param value  value
+     * @param key   key
+     * @param value value
      * @param hours hours
      * @author hedwing
      * @since 2022/9/17
@@ -83,6 +94,16 @@ public interface RedisService {
      * @since 2022/9/17
      */
     Long del(List<String> keys);
+
+    /**
+     * <p>根据匹配条件删除所有键</p>
+     *
+     * @param pattern pattern
+     * @return java.lang.Long
+     * @author guocq
+     * @date 2022/11/16 17:05
+     */
+    Long delByPattern(String pattern);
 
     /**
      * <p>设置过期时间</p>
