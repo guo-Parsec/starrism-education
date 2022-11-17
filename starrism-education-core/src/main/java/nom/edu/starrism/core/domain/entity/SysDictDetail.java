@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.common.support.ChainHelper;
 import nom.edu.starrism.core.domain.vo.SysDictCategoryVo;
 import nom.edu.starrism.core.domain.vo.SysDictDetailVo;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
@@ -70,9 +69,11 @@ public class SysDictDetail extends AbstractDataEntity {
         vo.setDictName(this.dictName);
         vo.setSort(this.sort);
         vo.setParentId(this.parentId);
-        ChainHelper.condition(SysDictDetail.isNotEmpty(category))
-                .success(() -> vo.setCategoryVo(category.toVo()))
-                .fail(() -> vo.setCategoryVo(new SysDictCategoryVo(this.sysDictCategoryId)));
+        if (SysDictDetail.isNotEmpty(category)) {
+            vo.setCategoryVo(category.toVo());
+            return vo;
+        }
+        vo.setCategoryVo(new SysDictCategoryVo(this.sysDictCategoryId));
         return vo;
     }
 
