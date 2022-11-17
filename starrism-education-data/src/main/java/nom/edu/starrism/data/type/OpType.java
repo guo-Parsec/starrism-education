@@ -1,8 +1,5 @@
 package nom.edu.starrism.data.type;
 
-import lombok.Getter;
-import nom.edu.starrism.common.enums.SeEnum;
-
 /**
  * <p>操作类型</p>
  *

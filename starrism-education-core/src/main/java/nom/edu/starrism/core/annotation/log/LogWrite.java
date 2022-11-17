@@ -1,6 +1,5 @@
 package nom.edu.starrism.core.annotation.log;
 
-import nom.edu.starrism.data.type.OpType;
 import nom.edu.starrism.data.type.RequestType;
 
 import java.lang.annotation.*;

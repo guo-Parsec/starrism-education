@@ -2,7 +2,6 @@ package nom.edu.starrism.core.util;
 
 import com.github.pagehelper.PageInfo;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
-import nom.edu.starrism.data.domain.vo.AbstractDataVo;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
 import java.util.List;

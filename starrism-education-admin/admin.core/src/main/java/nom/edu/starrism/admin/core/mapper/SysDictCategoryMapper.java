@@ -1,6 +1,5 @@
 package nom.edu.starrism.admin.core.mapper;
 
-import nom.edu.starrism.core.annotation.crud.Modify;
 import nom.edu.starrism.core.domain.entity.SysDictCategory;
 import nom.edu.starrism.data.mapper.CoreMapper;
 import org.apache.ibatis.annotations.Mapper;
