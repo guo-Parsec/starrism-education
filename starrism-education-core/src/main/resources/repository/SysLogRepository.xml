@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.core.repository.SysLogRepository">
+    <resultMap id="SysLogResultMap" type="nom.edu.starrism.core.domain.entity.SysLog">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="request_path" jdbcType="VARCHAR" property="requestPath"/>
+        <result column="time_consuming" jdbcType="LONGVARCHAR" property="timeConsuming"/>
+        <result column="request_method" jdbcType="VARCHAR" property="requestMethod"/>
+        <result column="request_param" jdbcType="LONGVARCHAR" property="requestParam"/>
+        <result column="request_result" jdbcType="LONGVARCHAR" property="requestResult"/>
+        <result column="error_code" jdbcType="INTEGER" property="errorCode"/>
+        <result column="error_message" jdbcType="LONGVARCHAR" property="errorMessage"/>
+        <result column="success" jdbcType="VARCHAR" property="success"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="op_user_id" jdbcType="BIGINT" property="opUserId"/>
+        <result column="op_user_account" jdbcType="VARCHAR" property="opUserAccount"/>
+    </resultMap>
+
+    <sql id="sys_log_all_columns">
+        <!--@sql select -->
+        sl.id,
+        sl.request_path,
+        sl.time_consuming,
+        sl.request_method,
+        sl.request_param,
+        sl.request_result,
+        sl.error_code,
+        sl.error_message,
+        sl.success,
+        sl.gmt_create,
+        sl.op_user_id,
+        sl.op_user_account
+        <!--@sql from sys_log sl -->
+    </sql>
+</mapper>

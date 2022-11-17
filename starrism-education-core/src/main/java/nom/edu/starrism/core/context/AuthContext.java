@@ -55,7 +55,7 @@ public class AuthContext {
         RedisService redisService = SpringBean.getBean(RedisService.class);
         AuthenticatedUser authenticatedUser = getAuthenticatedUser(token);
         Long id = authenticatedUser.getUserEntity().getId();
-        String key = StringUtil.redisKeyJoin(AuthPool.JWT_TOKEN_HEADER, id);
+        String key = getUserUrlsKey(id);
         Set<String> result = Sets.newHashSet();
         CollectionUtil.castCollection(redisService.get(key), result, String.class);
         return result;
@@ -152,8 +152,8 @@ public class AuthContext {
         Long cacheId = authenticatedUser.getId();
         String realToken = getRealToken(authenticatedUser.getTokenContent());
         RedisService redisService = SpringBean.getBean(RedisService.class);
-        String tokenKey = StringUtil.redisKeyJoin(AuthPool.TOKEN_REDIS_KEY, realToken);
-        String urlsKey = StringUtil.redisKeyJoin(AuthPool.JWT_TOKEN_HEADER, cacheId);
+        String tokenKey = getTokenKey(realToken);
+        String urlsKey = getUserUrlsKey(cacheId);
         redisService.del(Lists.newArrayList(tokenKey, urlsKey));
     }
 

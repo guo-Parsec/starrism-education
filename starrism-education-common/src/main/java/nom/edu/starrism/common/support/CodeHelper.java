@@ -3,6 +3,10 @@ package nom.edu.starrism.common.support;
 import nom.edu.starrism.common.enums.SeCommonResultCode;
 import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>代码辅助类</p>
@@ -75,5 +79,15 @@ public class CodeHelper {
      */
     public static void throwError(final SeLogger logger, Object... arg) {
         throwError(logger, SeCommonResultCode.FAILED, arg);
+    }
+
+    /**
+     * 获取当前请求
+     * @return 请求
+     */
+    public static HttpServletRequest getHttpServletRequest() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert requestAttributes != null;
+        return requestAttributes.getRequest();
     }
 }

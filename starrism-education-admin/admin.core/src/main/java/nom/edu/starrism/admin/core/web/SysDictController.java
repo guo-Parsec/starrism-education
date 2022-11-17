@@ -27,7 +27,6 @@ import java.util.List;
  **/
 @Api(value = "系统字典管理Web", tags = "系统字典管理接口")
 @RestController
-@LogWrite
 @RequestMapping(value = UrlPool.ADMIN_DICT_PREFIX)
 public class SysDictController {
     private SysDictCategoryService dictCategoryService;
@@ -36,6 +35,7 @@ public class SysDictController {
 
 
     @ApiOperation(value = "字典类别数据新增")
+    @LogWrite
     @PostMapping(value = "/category/create.do")
     public SeResultCarrier<SysDictCategoryVo> addSysDictCategory(@Validated @RequestBody SysDictCategoryParam param) {
         return SeResultCarrier.success(dictCategoryService.create(param));

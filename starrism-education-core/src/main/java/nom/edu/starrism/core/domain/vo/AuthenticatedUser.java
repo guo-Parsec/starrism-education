@@ -25,7 +25,7 @@ public class AuthenticatedUser extends AbstractVo {
     private SeUser userEntity;
 
     @ApiModelProperty(value = "主体")
-    private Serializable subject;
+    private String subject;
 
     @ApiModelProperty(value = "用户所拥有的角色")
     private Set<String> roles;
