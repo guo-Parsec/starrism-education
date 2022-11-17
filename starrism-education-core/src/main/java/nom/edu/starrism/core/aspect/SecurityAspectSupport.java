@@ -123,10 +123,6 @@ public class SecurityAspectSupport {
             return joinPoint.proceed(args);
         }
         Set<String> roleCodes = findRoleCodes(checkRole);
-        if (StringUtil.matches(AuthPool.DEFAULT_ADMIN, roleCodes)) {
-            LOGGER.debug("方法[{}]校验角色{}成功", methodName, AuthPool.DEFAULT_ALL_PERMISSION);
-            return joinPoint.proceed(args);
-        }
         AuthenticatedUser authenticatedUser = SecurityContext.findCertificate();
         Set<String> roles = authenticatedUser.getRoles();
         if (StringUtil.matches(roles, roleCodes)) {

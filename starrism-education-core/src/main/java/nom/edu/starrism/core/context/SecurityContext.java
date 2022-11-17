@@ -5,7 +5,6 @@ import nom.edu.starrism.common.enums.SeCommonResultCode;
 import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.properties.TokenProperties;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.support.CodeHelper;
@@ -42,6 +41,8 @@ public class SecurityContext {
         Long userId = authenticatedUser.getId();
         RedisService redisService = SecurityHelper.redisService();
         TokenProperties tokenProperties = SecurityHelper.tokenProperties();
+        // 登录时先踢出当前用户
+        kickOut(userId);
         redisService.set(SecurityHelper.generateSecurityTokenKey(tokenId), authenticatedUser, tokenProperties.expire);
         redisService.set(SecurityHelper.generateSecurityUserKey(userId), tokenId, tokenProperties.expire);
     }

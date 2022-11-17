@@ -1,6 +1,5 @@
 package nom.edu.starrism.core.support;
 
-import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.pool.RedisPool;
 import nom.edu.starrism.common.properties.TokenProperties;
 import nom.edu.starrism.common.service.RedisService;
@@ -8,8 +7,6 @@ import nom.edu.starrism.common.support.TextHelper;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.core.pool.SecurityPool;
 import nom.edu.starrism.data.component.SpringBean;
-
-import java.util.Set;
 
 /**
  * <p>安全认证辅助类</p>

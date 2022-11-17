@@ -7,7 +7,6 @@ import lombok.Setter;
 import nom.edu.starrism.core.pool.SecurityPool;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -39,10 +38,6 @@ public class AuthenticatedUser extends AbstractVo {
 
     @ApiModelProperty(value = "令牌名称")
     private String tokenName;
-
-    @ApiModelProperty(value = "令牌内容")
-    @Deprecated
-    private String tokenContent;
 
     @ApiModelProperty(value = "令牌id")
     private String tokenId;

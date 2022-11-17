@@ -3,8 +3,6 @@ package nom.edu.starrism.core.service;
 import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.core.domain.entity.SysLog;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * <p>日志操作service</p>
  *

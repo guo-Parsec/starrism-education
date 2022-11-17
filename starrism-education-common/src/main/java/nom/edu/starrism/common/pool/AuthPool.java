@@ -49,7 +49,7 @@ public interface AuthPool {
     /**
      * 默认管理员
      */
-    String DEFAULT_ADMIN = "admin";
+    String DEFAULT_ADMIN = "full-admin";
 
     /**
      * 服务间调用请求头

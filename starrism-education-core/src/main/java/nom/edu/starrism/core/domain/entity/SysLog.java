@@ -1,14 +1,11 @@
 package nom.edu.starrism.core.domain.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.core.domain.vo.SeUser;
 import nom.edu.starrism.data.domain.entity.AbstractEntity;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>日志记录表</p>

@@ -26,7 +26,7 @@ spring:
     redis:
       use-key-prefix: true
       key-prefix: "se:"
-      time-to-live: 60000 # ms
+      time-to-live: 7200000 # ms 2小时
       cache-null-values: false
     cache-names: starrism
 feign:
