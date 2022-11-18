@@ -22,6 +22,7 @@ public abstract class AbstractDataEntity extends AbstractEntity {
     /**
      * 数据状态
      */
+    @TableField(fill = FieldFill.INSERT)
     protected Integer dataStatus;
 
     /**

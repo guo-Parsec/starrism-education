@@ -3,6 +3,7 @@ package nom.edu.starrism.data.persistent.handler;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
+import nom.edu.starrism.data.pool.DataPool;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ public class SeMySqlMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         LOGGER.debug("开始填充插入字段...");
+        this.strictInsertFill(metaObject, "dataStatus", Integer.class, DataPool.ENABLE);
         this.strictInsertFill(metaObject, "gmtCreate", LocalDateTime.class, LocalDateTime.now());
         this.strictInsertFill(metaObject, "gmtModify", LocalDateTime.class, LocalDateTime.now());
     }

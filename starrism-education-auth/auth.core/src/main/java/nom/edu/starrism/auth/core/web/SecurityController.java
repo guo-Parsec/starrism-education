@@ -5,8 +5,10 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.auth.core.service.SecurityService;
 import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.core.annotation.api.ApiResource;
 import nom.edu.starrism.core.annotation.security.CheckRole;
 import nom.edu.starrism.core.domain.vo.SeUser;
+import nom.edu.starrism.core.type.AppTypes;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +32,7 @@ public class SecurityController {
     @CheckRole(AuthPool.DEFAULT_ADMIN)
     @ApiOperation(value = "查询全部在线用户")
     @GetMapping(value = "/find/all/online/user")
+    @ApiResource(value = "admin:online-user:query", name = "查询全部在线用户", app = AppTypes.AUTH)
     public SeResultCarrier<List<SeUser>> findAllOnlineUser() {
         return SeResultCarrier.success(service.findAllOnlineUser());
     }

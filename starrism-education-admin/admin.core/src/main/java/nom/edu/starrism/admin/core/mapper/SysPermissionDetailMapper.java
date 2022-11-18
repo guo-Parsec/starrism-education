@@ -49,4 +49,33 @@ public interface SysPermissionDetailMapper extends CoreMapper<SysPermissionDetai
      */
     List<SysPermissionDetail> findByCategoryCodesAndRoleIds(@Param("categoryCodes") Collection<String> categoryCodes,
                                                             @Param("roleIds") Collection<Long> roleIds);
+
+    /**
+     * <p>查询最后一个sort大小</p>
+     *
+     * @return java.lang.Long
+     * @author guocq
+     * @date 2022/11/18 10:57
+     */
+    int findLastSort();
+
+    /**
+     * <p>数据更新</p>
+     *
+     * @param param 数据
+     * @return int
+     * @author guocq
+     * @date 2022/11/18 11:30
+     */
+    int update(SysPermissionDetail param);
+
+    /**
+     * <p>数据批量更新</p>
+     *
+     * @param paramList 参数列表
+     * @return int
+     * @author guocq
+     * @date 2022/11/18 11:30
+     */
+    int updateList(List<SysPermissionDetail> paramList);
 }

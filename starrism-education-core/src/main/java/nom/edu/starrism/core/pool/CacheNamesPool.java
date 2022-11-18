@@ -18,4 +18,9 @@ public interface CacheNamesPool {
      * 缓存名称 - 字典类别
      */
     String CN_SYS_DICT_CATEGORY = CN_SYS_DICT + RedisPool.REDIS_KEY_SEPARATOR + "category";
+
+    /**
+     * 缓存名称 - 权限
+     */
+    String CN_SYS_PERMISSION = "sys:permission";
 }

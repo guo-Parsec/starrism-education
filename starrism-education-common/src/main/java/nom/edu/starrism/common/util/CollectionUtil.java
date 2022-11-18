@@ -5,6 +5,7 @@ import nom.edu.starrism.common.logger.SeLoggerFactory;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * <p>集合工具类</p>
@@ -57,10 +58,11 @@ public class CollectionUtil {
 
     /**
      * 对象转集合
-     * @param object 对象
+     *
+     * @param object          对象
      * @param emptyCollection 待转换的空集合
-     * @param tClass 集合元素class对象
-     * @param <T> 泛型
+     * @param tClass          集合元素class对象
+     * @param <T>             泛型
      */
     public static <T> void castCollection(Object object, Collection<T> emptyCollection, Class<T> tClass) {
         if (emptyCollection == null) {
@@ -70,5 +72,21 @@ public class CollectionUtil {
         if (object instanceof Collection<?>) {
             ((Collection<?>) object).forEach(ele -> emptyCollection.add(tClass.cast(ele)));
         }
+    }
+
+    /**
+     * <p>获取集合第一个元素</p>
+     *
+     * @param collection 集合
+     * @return T
+     * @author guocq
+     * @date 2022/11/18 9:19
+     */
+    public static <T> T findFirst(Collection<T> collection) {
+        if (CollectionUtil.isEmpty(collection)) {
+            return null;
+        }
+        Optional<T> first = collection.stream().findFirst();
+        return first.orElse(null);
     }
 }

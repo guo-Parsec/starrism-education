@@ -223,6 +223,20 @@ public class RedisServiceImpl implements RedisService {
         return redisTemplate.opsForSet().remove(key, values);
     }
 
+    /**
+     * <p>获取List结构中的属性</p>
+     *
+     * @param key key
+     * @return java.util.List<java.lang.Object>
+     * @author guocq
+     * @date 2022/11/18 9:58
+     */
+    @Override
+    public List<Object> lRange(String key) {
+        Long end = lSize(key);
+        return lRange(key, 0, end);
+    }
+
     @Override
     public List<Object> lRange(String key, long start, long end) {
         return redisTemplate.opsForList().range(key, start, end);

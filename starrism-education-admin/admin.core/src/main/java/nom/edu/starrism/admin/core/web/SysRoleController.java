@@ -8,6 +8,8 @@ import nom.edu.starrism.admin.api.domain.vo.SysRoleVo;
 import nom.edu.starrism.admin.core.service.SysRoleService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.core.annotation.api.ApiResource;
+import nom.edu.starrism.core.type.AppTypes;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,12 +35,14 @@ public class SysRoleController {
 
     @ApiOperation(value = "获取角色码：根据用户id获取")
     @GetMapping(value = "/find/code/by/roles")
+    @ApiResource(value = "admin:self-role:query", name = "获取角色码：根据用户id获取", app = AppTypes.ADMIN)
     public SeResultCarrier<Set<String>> findRoleCodesOfUser(@RequestParam(value = "userId") Long userId) {
         return SeResultCarrier.success(sysRoleService.findRoleCodesOfUser(userId));
     }
 
     @ApiOperation(value = "角色分页查询")
     @GetMapping(value = "/query")
+    @ApiResource(value = "admin:role:query-page", name = "角色分页查询", app = AppTypes.ADMIN)
     public SeResultCarrier<PageInfo<SysRoleVo>> sysRolePageQuery(SysRolePageParam param) {
         return SeResultCarrier.success(sysRoleService.sysRolePageQuery(param));
     }

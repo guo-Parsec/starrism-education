@@ -5,8 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysUserService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.SeResultCarrier;
-import nom.edu.starrism.core.context.SecurityContext;
+import nom.edu.starrism.core.annotation.api.ApiResource;
 import nom.edu.starrism.core.domain.vo.SeUser;
+import nom.edu.starrism.core.type.AppTypes;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,15 +40,10 @@ public class SysUserController {
      */
     @ApiOperation(value = "根据账户查询用户")
     @GetMapping(value = "/find/by/account")
+    @ApiResource(value = "admin:self-user:query", name = "根据账户查询用户", app = AppTypes.ADMIN)
     public SeResultCarrier<SeUser> findUserByAccount(@RequestParam("account") String account,
                                                      @RequestParam("password") String password) {
         SeUser seUser = sysUserService.findUserByAccount(account, password);
         return SeResultCarrier.success(seUser);
-    }
-
-    @ApiOperation(value = "当前用户是否登录成功")
-    @GetMapping(value = "/login")
-    public SeResultCarrier<Boolean> isLogin() {
-        return SeResultCarrier.success(SecurityContext.isCertificated());
     }
 }

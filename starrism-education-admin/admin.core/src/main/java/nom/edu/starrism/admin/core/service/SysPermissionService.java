@@ -1,6 +1,7 @@
 package nom.edu.starrism.admin.core.service;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -49,4 +50,13 @@ public interface SysPermissionService {
      * @date 2022/11/10 14:29
      */
     Set<String> findPermissionUrlByCategory(String categoryCode);
+
+    /**
+    * <p>生成权限到数据库</p>
+    * @param cacheUuid 缓存uuid
+    * @return Map<String, Long> 成功录入的数量
+    * @author guocq
+    * @date 2022/11/18 9:55
+    */
+    Map<String, Long> generatePermissionIntoDb(String cacheUuid);
 }
