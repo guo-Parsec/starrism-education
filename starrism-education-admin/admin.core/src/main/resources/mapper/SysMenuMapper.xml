@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nom.edu.starrism.admin.core.mapper.SysMenuMapper">
+    <resultMap id="SysMenuResultMap" type="nom.edu.starrism.admin.core.domain.entity.SysMenu">
+        <!--@mbg.generated-->
+        <!--@Table sys_menu-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="hierarchical_path" jdbcType="VARCHAR" property="hierarchicalPath"/>
+        <result column="menu_code" jdbcType="VARCHAR" property="menuCode"/>
+        <result column="menu_title" jdbcType="VARCHAR" property="menuTitle"/>
+        <result column="menu_icon" jdbcType="VARCHAR" property="menuIcon"/>
+        <result column="visible_status" jdbcType="SMALLINT" property="visibleStatus"/>
+        <result column="menu_level" jdbcType="INTEGER" property="menuLevel"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="component" jdbcType="VARCHAR" property="component"/>
+        <result column="menu_url" jdbcType="VARCHAR" property="menuUrl"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="data_status" jdbcType="INTEGER" property="dataStatus"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modify" jdbcType="TIMESTAMP" property="gmtModify"/>
+    </resultMap>
+
+    <sql id="sys_menu_all_list">
+        <!--@sql select -->
+        sm.id,
+        sm.parent_id,
+        sm.hierarchical_path,
+        sm.menu_code,
+        sm.menu_title,
+        sm.menu_icon,
+        sm.visible_status,
+        sm.menu_level,
+        sm.sort,
+        sm.component,
+        sm.menu_url,
+        sm.remark,
+        sm.data_status,
+        sm.gmt_create,
+        sm.gmt_modify
+        <!--@sql from sys_menu sm-->
+    </sql>
+
+    <select id="findByRoleIds" resultMap="SysMenuResultMap">
+        select
+        <include refid="sys_menu_all_list"/>
+        from sys_menu sm
+                 left join sys_role_menu srm on sm.id = srm.menu_id
+        <where>
+            sm.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+            <if test="roleIds != null and roleIds.size() != 0">
+                and srm.role_id in
+                <foreach collection="roleIds" open="(" close=")" separator="," item="roleId">
+                    #{roleId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+        order by sm.sort;
+    </select>
+
+    <select id="findByMenuIds" resultMap="SysMenuResultMap">
+        select
+        <include refid="sys_menu_all_list"/>
+        from sys_menu sm
+        <where>
+            sm.data_status = '${@nom.edu.starrism.data.pool.DataPool@ENABLE}'
+            <if test="menuIds != null and menuIds.size() != 0">
+                and sm.id in
+                <foreach collection="menuIds" open="(" close=")" separator="," item="menuId">
+                    #{menuId,jdbcType=BIGINT}
+                </foreach>
+            </if>
+        </where>
+        order by sm.sort;
+    </select>
+</mapper>

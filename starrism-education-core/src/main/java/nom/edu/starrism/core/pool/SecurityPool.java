@@ -28,6 +28,11 @@ public interface SecurityPool {
     String USER = "user";
 
     /**
+     * 菜单
+     */
+    String MENUS = "menus";
+
+    /**
      * URLS
      */
     String URLS = "urls";

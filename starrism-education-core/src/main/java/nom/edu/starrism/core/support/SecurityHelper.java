@@ -57,16 +57,16 @@ public class SecurityHelper {
     }
 
     /**
-     * <p>根据用户id生成指定userId的用户可通过的权限请求路径存储的key</p>
-     * <p>e.g. se:security:user:{userId}:urls</p>
+     * <p>根据用户id生成指定userId的用户拥有的菜单存储的key</p>
+     * <p>e.g. se:security:user:{userId}:menus</p>
      *
      * @param userId 用户id
      * @return java.lang.String
      * @author guocq
      * @date 2022/11/17 14:19
      */
-    public static String generateSecurityUserUrlKey(Long userId) {
-        return StringUtil.redisKeyJoin(generateSecurityUserKey(userId), SecurityPool.URLS);
+    public static String generateMenusOfUser(Long userId) {
+        return StringUtil.redisKeyJoin(generateSecurityUserKey(userId), SecurityPool.MENUS);
     }
 
     /**

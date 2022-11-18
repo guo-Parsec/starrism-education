@@ -1,6 +1,7 @@
 package nom.edu.starrism.core.aspect;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import nom.edu.starrism.common.enums.SeCommonResultCode;
 import nom.edu.starrism.common.exception.SeException;
 import nom.edu.starrism.common.logger.SeLogger;
@@ -52,7 +53,7 @@ public class LogWriteAspect {
         }
         String url = request.getRequestURI();
         long endMillis = System.currentTimeMillis();
-        if (requestTypes.contains(RequestType.findRequestType(method))) {
+        if (Sets.newHashSet(requestTypes).contains(RequestType.findRequestType(method))) {
             logService.write(url, method, endMillis - startMillis, args, result, error);
         }
         return result;

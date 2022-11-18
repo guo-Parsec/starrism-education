@@ -7,6 +7,7 @@ import lombok.Setter;
 import nom.edu.starrism.core.pool.SecurityPool;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +36,12 @@ public class AuthenticatedUser extends AbstractVo {
 
     @ApiModelProperty(value = "用户所拥有的请求路径")
     private Set<String> urls;
+
+    @ApiModelProperty(value = "用户所拥有的菜单id")
+    private Set<Long> menuIds;
+
+    @ApiModelProperty(value = "用户所拥有的菜单")
+    private transient Object menus;
 
     @ApiModelProperty(value = "令牌名称")
     private String tokenName;

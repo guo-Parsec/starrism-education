@@ -21,4 +21,9 @@ public interface DictPool {
      * 字典类别码 - 用户类型
      */
     String DICT_CATEGORY_USER_TYPE = "user_type";
+
+    /**
+     * 字典类别码 - 可见状态
+     */
+    String DICT_CATEGORY_VISIBLE_STATUS = "visible_status";
 }

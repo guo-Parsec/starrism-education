@@ -23,4 +23,14 @@ public interface CacheNamesPool {
      * 缓存名称 - 权限
      */
     String CN_SYS_PERMISSION = "sys:permission";
+
+    /**
+     * 缓存名称 - 查询个人菜单
+     */
+    String CN_INDIVIDUAL_MENU = "individual:menu";
+
+    /**
+     * 缓存名称 - 菜单
+     */
+    String CN_SYS_MENU = "sys:menu";
 }

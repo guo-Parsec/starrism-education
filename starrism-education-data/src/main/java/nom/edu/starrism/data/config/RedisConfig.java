@@ -74,7 +74,7 @@ public class RedisConfig {
         //设置Redis缓存有效期为1小时
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .computePrefixWith(name -> RedisPool.BASE_REDIS_KEY + RedisPool.REDIS_KEY_SEPARATOR + name + RedisPool.REDIS_KEY_SEPARATOR)
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer())).entryTtl(Duration.ofHours(1));
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer())).entryTtl(Duration.ofHours(4));
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
 

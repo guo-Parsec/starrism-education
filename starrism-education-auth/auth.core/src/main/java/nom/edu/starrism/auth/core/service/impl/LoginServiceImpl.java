@@ -1,5 +1,7 @@
 package nom.edu.starrism.auth.core.service.impl;
 
+import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
+import nom.edu.starrism.admin.api.feign.SysMenuClient;
 import nom.edu.starrism.admin.api.feign.SysPermissionClient;
 import nom.edu.starrism.admin.api.feign.SysRoleClient;
 import nom.edu.starrism.admin.api.feign.SysUserClient;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,6 +39,8 @@ public class LoginServiceImpl implements LoginService {
     private SysPermissionClient sysPermissionClient;
     @Resource
     private SysRoleClient sysRoleClient;
+    @Resource
+    private SysMenuClient sysMenuClient;
     private TokenProperties tokenProperties;
     private RedisService redisService;
 
@@ -76,6 +81,8 @@ public class LoginServiceImpl implements LoginService {
         fillPermissions(authenticatedUser);
         fillRoles(authenticatedUser);
         fillUrls(authenticatedUser);
+        fillMenuIds(authenticatedUser);
+        fillMenus(authenticatedUser);
         SecurityContext.login(authenticatedUser);
         return authenticatedUser;
     }
@@ -117,5 +124,31 @@ public class LoginServiceImpl implements LoginService {
         Long userId = authenticatedUser.getId();
         SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
         authenticatedUser.setUrls(SeResultCarrier.getSuccessData(carrier));
+    }
+
+    /**
+     * <p>填充menuIds信息</p>
+     *
+     * @param authenticatedUser 认证用户
+     * @author guocq
+     * @date 2022/11/18 16:32
+     */
+    private void fillMenuIds(AuthenticatedUser authenticatedUser) {
+        Long userId = authenticatedUser.getId();
+        SeResultCarrier<Set<Long>> carrier = sysMenuClient.findMenuIdsOfUser(userId);
+        authenticatedUser.setMenuIds(SeResultCarrier.getSuccessData(carrier));
+    }
+
+    /**
+     * <p>填充menuIds信息</p>
+     *
+     * @param authenticatedUser 认证用户
+     * @author guocq
+     * @date 2022/11/18 16:32
+     */
+    private void fillMenus(AuthenticatedUser authenticatedUser) {
+        Long userId = authenticatedUser.getId();
+        SeResultCarrier<List<SysMenuVo>> carrier = sysMenuClient.findMenuTreesOfUser(userId);
+        authenticatedUser.setMenus(SeResultCarrier.getSuccessData(carrier));
     }
 }

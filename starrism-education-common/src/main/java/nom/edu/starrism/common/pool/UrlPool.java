@@ -18,6 +18,11 @@ public interface UrlPool {
     String ADMIN_PERMISSION_PREFIX = "/sys/permission";
 
     /**
+     * 系统菜单管理url前缀
+     */
+    String ADMIN_MENU_PREFIX = "/sys/menu";
+
+    /**
      * 系统权限管理url前缀
      */
     String ADMIN_DICT_PREFIX = "/sys/dict";
