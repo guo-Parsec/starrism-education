@@ -52,10 +52,5 @@ snowflake:
 logging:
   level:
     nom.edu.starrism: debug
-starrism:
-  jwt:
-    secret: abc123456
-    # 过期时间 默认四小时 4*60*60 单位s
-    expire: 14400
 pagehelper:
   helperDialect: mysql

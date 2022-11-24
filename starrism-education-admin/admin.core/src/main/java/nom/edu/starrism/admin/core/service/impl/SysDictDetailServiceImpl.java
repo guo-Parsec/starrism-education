@@ -1,7 +1,5 @@
 package nom.edu.starrism.admin.core.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageInfo;
 import nom.edu.starrism.admin.core.domain.param.SysDictDetailParam;
 import nom.edu.starrism.admin.core.mapper.SysDictDetailMapper;
 import nom.edu.starrism.admin.core.service.SysDictDetailService;
@@ -12,20 +10,16 @@ import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.core.access.DictAccess;
 import nom.edu.starrism.core.annotation.cache.CacheClear;
 import nom.edu.starrism.core.annotation.cache.CacheGroup;
-import nom.edu.starrism.core.annotation.crud.PageQuery;
 import nom.edu.starrism.core.domain.entity.SysDictCategory;
 import nom.edu.starrism.core.domain.entity.SysDictDetail;
 import nom.edu.starrism.core.domain.vo.SysDictDetailVo;
 import nom.edu.starrism.core.pool.CacheNamesPool;
 import nom.edu.starrism.core.repository.SysDictCategoryRepository;
-import nom.edu.starrism.core.service.AbstractCoreService;
-import nom.edu.starrism.core.util.PageUtil;
+import nom.edu.starrism.core.service.impl.MainServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>字典类别Service实现类</p>
@@ -34,7 +28,9 @@ import java.util.stream.Collectors;
  * @since 2022/11/11
  **/
 @Service("sysDictDetailService")
-public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailVo, SysDictDetailParam> implements SysDictDetailService {
+public class SysDictDetailServiceImpl
+        extends MainServiceImpl<SysDictDetail, SysDictDetailVo, SysDictDetailParam, SysDictDetailMapper>
+        implements SysDictDetailService {
     private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SysDictDetailServiceImpl.class);
     @Resource
     private SysDictDetailMapper sysDictDetailMapper;
@@ -111,41 +107,7 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
             }
     )
     public SysDictDetailVo delete(Long id) {
-        SysDictDetailVo sysDictDetailVo = checkDictIdExist(id);
-        sysDictDetailMapper.delete(id);
-        return sysDictDetailVo;
-    }
-
-    /**
-     * <p>分页查询</p>
-     *
-     * @param param param
-     * @return {@link PageInfo<SysDictDetailVo>}
-     * @author hedwing
-     * @since 2022/11/12
-     */
-    @PageQuery
-    @Override
-    public PageInfo<SysDictDetailVo> pageQuery(SysDictDetailParam param) {
-        LOGGER.debug("根据参数{}条件查询分页数据", param);
-        Page<SysDictDetail> pageData = sysDictDetailMapper.paginationQuery(param);
-        List<SysDictDetailVo> sysDictDetailVos = pageData.stream().map(SysDictDetail::toVo).collect(Collectors.toList());
-        return PageUtil.toVoPage(sysDictDetailVos, new PageInfo<>(pageData));
-    }
-
-    /**
-     * <p>查询数据(不分页)</p>
-     *
-     * @param param param
-     * @return {@link List<SysDictDetailVo>}
-     * @author guocq
-     * @date 2022/11/16 9:45
-     */
-    @Override
-    public List<SysDictDetailVo> listQuery(SysDictDetailParam param) {
-        LOGGER.debug("根据参数{}条件查询数据(不进行分页)", param);
-        List<SysDictDetail> list = sysDictDetailMapper.listQuery(param);
-        return list.stream().map(SysDictDetail::toVo).collect(Collectors.toList());
+        return super.delete(id);
     }
 
     /**

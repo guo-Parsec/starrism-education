@@ -43,6 +43,7 @@ public class SysDictCategoryParam extends AbstractPageParam {
     private Integer sort;
 
 
+    @Override
     public SysDictCategory toEntity() {
         SysDictCategory sysDictCategory = new SysDictCategory();
         sysDictCategory.setId(this.id);

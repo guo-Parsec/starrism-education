@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nom.edu.starrism.core.domain.entity.SysDictCategory;
 import nom.edu.starrism.core.domain.entity.SysDictDetail;
+import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
 import nom.edu.starrism.data.domain.param.AbstractPageParam;
 import nom.edu.starrism.data.valid.CrudValidGroup;
 
@@ -62,10 +63,20 @@ public class SysDictDetailParam extends AbstractPageParam {
     @ApiModelProperty(value = "上级字典id")
     private Long parentId;
 
+
+    @Override
+    public AbstractDataEntity toEntity() {
+        return toEntity(null);
+    }
+
     public SysDictDetail toEntity(SysDictCategory category) {
         SysDictDetail detail = new SysDictDetail();
         detail.setId(this.id);
-        detail.setSysDictCategoryId(category.getId());
+        if (category != null) {
+            detail.setSysDictCategoryId(category.getId());
+        } else {
+            detail.setSysDictCategoryId(this.dictCategoryId);
+        }
         detail.setDictCode(this.dictCode);
         detail.setDictValue(this.dictValue);
         detail.setDictName(this.dictName);
