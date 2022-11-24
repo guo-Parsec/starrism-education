@@ -11,6 +11,7 @@ import nom.edu.starrism.core.access.ParamAccess;
 import nom.edu.starrism.core.context.AppCoreContext;
 import nom.edu.starrism.core.context.PageContext;
 import nom.edu.starrism.core.domain.vo.SysParamVo;
+import nom.edu.starrism.core.helper.RsaHelper;
 import nom.edu.starrism.core.pool.ParamPool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -19,6 +20,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,11 +98,37 @@ public class SeCommonInitRunner implements ApplicationRunner {
         LOGGER.debug("第一次初始化feign秘钥为{}", AppCoreContext.feignSecret);
     }
 
+    /**
+     * 初始化rsa
+     */
+    private void initRsa() {
+        LOGGER.debug("初始化RSA秘钥信息");
+        String key = RsaHelper.generateCacheKey();
+        PublicKey publicKey;
+        PrivateKey privateKey;
+        String publicKeyStr;
+        String privateKeyStr;
+        if (redisService.hasKey(key)) {
+            LOGGER.debug("将从缓存中读取RSA信息");
+            publicKeyStr = (String) redisService.hGet(key, RsaHelper.PUBLIC_KEY);
+            privateKeyStr = (String) redisService.hGet(key, RsaHelper.PRIVATE_KEY);
+        } else {
+            Map<String, String> keyMap = RsaHelper.initKey();
+            publicKeyStr = keyMap.get(RsaHelper.PUBLIC_KEY);
+            privateKeyStr = keyMap.get(RsaHelper.PRIVATE_KEY);
+            redisService.hSetAll(key, keyMap);
+        }
+        publicKey = RsaHelper.getPublicKey(publicKeyStr);
+        privateKey = RsaHelper.getPrivateKey(privateKeyStr);
+        RsaHelper.keyPair = new KeyPair(publicKey, privateKey);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         initFeignSecret();
         cMapInit();
         initPageProperties();
+        initRsa();
     }
 
     @Autowired

@@ -1,20 +1,20 @@
 package nom.edu.starrism.core.context;
 
 import com.google.common.collect.Lists;
-import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.exception.CoreException;
+import nom.edu.starrism.common.helper.CodeHelper;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.properties.TokenProperties;
 import nom.edu.starrism.common.service.RedisService;
-import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.common.util.UUIDGeneratorUtil;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.domain.vo.SeUser;
-import nom.edu.starrism.core.pool.SecurityPool;
-import nom.edu.starrism.core.support.SecurityHelper;
+import nom.edu.starrism.core.helper.SecurityHelper;
+import nom.edu.starrism.core.pool.ParamPool;
+import nom.edu.starrism.data.pool.SecurityPool;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,14 +37,14 @@ public class SecurityContext {
      */
     public static void login(AuthenticatedUser authenticatedUser) {
         String tokenId = UUIDGeneratorUtil.uuidRaw();
-        authenticatedUser.setTokenId(SecurityPool.Bearer + tokenId);
+        authenticatedUser.setTokenId(SecurityPool.BEARER + tokenId);
         Long userId = authenticatedUser.getId();
         RedisService redisService = SecurityHelper.redisService();
-        TokenProperties tokenProperties = SecurityHelper.tokenProperties();
         // 登录时先踢出当前用户
         kickOut(userId);
-        redisService.set(SecurityHelper.generateSecurityTokenKey(tokenId), authenticatedUser, tokenProperties.expire);
-        redisService.set(SecurityHelper.generateSecurityUserKey(userId), tokenId, tokenProperties.expire);
+        Long expireHours = ParamContext.findParam(ParamPool.PARAM_CODE_TOKEN_EXPIRE, 6L);
+        redisService.setByHour(SecurityHelper.generateSecurityTokenKey(tokenId), authenticatedUser, expireHours);
+        redisService.setByHour(SecurityHelper.generateSecurityUserKey(userId), tokenId, expireHours);
     }
 
     /**
@@ -71,13 +71,13 @@ public class SecurityContext {
         String tokenId = SecurityHelper.findEffectiveTokenId(tokenText);
         if (StringUtil.isBlank(tokenId)) {
             LOGGER.error("获取登录凭证信息失败，无法从当前系统请求中获取合法的令牌id");
-            throw new SeException(SeCommonResultCode.UNAUTHORIZED, "获取登录凭证信息失败");
+            throw new CoreException(BaseRequest.UNAUTHORIZED, "获取登录凭证信息失败");
         }
         RedisService redisService = SecurityHelper.redisService();
         AuthenticatedUser cert = (AuthenticatedUser) redisService.get(SecurityHelper.generateSecurityTokenKey(tokenId));
         if (AuthenticatedUser.isEmpty(cert)) {
             LOGGER.error("获取登录凭证信息失败，无法获取到登录信息，可能因为令牌已过期");
-            throw new SeException(SeCommonResultCode.UNAUTHORIZED, "获取登录凭证信息失败");
+            throw new CoreException(BaseRequest.UNAUTHORIZED, "获取登录凭证信息失败");
         }
         return cert;
     }
@@ -105,7 +105,7 @@ public class SecurityContext {
     public static boolean isCertificated(String tokenText) {
         try {
             findCertificate(tokenText);
-        } catch (SeException e) {
+        } catch (CoreException e) {
             return false;
         }
         return true;
@@ -127,7 +127,7 @@ public class SecurityContext {
             String tokenKey = SecurityHelper.generateSecurityTokenKey(tokenId);
             String userKey = SecurityHelper.generateSecurityUserKey(userId);
             redisService.del(Lists.newArrayList(tokenKey, userKey));
-        } catch (SeException e) {
+        } catch (CoreException e) {
             LOGGER.warn("当前用户已退出系统");
             return;
         }

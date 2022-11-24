@@ -27,7 +27,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * <p></p>
+ * <p>redis配置</p>
  *
  * @author hedwing
  * @since 2022/10/21

@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysPermissionService;
 import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.annotation.api.ApiResource;
 import nom.edu.starrism.core.annotation.security.CheckPermission;
 import nom.edu.starrism.core.annotation.security.CheckRole;
@@ -35,29 +35,29 @@ public class SysPermissionController {
     @ApiOperation(value = "生成权限到数据库")
     @PostMapping(value = "/generate/into-db.do")
     @CheckRole(AuthPool.DEFAULT_ADMIN)
-    public SeResultCarrier<Map<String, Long>> generatePermissionIntoDb(@RequestBody String cacheUuid) {
-        return SeResultCarrier.success(sysPermissionService.generatePermissionIntoDb(cacheUuid));
+    public Carrier<Map<String, Long>> generatePermissionIntoDb(@RequestBody String cacheUuid) {
+        return Carrier.success(sysPermissionService.generatePermissionIntoDb(cacheUuid));
     }
 
     @ApiOperation(value = "查询用户权限：根据用户id查询权限url")
     @GetMapping(value = "/find/url/by/userId")
     @CheckPermission("admin:self-permission:query")
     @ApiResource(value = "admin:self-permission:query", name = "字典类别数据更新", app = AppTypes.ADMIN)
-    public SeResultCarrier<Set<String>> findPermissionUrlOfUser(@RequestParam(value = "userId") Long userId) {
-        return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfUser(userId));
+    public Carrier<Set<String>> findPermissionUrlOfUser(@RequestParam(value = "userId") Long userId) {
+        return Carrier.success(sysPermissionService.findPermissionUrlOfUser(userId));
     }
 
     @ApiOperation(value = "查询角色权限：根据角色列表查询权限url")
     @GetMapping(value = "/find/url/by/roles")
     @ApiResource(value = "admin:self-permission:query", name = "字典类别数据更新", app = AppTypes.ADMIN)
-    public SeResultCarrier<Set<String>> findPermissionUrlOfRoles(@RequestParam(value = "roles") Collection<Long> roles) {
-        return SeResultCarrier.success(sysPermissionService.findPermissionUrlOfRoles(roles));
+    public Carrier<Set<String>> findPermissionUrlOfRoles(@RequestParam(value = "roles") Collection<Long> roles) {
+        return Carrier.success(sysPermissionService.findPermissionUrlOfRoles(roles));
     }
 
     @ApiOperation(value = "查询角色权限：根据用户id查询权限码")
     @GetMapping(value = "/find/code/by/userId")
     @ApiResource(value = "admin:self-permission:query", name = "查询角色权限：根据用户id查询权限码", app = AppTypes.ADMIN)
-    public SeResultCarrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "userId") Long userId) {
-        return SeResultCarrier.success(sysPermissionService.findPermissionCodeOfUser(userId));
+    public Carrier<Set<String>> findPermissionCodeOfUser(@RequestParam(value = "userId") Long userId) {
+        return Carrier.success(sysPermissionService.findPermissionCodeOfUser(userId));
     }
 }

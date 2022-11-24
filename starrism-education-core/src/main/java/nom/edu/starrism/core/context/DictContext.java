@@ -20,8 +20,8 @@ import java.util.Objects;
  * @see nom.edu.starrism.core.domain.entity.SysDictDetail
  * @since 2022/10/23
  **/
-public class SeDictContext {
-    private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SeDictContext.class);
+public class DictContext {
+    private static final SeLogger LOGGER = SeLoggerFactory.getLogger(DictContext.class);
 
     /**
      * <p>字典转换</p>

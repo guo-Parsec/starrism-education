@@ -1,7 +1,7 @@
-package nom.edu.starrism.common.support;
+package nom.edu.starrism.common.helper;
 
-import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.exception.CoreException;
 import nom.edu.starrism.common.logger.SeLogger;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,9 +24,9 @@ public class CodeHelper {
      * @author guocq
      * @date 2022/11/17 10:13
      */
-    public static void throwError(final SeLogger logger, SeCommonResultCode code, String message, Object arg) {
+    public static void throwError(final SeLogger logger, BaseRequest code, String message, Object arg) {
         logger.error(message, arg);
-        throw new SeException(code, TextHelper.build().format(message, arg));
+        throw new CoreException(code, TextHelper.build().format(message, arg));
     }
 
     /**
@@ -38,9 +38,9 @@ public class CodeHelper {
      * @author guocq
      * @date 2022/11/17 10:13
      */
-    public static void throwError(final SeLogger logger, SeCommonResultCode code, String message, Object... arg) {
+    public static void throwError(final SeLogger logger, BaseRequest code, String message, Object... arg) {
         logger.error(message, arg);
-        throw new SeException(code, TextHelper.build().format(message, arg));
+        throw new CoreException(code, TextHelper.build().format(message, arg));
     }
 
     /**
@@ -53,7 +53,7 @@ public class CodeHelper {
      * @date 2022/11/17 10:23
      */
     public static void throwError(final SeLogger logger, String message, Object... arg) {
-        throwError(logger, SeCommonResultCode.FAILED, message, arg);
+        throwError(logger, BaseRequest.FAILED, message, arg);
     }
 
     /**
@@ -65,7 +65,7 @@ public class CodeHelper {
      * @author guocq
      * @date 2022/11/17 10:24
      */
-    public static void throwError(final SeLogger logger, SeCommonResultCode code, Object... arg) {
+    public static void throwError(final SeLogger logger, BaseRequest code, Object... arg) {
         throwError(logger, code, code.getMessage(), arg);
     }
 
@@ -78,7 +78,7 @@ public class CodeHelper {
      * @date 2022/11/17 10:24
      */
     public static void throwError(final SeLogger logger, Object... arg) {
-        throwError(logger, SeCommonResultCode.FAILED, arg);
+        throwError(logger, BaseRequest.FAILED, arg);
     }
 
     /**

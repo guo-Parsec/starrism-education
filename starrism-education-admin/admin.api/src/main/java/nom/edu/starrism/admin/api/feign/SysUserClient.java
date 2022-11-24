@@ -2,7 +2,7 @@ package nom.edu.starrism.admin.api.feign;
 
 import nom.edu.starrism.common.pool.AppPool;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +21,11 @@ public interface SysUserClient {
      *
      * @param account  账户
      * @param password 密码
-     * @return {@link SeResultCarrier<SeUser>}
+     * @return {@link Carrier <SeUser>}
      * @author guocq
      * @date 2022/10/24 15:07
      */
     @GetMapping(value = "/find/by/account")
-    SeResultCarrier<SeUser> findUserByAccount(@RequestParam("account") String account,
-                                              @RequestParam("password") String password);
+    Carrier<SeUser> findUserByAccount(@RequestParam("account") String account,
+                                      @RequestParam("password") String password);
 }

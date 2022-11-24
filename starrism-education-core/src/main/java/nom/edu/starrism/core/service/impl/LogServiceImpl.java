@@ -1,7 +1,7 @@
 package nom.edu.starrism.core.service.impl;
 
 import com.alibaba.fastjson2.JSON;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.exception.CoreException;
 import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.entity.SysLog;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
@@ -48,7 +48,7 @@ public class LogServiceImpl implements LogService {
      * @date 2022/11/17 11:35
      */
     @Override
-    public SysLog build(String requestPath, String method, Long timeConsuming, Object[] args, Object result, SeException error) {
+    public SysLog build(String requestPath, String method, Long timeConsuming, Object[] args, Object result, CoreException error) {
         SysLog sysLog = new SysLog();
         sysLog.setRequestPath(requestPath);
         sysLog.setTimeConsuming(timeConsuming);
@@ -63,7 +63,7 @@ public class LogServiceImpl implements LogService {
         sysLog.setOpUserId(authenticatedUser.getId());
         sysLog.setOpUserAccount(authenticatedUser.getSubject());
         if (error != null) {
-            sysLog.setErrorCode(error.getCode() == null ? error.getBaseRestEnum().getCode() : error.getCode());
+            sysLog.setErrorCode(error.getCode() == null ? error.getRequestEnum().getCode() : error.getCode());
             sysLog.setErrorMessage(error.getMessage());
             sysLog.setSuccess(SysLog.FAILED);
         } else {

@@ -31,4 +31,9 @@ public interface ParamPool {
      * 参数码 - 默认当前页
      */
     String PARAM_CODE_CURR_PAGE = "DEFAULT_CURR_PAGE";
+
+    /**
+     * 参数码 - 默认令牌过期时间
+     */
+    String PARAM_CODE_TOKEN_EXPIRE = "DEFAULT_TOKEN_EXPIRE";
 }

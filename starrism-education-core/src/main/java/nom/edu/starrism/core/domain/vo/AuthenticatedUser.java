@@ -4,10 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.core.pool.SecurityPool;
+import nom.edu.starrism.data.pool.SecurityPool;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
-import java.util.List;
 import java.util.Set;
 
 /**

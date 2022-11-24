@@ -3,7 +3,7 @@ package nom.edu.starrism.data.domain.param;
 import nom.edu.starrism.common.domain.Domainizable;
 
 /**
- * <p></p>
+ * <p>基础参数实体类</p>
  *
  * @author hedwing
  * @since 2022/10/21

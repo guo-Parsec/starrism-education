@@ -1,6 +1,6 @@
 package nom.edu.starrism.core.service;
 
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.exception.CoreException;
 import nom.edu.starrism.core.domain.entity.SysLog;
 
 /**
@@ -31,7 +31,7 @@ public interface LogService {
      * @author guocq
      * @date 2022/11/17 11:36
      */
-    default void write(String requestPath, String method, Long timeConsuming, Object[] args, Object result, SeException error) {
+    default void write(String requestPath, String method, Long timeConsuming, Object[] args, Object result, CoreException error) {
         write(build(requestPath, method, timeConsuming, args, result, error));
     }
 
@@ -48,5 +48,5 @@ public interface LogService {
      * @author guocq
      * @date 2022/11/17 11:35
      */
-    SysLog build(String requestPath, String method, Long timeConsuming, Object[] args, Object result, SeException error);
+    SysLog build(String requestPath, String method, Long timeConsuming, Object[] args, Object result, CoreException error);
 }

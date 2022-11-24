@@ -6,7 +6,7 @@ package nom.edu.starrism.common.enums;
  * @author hedwing
  * @since 2022/10/21
  **/
-public interface SeRestEnum extends SeEnum<Long, String> {
+public interface RequestEnum extends BaseEnum<Long, String> {
     /**
      * <p>获取提示信息</p>
      *

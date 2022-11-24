@@ -2,18 +2,13 @@ package nom.edu.starrism.admin.core.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
 import nom.edu.starrism.admin.api.domain.vo.SysUserVo;
 import nom.edu.starrism.core.domain.vo.SeUser;
-import nom.edu.starrism.core.support.TreeHelper;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>系统用户表</p>

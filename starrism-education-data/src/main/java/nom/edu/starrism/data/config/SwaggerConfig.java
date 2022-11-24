@@ -2,8 +2,8 @@ package nom.edu.starrism.data.config;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import nom.edu.starrism.common.pool.AuthPool;
 import nom.edu.starrism.common.pool.UrlPool;
+import nom.edu.starrism.data.pool.SecurityPool;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,12 +50,8 @@ public class SwaggerConfig {
 
     }
 
-    private HttpAuthenticationScheme tokenScheme() {
-        return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name(AuthPool.TOKEN_REQ_HEAD).build();
-    }
-
     private ApiKey apiKey() {
-        return new ApiKey(AuthPool.TOKEN_REQ_HEAD, AuthPool.TOKEN_REQ_HEAD, "header");
+        return new ApiKey(SecurityPool.AUTHORIZATION, SecurityPool.AUTHORIZATION, "header");
     }
 
     private SecurityContext tokenContext() {

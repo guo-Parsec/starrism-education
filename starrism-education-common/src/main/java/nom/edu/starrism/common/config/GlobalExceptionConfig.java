@@ -1,10 +1,10 @@
 package nom.edu.starrism.common.config;
 
-import nom.edu.starrism.common.enums.SeRestEnum;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.enums.RequestEnum;
+import nom.edu.starrism.common.exception.CoreException;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,10 +29,10 @@ public class GlobalExceptionConfig {
      * @return 统一处理
      */
     @ExceptionHandler({MethodArgumentNotValidException.class})
-    public SeResultCarrier<Void> validException(MethodArgumentNotValidException exception) {
+    public Carrier<Void> validException(MethodArgumentNotValidException exception) {
         ObjectError objectError = exception.getBindingResult().getAllErrors().get(0);
         LOGGER.error("参数校验失败", exception);
-        return SeResultCarrier.validateFailed(objectError.getDefaultMessage());
+        return Carrier.validateFailed(objectError.getDefaultMessage());
     }
 
     /**
@@ -41,14 +41,14 @@ public class GlobalExceptionConfig {
      * @param exception 异常信息
      * @return 统一处理
      */
-    @ExceptionHandler({SeException.class})
-    public SeResultCarrier<Void> starrismExceptionHandler(SeException exception) {
+    @ExceptionHandler({CoreException.class})
+    public Carrier<Void> starrismExceptionHandler(CoreException exception) {
         LOGGER.error("The application run starrismException", exception);
-        SeRestEnum baseRestEnum = exception.getBaseRestEnum();
+        RequestEnum baseRestEnum = exception.getRequestEnum();
         if (baseRestEnum == null) {
-            return SeResultCarrier.failed(exception.getMessage(), exception.getCode());
+            return Carrier.failed(exception.getMessage(), exception.getCode());
         }
-        return SeResultCarrier.failed(exception.getBaseRestEnum(), exception.getMessage());
+        return Carrier.failed(exception.getRequestEnum(), exception.getMessage());
     }
 
     /**
@@ -58,8 +58,8 @@ public class GlobalExceptionConfig {
      * @return 统一处理
      */
     @ExceptionHandler({Exception.class})
-    public SeResultCarrier<Void> defaultExceptionHandler(Exception exception) {
+    public Carrier<Void> defaultExceptionHandler(Exception exception) {
         LOGGER.error("The application run exception", exception);
-        return SeResultCarrier.failed();
+        return Carrier.failed();
     }
 }

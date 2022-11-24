@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.core.context.SeDictContext;
+import nom.edu.starrism.core.context.DictContext;
 import nom.edu.starrism.core.pool.DictPool;
 import nom.edu.starrism.data.domain.vo.AbstractDataVo;
 import nom.edu.starrism.data.pool.DataPool;
@@ -56,11 +56,11 @@ public class SeUser extends AbstractDataVo {
     private boolean authenticated;
 
     public String getSexName() {
-        return SeDictContext.convert(DictPool.DICT_CATEGORY_SEX, this.sex);
+        return DictContext.convert(DictPool.DICT_CATEGORY_SEX, this.sex);
     }
 
     public String getUserTypeName() {
-        return SeDictContext.convert(DictPool.DICT_CATEGORY_USER_TYPE, this.sex);
+        return DictContext.convert(DictPool.DICT_CATEGORY_USER_TYPE, this.sex);
     }
 
     /**
@@ -71,7 +71,7 @@ public class SeUser extends AbstractDataVo {
      * @since 2022/10/23
      */
     public String getDataStatusName() {
-        return SeDictContext.convert(DictPool.DICT_CATEGORY_DATA_STATUS, this.dataStatus);
+        return DictContext.convert(DictPool.DICT_CATEGORY_DATA_STATUS, this.dataStatus);
     }
 
     /**

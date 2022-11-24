@@ -3,7 +3,6 @@ package nom.edu.starrism.data.domain.vo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.data.domain.entity.AbstractEntity;
 import nom.edu.starrism.data.domain.entity.Treelike;
 
 /**

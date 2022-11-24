@@ -6,18 +6,15 @@ import nom.edu.starrism.admin.api.feign.SysPermissionClient;
 import nom.edu.starrism.admin.api.feign.SysRoleClient;
 import nom.edu.starrism.admin.api.feign.SysUserClient;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
-import nom.edu.starrism.auth.core.enums.SeAuthResultCode;
+import nom.edu.starrism.auth.core.enums.AuthRequest;
 import nom.edu.starrism.auth.core.exception.AuthException;
 import nom.edu.starrism.auth.core.service.LoginService;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.properties.TokenProperties;
-import nom.edu.starrism.common.service.RedisService;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.domain.vo.SeUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,18 +38,6 @@ public class LoginServiceImpl implements LoginService {
     private SysRoleClient sysRoleClient;
     @Resource
     private SysMenuClient sysMenuClient;
-    private TokenProperties tokenProperties;
-    private RedisService redisService;
-
-    @Autowired
-    public void setTokenProperties(TokenProperties tokenProperties) {
-        this.tokenProperties = tokenProperties;
-    }
-
-    @Autowired
-    public void setRedisService(RedisService redisService) {
-        this.redisService = redisService;
-    }
 
     /**
      * <p>登录方法</p>
@@ -67,15 +52,15 @@ public class LoginServiceImpl implements LoginService {
         String account = param.getAccount();
         String password = param.getPassword();
         LOGGER.debug("用户{}正在尝试登录系统", account);
-        SeResultCarrier<SeUser> carrier = sysUserClient.findUserByAccount(account, password);
-        SeUser userEntity = SeResultCarrier.getSuccessData(carrier);
+        Carrier<SeUser> carrier = sysUserClient.findUserByAccount(account, password);
+        SeUser userEntity = Carrier.getSuccessData(carrier);
         if (userEntity == null) {
             LOGGER.error("无法找到账户为{}的用户", account);
-            throw new AuthException(SeAuthResultCode.ACCOUNT_OR_PASSWORD_ERROR);
+            throw new AuthException(AuthRequest.ACCOUNT_OR_PASSWORD_ERROR);
         }
         if (!userEntity.isAuthenticated()) {
             LOGGER.error("账户{}密码验证失败", account);
-            throw new AuthException(SeAuthResultCode.ACCOUNT_OR_PASSWORD_ERROR);
+            throw new AuthException(AuthRequest.ACCOUNT_OR_PASSWORD_ERROR);
         }
         AuthenticatedUser authenticatedUser = new AuthenticatedUser(userEntity);
         fillPermissions(authenticatedUser);
@@ -96,8 +81,8 @@ public class LoginServiceImpl implements LoginService {
      */
     private void fillPermissions(AuthenticatedUser authenticatedUser) {
         Long userId = authenticatedUser.getId();
-        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionCodeOfUser(userId);
-        authenticatedUser.setPermissions(SeResultCarrier.getSuccessData(carrier));
+        Carrier<Set<String>> carrier = sysPermissionClient.findPermissionCodeOfUser(userId);
+        authenticatedUser.setPermissions(Carrier.getSuccessData(carrier));
     }
 
     /**
@@ -109,8 +94,8 @@ public class LoginServiceImpl implements LoginService {
      */
     private void fillRoles(AuthenticatedUser authenticatedUser) {
         Long userId = authenticatedUser.getId();
-        SeResultCarrier<Set<String>> carrier = sysRoleClient.findRoleCodesOfUser(userId);
-        authenticatedUser.setRoles(SeResultCarrier.getSuccessData(carrier));
+        Carrier<Set<String>> carrier = sysRoleClient.findRoleCodesOfUser(userId);
+        authenticatedUser.setRoles(Carrier.getSuccessData(carrier));
     }
 
     /**
@@ -122,8 +107,8 @@ public class LoginServiceImpl implements LoginService {
      */
     private void fillUrls(AuthenticatedUser authenticatedUser) {
         Long userId = authenticatedUser.getId();
-        SeResultCarrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
-        authenticatedUser.setUrls(SeResultCarrier.getSuccessData(carrier));
+        Carrier<Set<String>> carrier = sysPermissionClient.findPermissionUrlOfUser(userId);
+        authenticatedUser.setUrls(Carrier.getSuccessData(carrier));
     }
 
     /**
@@ -135,8 +120,8 @@ public class LoginServiceImpl implements LoginService {
      */
     private void fillMenuIds(AuthenticatedUser authenticatedUser) {
         Long userId = authenticatedUser.getId();
-        SeResultCarrier<Set<Long>> carrier = sysMenuClient.findMenuIdsOfUser(userId);
-        authenticatedUser.setMenuIds(SeResultCarrier.getSuccessData(carrier));
+        Carrier<Set<Long>> carrier = sysMenuClient.findMenuIdsOfUser(userId);
+        authenticatedUser.setMenuIds(Carrier.getSuccessData(carrier));
     }
 
     /**
@@ -148,7 +133,7 @@ public class LoginServiceImpl implements LoginService {
      */
     private void fillMenus(AuthenticatedUser authenticatedUser) {
         Long userId = authenticatedUser.getId();
-        SeResultCarrier<List<SysMenuVo>> carrier = sysMenuClient.findMenuTreesOfUser(userId);
-        authenticatedUser.setMenus(SeResultCarrier.getSuccessData(carrier));
+        Carrier<List<SysMenuVo>> carrier = sysMenuClient.findMenuTreesOfUser(userId);
+        authenticatedUser.setMenus(Carrier.getSuccessData(carrier));
     }
 }

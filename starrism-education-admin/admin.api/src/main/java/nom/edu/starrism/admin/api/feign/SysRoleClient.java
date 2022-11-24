@@ -2,7 +2,7 @@ package nom.edu.starrism.admin.api.feign;
 
 import nom.edu.starrism.common.pool.AppPool;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,10 +21,10 @@ public interface SysRoleClient {
      * <p>获取角色码：根据用户id获取</p>
      *
      * @param userId userId
-     * @return {@link SeResultCarrier<Set<String>>}
+     * @return {@link Carrier <Set<String>>}
      * @author hedwing
      * @since 2022/11/7
      */
     @GetMapping(value = "/find/code/by/roles")
-    SeResultCarrier<Set<String>> findRoleCodesOfUser(@RequestParam(value = "userId") Long userId);
+    Carrier<Set<String>> findRoleCodesOfUser(@RequestParam(value = "userId") Long userId);
 }

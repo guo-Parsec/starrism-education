@@ -1,12 +1,9 @@
 package nom.edu.starrism.admin.api.feign;
 
-import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
 import nom.edu.starrism.common.pool.AppPool;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
-import nom.edu.starrism.core.annotation.api.ApiResource;
-import nom.edu.starrism.core.type.AppTypes;
+import nom.edu.starrism.common.support.Carrier;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +28,7 @@ public interface SysMenuClient {
      * @date 2022/11/18 16:30
      */
     @GetMapping(value = "/find/menu-ids/of/user-id")
-    SeResultCarrier<Set<Long>> findMenuIdsOfUser(@RequestParam("userId") Long userId);
+    Carrier<Set<Long>> findMenuIdsOfUser(@RequestParam("userId") Long userId);
 
     /**
     * <p>查询用户的菜单树形结构列表</p>
@@ -41,5 +38,5 @@ public interface SysMenuClient {
     * @date 2022/11/18 17:25
     */
     @GetMapping(value = "/find/menu-tree/of/user-id")
-    SeResultCarrier<List<SysMenuVo>> findMenuTreesOfUser(@RequestParam(value = "userId", required = false) Long userId);
+    Carrier<List<SysMenuVo>> findMenuTreesOfUser(@RequestParam(value = "userId", required = false) Long userId);
 }

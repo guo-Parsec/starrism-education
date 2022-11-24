@@ -1,4 +1,4 @@
-package nom.edu.starrism.core.support;
+package nom.edu.starrism.core.helper;
 
 import com.google.common.collect.Lists;
 import nom.edu.starrism.data.domain.entity.Treelike;

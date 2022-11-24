@@ -1,16 +1,11 @@
 package nom.edu.starrism.admin.core.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
-import nom.edu.starrism.data.domain.vo.AbstractVo;
 
 /**
  * <p>系统菜单表</p>

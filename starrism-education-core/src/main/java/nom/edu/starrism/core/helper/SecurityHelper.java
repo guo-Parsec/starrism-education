@@ -1,11 +1,10 @@
-package nom.edu.starrism.core.support;
+package nom.edu.starrism.core.helper;
 
+import nom.edu.starrism.common.helper.TextHelper;
 import nom.edu.starrism.common.pool.RedisPool;
-import nom.edu.starrism.common.properties.TokenProperties;
 import nom.edu.starrism.common.service.RedisService;
-import nom.edu.starrism.common.support.TextHelper;
 import nom.edu.starrism.common.util.StringUtil;
-import nom.edu.starrism.core.pool.SecurityPool;
+import nom.edu.starrism.data.pool.SecurityPool;
 import nom.edu.starrism.data.component.SpringBean;
 
 /**
@@ -76,10 +75,10 @@ public class SecurityHelper {
      * @return 有效的令牌id
      */
     public static String findEffectiveTokenId(String text) {
-        if (StringUtil.isBlank(text) || !text.startsWith(SecurityPool.Bearer)) {
+        if (StringUtil.isBlank(text) || !text.startsWith(SecurityPool.BEARER)) {
             return StringUtil.EMPTY;
         }
-        return text.replace(SecurityPool.Bearer, StringUtil.EMPTY);
+        return text.replace(SecurityPool.BEARER, StringUtil.EMPTY);
     }
 
     /**
@@ -91,16 +90,5 @@ public class SecurityHelper {
      */
     public static RedisService redisService() {
         return SpringBean.getBean(RedisService.class);
-    }
-
-    /**
-     * <p>获取TokenProperties</p>
-     *
-     * @return {@link TokenProperties}
-     * @author guocq
-     * @date 2022/11/17 14:39
-     */
-    public static TokenProperties tokenProperties() {
-        return SpringBean.getBean(TokenProperties.class);
     }
 }

@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.core.service.SysUserService;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.annotation.api.ApiResource;
 import nom.edu.starrism.core.domain.vo.SeUser;
 import nom.edu.starrism.core.type.AppTypes;
@@ -34,16 +34,16 @@ public class SysUserController {
      *
      * @param account  账户
      * @param password 密码
-     * @return {@link SeResultCarrier<SeUser>}
+     * @return {@link Carrier <SeUser>}
      * @author guocq
      * @date 2022/10/24 15:07
      */
     @ApiOperation(value = "根据账户查询用户")
     @GetMapping(value = "/find/by/account")
     @ApiResource(value = "admin:self-user:query", name = "根据账户查询用户", app = AppTypes.ADMIN)
-    public SeResultCarrier<SeUser> findUserByAccount(@RequestParam("account") String account,
-                                                     @RequestParam("password") String password) {
+    public Carrier<SeUser> findUserByAccount(@RequestParam("account") String account,
+                                             @RequestParam("password") String password) {
         SeUser seUser = sysUserService.findUserByAccount(account, password);
-        return SeResultCarrier.success(seUser);
+        return Carrier.success(seUser);
     }
 }

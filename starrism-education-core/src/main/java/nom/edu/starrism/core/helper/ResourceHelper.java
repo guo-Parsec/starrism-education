@@ -1,11 +1,11 @@
-package nom.edu.starrism.core.support;
+package nom.edu.starrism.core.helper;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import nom.edu.starrism.common.helper.CodeHelper;
+import nom.edu.starrism.common.helper.TextHelper;
 import nom.edu.starrism.common.pool.RedisPool;
 import nom.edu.starrism.common.service.RedisService;
-import nom.edu.starrism.common.support.CodeHelper;
-import nom.edu.starrism.common.support.TextHelper;
 import nom.edu.starrism.common.util.CollectionUtil;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.common.util.UUIDGeneratorUtil;

@@ -1,7 +1,8 @@
-package nom.edu.starrism.common.support;
+package nom.edu.starrism.common.helper;
 
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
+import nom.edu.starrism.common.support.CommonConverts;
 import nom.edu.starrism.common.util.StringUtil;
 
 import java.util.HashMap;

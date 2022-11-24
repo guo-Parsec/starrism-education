@@ -5,10 +5,10 @@ import com.github.pagehelper.PageInfo;
 import nom.edu.starrism.admin.core.domain.param.SysDictDetailParam;
 import nom.edu.starrism.admin.core.mapper.SysDictDetailMapper;
 import nom.edu.starrism.admin.core.service.SysDictDetailService;
-import nom.edu.starrism.common.enums.SeCommonResultCode;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.helper.CodeHelper;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.core.access.DictAccess;
 import nom.edu.starrism.core.annotation.cache.CacheClear;
 import nom.edu.starrism.core.annotation.cache.CacheGroup;
@@ -159,7 +159,7 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
         SysDictDetailVo detail = dictAccess.findDetail(id);
         if (Objects.isNull(detail)) {
             String errorMessage = "不存在id为{}的字典";
-            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_NOT_EXIST, errorMessage, id);
+            CodeHelper.throwError(LOGGER, BaseRequest.DATA_NOT_EXIST, errorMessage, id);
         }
         return detail;
     }
@@ -175,7 +175,7 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
         SysDictCategory category = categoryRepository.findByCode(categoryCode);
         if (SysDictCategory.isEmpty(category)) {
             String errorMessage = "不存在分类码为{}的字典";
-            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_NOT_EXIST, errorMessage, categoryCode);
+            CodeHelper.throwError(LOGGER, BaseRequest.DATA_NOT_EXIST, errorMessage, categoryCode);
         }
         return category;
     }
@@ -192,7 +192,7 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
         SysDictDetailVo dict = dictAccess.findDictByCategoryCodeAndDictCode(categoryCode, dictCode);
         if (SysDictDetailVo.isNotEmpty(dict)) {
             String errorMessage = "[categoryCode={},dictCode={}]已维护";
-            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_EXIST, errorMessage, categoryCode, dictCode);
+            CodeHelper.throwError(LOGGER, BaseRequest.DATA_EXIST, errorMessage, categoryCode, dictCode);
         }
     }
 
@@ -208,7 +208,7 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
         SysDictDetailVo dict = dictAccess.findDictByCategoryCodeAndDictCode(categoryCode, dictCode);
         if (SysDictDetailVo.isEmpty(dict)) {
             String errorMessage = "[categoryCode={},dictCode={}]不存在";
-            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_NOT_EXIST, errorMessage, categoryCode, dictCode);
+            CodeHelper.throwError(LOGGER, BaseRequest.DATA_NOT_EXIST, errorMessage, categoryCode, dictCode);
         }
     }
 
@@ -224,7 +224,7 @@ public class SysDictDetailServiceImpl extends AbstractCoreService<SysDictDetailV
         SysDictDetailVo dict = dictAccess.findDictByCategoryCodeAndDictValue(categoryCode, dictValue);
         if (SysDictDetailVo.isNotEmpty(dict) && !dict.getDictCode().equals(dictCode)) {
             String errorMessage = "[categoryCode={},dictValue={}]已维护";
-            CodeHelper.throwError(LOGGER, SeCommonResultCode.DATA_EXIST, errorMessage, categoryCode, dictValue);
+            CodeHelper.throwError(LOGGER, BaseRequest.DATA_EXIST, errorMessage, categoryCode, dictValue);
         }
     }
 }

@@ -1,6 +1,6 @@
 package nom.edu.starrism.gate.filter;
 
-import nom.edu.starrism.common.enums.SeCommonResultCode;
+import nom.edu.starrism.common.enums.BaseRequest;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
@@ -13,6 +13,7 @@ import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.common.util.WebfluxServletUtil;
 import nom.edu.starrism.core.context.SecurityContext;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
+import nom.edu.starrism.data.pool.SecurityPool;
 import nom.edu.starrism.gate.properties.IgnoreUrlProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -34,12 +35,12 @@ import java.util.Set;
  * @since 2022/11/9
  **/
 @Component
-public class AuthCoreFilter implements GlobalFilter, Ordered {
-    private static final SeLogger LOGGER = SeLoggerFactory.getLogger(AuthCoreFilter.class);
+public class SecurityFilter implements GlobalFilter, Ordered {
+    private static final SeLogger LOGGER = SeLoggerFactory.getLogger(SecurityFilter.class);
     private final IgnoreUrlProperties ignoreUrlProperties;
     private RedisService redisService;
 
-    public AuthCoreFilter(IgnoreUrlProperties ignoreUrlProperties) {
+    public SecurityFilter(IgnoreUrlProperties ignoreUrlProperties) {
         this.ignoreUrlProperties = ignoreUrlProperties;
     }
 
@@ -85,13 +86,13 @@ public class AuthCoreFilter implements GlobalFilter, Ordered {
      */
     private Mono<Void> checkPermission(String requestActionUrl, String token, ServerHttpResponse response, ServerWebExchange exchange, GatewayFilterChain chain) {
         if (!SecurityContext.isCertificated(token)) {
-            return WebfluxServletUtil.write(response, SeCommonResultCode.UNAUTHORIZED.getMessage(), SeCommonResultCode.UNAUTHORIZED);
+            return WebfluxServletUtil.write(response, BaseRequest.UNAUTHORIZED.getMessage(), BaseRequest.UNAUTHORIZED);
         }
         if (authRelease(requestActionUrl, token)) {
             LOGGER.debug("当前请求[{}]已经匹配为认证过滤路径，可直接放行", requestActionUrl);
             return chain.filter(exchange);
         }
-        return WebfluxServletUtil.write(response, SeCommonResultCode.FORBIDDEN.getMessage(), SeCommonResultCode.FORBIDDEN);
+        return WebfluxServletUtil.write(response, BaseRequest.FORBIDDEN.getMessage(), BaseRequest.FORBIDDEN);
     }
 
     /**
@@ -111,7 +112,7 @@ public class AuthCoreFilter implements GlobalFilter, Ordered {
             LOGGER.debug("当前请求[{}]已经匹配为认证过滤路径，可直接放行", requestActionUrl);
             return chain.filter(exchange);
         }
-        return checkPermission(requestActionUrl, request.getHeaders().getFirst(AuthPool.TOKEN_REQ_HEAD), response, exchange, chain);
+        return checkPermission(requestActionUrl, request.getHeaders().getFirst(SecurityPool.AUTHORIZATION), response, exchange, chain);
     }
 
     @Override

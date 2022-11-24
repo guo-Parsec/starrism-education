@@ -1,7 +1,7 @@
 package nom.edu.starrism.common.util;
 
-import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.exception.CoreException;
 
 import java.security.MessageDigest;
 
@@ -37,7 +37,7 @@ public class Md5Util {
             }
             return new String(strA);
         } catch (Exception e) {
-            throw new SeException(SeCommonResultCode.FAILED, "MD5加密失败");
+            throw new CoreException(BaseRequest.FAILED, "MD5加密失败");
         }
     }
 

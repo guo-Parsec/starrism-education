@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 
 
 /**
- * <p></p>
+ * <p>mybatis拦截器</p>
  *
  * @author guocq
  * @since 2022/11/16

@@ -1,8 +1,8 @@
 package nom.edu.starrism.auth.core.exception;
 
 import lombok.Getter;
-import nom.edu.starrism.auth.core.enums.SeAuthResultCode;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.auth.core.enums.AuthRequest;
+import nom.edu.starrism.common.exception.CoreException;
 
 /**
  * <p>认证异常类</p>
@@ -10,12 +10,12 @@ import nom.edu.starrism.common.exception.SeException;
  * @author hedwing
  * @since 2022/11/6
  **/
-public class AuthException extends SeException {
+public class AuthException extends CoreException {
     private static final long serialVersionUID = 5844827963823153181L;
     @Getter
-    private SeAuthResultCode authResultCode;
+    private AuthRequest authResultCode;
 
-    public AuthException(SeAuthResultCode authResultCode) {
+    public AuthException(AuthRequest authResultCode) {
         super(authResultCode);
         this.authResultCode = authResultCode;
     }
@@ -24,17 +24,17 @@ public class AuthException extends SeException {
         super(message,code);
     }
 
-    public AuthException(SeAuthResultCode authResultCode, String message) {
+    public AuthException(AuthRequest authResultCode, String message) {
         super(authResultCode, message);
         this.authResultCode = authResultCode;
     }
 
-    public AuthException(SeAuthResultCode authResultCode, Throwable cause) {
+    public AuthException(AuthRequest authResultCode, Throwable cause) {
         super(authResultCode, cause);
         this.authResultCode = authResultCode;
     }
 
-    public AuthException(Throwable cause, SeAuthResultCode authResultCode, String message) {
+    public AuthException(Throwable cause, AuthRequest authResultCode, String message) {
         super(cause, authResultCode, message);
         this.authResultCode = authResultCode;
     }

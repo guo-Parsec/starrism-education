@@ -1,8 +1,8 @@
 package nom.edu.starrism.core.aspect;
 
+import nom.edu.starrism.common.helper.ReflectHelper;
 import nom.edu.starrism.common.service.RedisService;
 import nom.edu.starrism.common.util.ArrayUtil;
-import nom.edu.starrism.common.util.ReflectionUtil;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.core.annotation.cache.CacheClear;
 import nom.edu.starrism.core.annotation.cache.CacheGroup;
@@ -44,8 +44,8 @@ public class CacheAspect {
         Object[] args = joinPoint.getArgs();
         // 得到被代理的方法
         Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        CacheClear cacheClear = ReflectionUtil.findMethodAnnotation(method, CacheClear.class);
-        CacheGroup cacheGroup = ReflectionUtil.findMethodAnnotation(method, CacheGroup.class);
+        CacheClear cacheClear = ReflectHelper.findMethodAnnotation(method, CacheClear.class);
+        CacheGroup cacheGroup = ReflectHelper.findMethodAnnotation(method, CacheGroup.class);
         result = joinPoint.proceed(args);
         if (cacheClear != null) {
             doCacheClear(args, method, cacheClear, result);

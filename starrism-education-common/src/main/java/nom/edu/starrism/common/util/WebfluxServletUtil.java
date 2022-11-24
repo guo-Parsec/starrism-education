@@ -1,9 +1,9 @@
 package nom.edu.starrism.common.util;
 
 import com.alibaba.fastjson2.JSONObject;
-import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.enums.SeRestEnum;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.enums.RequestEnum;
+import nom.edu.starrism.common.support.Carrier;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class WebfluxServletUtil {
      * @since 2022/8/27
      */
     public static Mono<Void> write(ServerHttpResponse response, String msg) {
-        return write(response, msg, SeCommonResultCode.FAILED);
+        return write(response, msg, BaseRequest.FAILED);
     }
 
     /**
@@ -41,7 +41,7 @@ public class WebfluxServletUtil {
      * @author hedwing
      * @since 2022/8/27
      */
-    public static Mono<Void> write(ServerHttpResponse response, String msg, SeRestEnum code) {
+    public static Mono<Void> write(ServerHttpResponse response, String msg, RequestEnum code) {
         return write(response, HttpStatus.OK, msg, code);
     }
 
@@ -56,7 +56,7 @@ public class WebfluxServletUtil {
      * @author hedwing
      * @since 2022/8/27
      */
-    public static Mono<Void> write(ServerHttpResponse response, HttpStatus status, String msg, SeRestEnum code) {
+    public static Mono<Void> write(ServerHttpResponse response, HttpStatus status, String msg, RequestEnum code) {
         return write(response, MediaType.APPLICATION_JSON_VALUE, status, msg, code);
     }
 
@@ -72,10 +72,10 @@ public class WebfluxServletUtil {
      * @author hedwing
      * @since 2022/8/27
      */
-    public static Mono<Void> write(ServerHttpResponse response, String contentType, HttpStatus status, String msg, SeRestEnum code) {
+    public static Mono<Void> write(ServerHttpResponse response, String contentType, HttpStatus status, String msg, RequestEnum code) {
         response.setStatusCode(status);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
-        SeResultCarrier<Void> result = SeResultCarrier.failed(code, msg);
+        Carrier<Void> result = Carrier.failed(code, msg);
         DataBuffer dataBuffer = response.bufferFactory().wrap(JSONObject.toJSONString(result).getBytes());
         return response.writeWith(Mono.just(dataBuffer));
     }

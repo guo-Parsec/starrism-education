@@ -1,9 +1,9 @@
 package nom.edu.starrism.core.context;
 
+import nom.edu.starrism.common.helper.CodeHelper;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
-import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.common.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;

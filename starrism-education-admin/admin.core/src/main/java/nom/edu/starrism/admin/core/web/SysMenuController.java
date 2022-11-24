@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
 import nom.edu.starrism.admin.core.service.SysMenuService;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.annotation.api.ApiResource;
 import nom.edu.starrism.core.type.AppTypes;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,17 +35,17 @@ public class SysMenuController {
     @ApiOperation(value = "查询用户的菜单id列表")
     @ApiResource(value = "admin:self-menu:query", name = "查询用户的菜单id列表", app = AppTypes.ADMIN)
     @GetMapping(value = "/find/menu-ids/of/user-id")
-    public SeResultCarrier<Set<Long>> findMenuIdsOfUser(@RequestParam("userId") Long userId) {
-        return SeResultCarrier.success(service.findMenuIds(userId));
+    public Carrier<Set<Long>> findMenuIdsOfUser(@RequestParam("userId") Long userId) {
+        return Carrier.success(service.findMenuIds(userId));
     }
 
     @ApiOperation(value = "查询用户的菜单树形结构列表")
     @ApiResource(value = "admin:self-menu:query", name = "查询用户的菜单树形结构列表", app = AppTypes.ADMIN)
     @GetMapping(value = "/find/menu-tree/of/user-id")
-    public SeResultCarrier<List<SysMenuVo>> findMenuTreesOfUser(@RequestParam(value = "userId", required = false) Long userId) {
+    public Carrier<List<SysMenuVo>> findMenuTreesOfUser(@RequestParam(value = "userId", required = false) Long userId) {
         if (userId == null) {
-            return SeResultCarrier.success(service.findMenusOfCurrentUser());
+            return Carrier.success(service.findMenusOfCurrentUser());
         }
-        return SeResultCarrier.success(service.findMenusOfUserId(userId, Boolean.TRUE));
+        return Carrier.success(service.findMenusOfUserId(userId, Boolean.TRUE));
     }
 }

@@ -8,7 +8,7 @@ import nom.edu.starrism.admin.core.domain.param.SysDictDetailParam;
 import nom.edu.starrism.admin.core.service.SysDictCategoryService;
 import nom.edu.starrism.admin.core.service.SysDictDetailService;
 import nom.edu.starrism.common.pool.UrlPool;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.annotation.api.ApiResource;
 import nom.edu.starrism.core.annotation.log.LogWrite;
 import nom.edu.starrism.core.domain.vo.SysDictCategoryVo;
@@ -40,62 +40,62 @@ public class SysDictController {
     @ApiOperation(value = "字典类别数据新增")
     @PostMapping(value = "/category/create.do")
     @ApiResource(value = "admin:dict-category:write", name = "字典类别数据新增", app = AppTypes.ADMIN)
-    public SeResultCarrier<SysDictCategoryVo> addSysDictCategory(@Validated @RequestBody SysDictCategoryParam param) {
-        return SeResultCarrier.success(dictCategoryService.create(param));
+    public Carrier<SysDictCategoryVo> addSysDictCategory(@Validated @RequestBody SysDictCategoryParam param) {
+        return Carrier.success(dictCategoryService.create(param));
     }
 
     @LogWrite
     @ApiOperation(value = "字典类别数据更新")
     @PutMapping(value = "/category/put.do")
     @ApiResource(value = "admin:dict-category:write", name = "字典类别数据更新", app = AppTypes.ADMIN)
-    public SeResultCarrier<SysDictCategoryVo> updateSysDictCategory(@Validated(CrudValidGroup.Update.class) @RequestBody SysDictCategoryParam param) {
-        return SeResultCarrier.success(dictCategoryService.update(param));
+    public Carrier<SysDictCategoryVo> updateSysDictCategory(@Validated(CrudValidGroup.Update.class) @RequestBody SysDictCategoryParam param) {
+        return Carrier.success(dictCategoryService.update(param));
     }
 
     @LogWrite
     @ApiOperation(value = "字典类别数据删除")
     @DeleteMapping(value = "/category/delete.do")
     @ApiResource(value = "admin:dict-category:write", name = "字典类别数据删除", app = AppTypes.ADMIN)
-    public SeResultCarrier<SysDictCategoryVo> deleteSysDictCategory(@RequestBody Long id) {
-        return SeResultCarrier.success(dictCategoryService.delete(id));
+    public Carrier<SysDictCategoryVo> deleteSysDictCategory(@RequestBody Long id) {
+        return Carrier.success(dictCategoryService.delete(id));
     }
 
     @LogWrite
     @ApiOperation(value = "字典详情数据新增")
     @PostMapping(value = "/detail/create.do")
     @ApiResource(value = "admin:dict-detail:write", name = "字典详情数据新增", app = AppTypes.ADMIN)
-    public SeResultCarrier<SysDictDetailVo> addSysDictDetail(@Validated(CrudValidGroup.Create.class) @RequestBody SysDictDetailParam param) {
-        return SeResultCarrier.success(dictDetailService.create(param));
+    public Carrier<SysDictDetailVo> addSysDictDetail(@Validated(CrudValidGroup.Create.class) @RequestBody SysDictDetailParam param) {
+        return Carrier.success(dictDetailService.create(param));
     }
 
     @LogWrite
     @ApiOperation(value = "字典详情数据更新")
     @PutMapping(value = "/detail/put.do")
     @ApiResource(value = "admin:dict-detail:write", name = "字典详情数据更新", app = AppTypes.ADMIN)
-    public SeResultCarrier<SysDictDetailVo> updateSysDictDetail(@Validated(CrudValidGroup.Update.class) @RequestBody SysDictDetailParam param) {
-        return SeResultCarrier.success(dictDetailService.update(param));
+    public Carrier<SysDictDetailVo> updateSysDictDetail(@Validated(CrudValidGroup.Update.class) @RequestBody SysDictDetailParam param) {
+        return Carrier.success(dictDetailService.update(param));
     }
 
     @LogWrite
     @ApiOperation(value = "字典详情数据删除")
     @DeleteMapping(value = "/detail/delete.do")
     @ApiResource(value = "admin:dict-detail:write", name = "字典详情数据删除", app = AppTypes.ADMIN)
-    public SeResultCarrier<SysDictDetailVo> deleteSysDictDetail(@RequestBody Long id) {
-        return SeResultCarrier.success(dictDetailService.delete(id));
+    public Carrier<SysDictDetailVo> deleteSysDictDetail(@RequestBody Long id) {
+        return Carrier.success(dictDetailService.delete(id));
     }
 
     @ApiOperation(value = "字典详情数据分页查询")
     @GetMapping(value = "/detail/page")
     @ApiResource(value = "admin:dict-detail:query-page", name = "字典详情数据分页查询", app = AppTypes.ADMIN)
-    public SeResultCarrier<PageInfo<SysDictDetailVo>> pageDetail(@Validated(CrudValidGroup.PageQuery.class) SysDictDetailParam param) {
-        return SeResultCarrier.success(dictDetailService.pageQuery(param));
+    public Carrier<PageInfo<SysDictDetailVo>> pageDetail(@Validated(CrudValidGroup.PageQuery.class) SysDictDetailParam param) {
+        return Carrier.success(dictDetailService.pageQuery(param));
     }
 
     @ApiOperation(value = "字典详情数据非分页查询")
     @GetMapping(value = "/detail/list")
     @ApiResource(value = "admin:dict-detail:query-list", name = "字典详情数据非分页查询", app = AppTypes.ADMIN)
-    public SeResultCarrier<List<SysDictDetailVo>> listDetail(@Validated(CrudValidGroup.Query.class) SysDictDetailParam param) {
-        return SeResultCarrier.success(dictDetailService.listQuery(param));
+    public Carrier<List<SysDictDetailVo>> listDetail(@Validated(CrudValidGroup.Query.class) SysDictDetailParam param) {
+        return Carrier.success(dictDetailService.listQuery(param));
     }
 
     @Autowired

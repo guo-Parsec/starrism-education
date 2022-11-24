@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.auth.api.domain.param.UserLoginParam;
 import nom.edu.starrism.auth.core.service.LoginService;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +29,7 @@ public class LoginController {
 
     @ApiOperation(value = "登录认证")
     @PostMapping(value = "/login.do")
-    public SeResultCarrier<AuthenticatedUser> doLogin(@Validated @RequestBody UserLoginParam param) {
-        return SeResultCarrier.success(loginService.login(param));
+    public Carrier<AuthenticatedUser> doLogin(@Validated @RequestBody UserLoginParam param) {
+        return Carrier.success(loginService.login(param));
     }
 }

@@ -6,7 +6,7 @@ package nom.edu.starrism.common.enums;
  * @author hedwing
  * @since 2022/10/21
  **/
-public interface SeEnum<C, V> {
+public interface BaseEnum<C, V> {
     /**
      * <p>获取码值</p>
      *

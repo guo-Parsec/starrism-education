@@ -33,12 +33,12 @@ public interface UrlPool {
     String ADMIN_ROLE_PREFIX = "/sys/role";
 
     /**
+     * 系统RSA加解密管理url前缀
+     */
+    String ADMIN_RSA_PREFIX = "/sys/rsa";
+
+    /**
      * 全局统一路由
      */
     String GLOBAL_URL_PREFIX = "/se/v1";
-
-    /**
-     * token管理url前缀
-     */
-    String AUTH_TOKEN_PREFIX = "/token";
 }

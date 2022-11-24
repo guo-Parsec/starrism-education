@@ -1,7 +1,7 @@
 package nom.edu.starrism.auth.core.enums;
 
 import lombok.Getter;
-import nom.edu.starrism.common.enums.SeRestEnum;
+import nom.edu.starrism.common.enums.RequestEnum;
 
 /**
  * <p>认证服务数据码枚举</p>
@@ -9,7 +9,7 @@ import nom.edu.starrism.common.enums.SeRestEnum;
  * @author hedwing
  * @since 2022/11/6
  **/
-public enum SeAuthResultCode implements SeRestEnum {
+public enum AuthRequest implements RequestEnum {
     /**
      * 客户端认证失败
      */
@@ -37,12 +37,12 @@ public enum SeAuthResultCode implements SeRestEnum {
     @Getter
     private final String message;
 
-    SeAuthResultCode(Long code, String value) {
+    AuthRequest(Long code, String value) {
         this.code = code;
         this.message = value;
     }
 
-    SeAuthResultCode(Integer code, String value) {
+    AuthRequest(Integer code, String value) {
         this.code = Long.valueOf(code);
         this.message = value;
     }

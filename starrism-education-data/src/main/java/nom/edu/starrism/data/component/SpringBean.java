@@ -33,8 +33,8 @@ public class SpringBean implements ApplicationContextAware {
     /**
      * 通过name获取 Bean.
      *
-     * @param name
-     * @return
+     * @param name 指定bean的类对象
+     * @return bean对象
      */
     public static Object getBean(String name) {
         return getApplicationContext().getBean(name);
@@ -43,9 +43,9 @@ public class SpringBean implements ApplicationContextAware {
     /**
      * 通过class获取Bean.
      *
-     * @param clazz
-     * @param <T>
-     * @return
+     * @param clazz 指定bean的类对象
+     * @param <T>   指定bean的类型
+     * @return bean对象
      */
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
@@ -54,10 +54,10 @@ public class SpringBean implements ApplicationContextAware {
     /**
      * 通过name,以及Clazz返回指定的Bean
      *
-     * @param name
-     * @param clazz
-     * @param <T>
-     * @return
+     * @param name  bean的名称
+     * @param clazz 指定bean的类对象
+     * @param <T>   指定bean的类型
+     * @return bean对象
      */
     public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);

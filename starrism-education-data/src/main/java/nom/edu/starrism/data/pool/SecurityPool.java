@@ -1,4 +1,4 @@
-package nom.edu.starrism.core.pool;
+package nom.edu.starrism.data.pool;
 
 /**
  * <p>安全认证常量池</p>
@@ -40,5 +40,5 @@ public interface SecurityPool {
     /**
      * JWT令牌前缀
      */
-    String Bearer = "Bearer ";
+    String BEARER = "Bearer ";
 }

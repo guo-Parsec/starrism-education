@@ -2,12 +2,12 @@ package nom.edu.starrism.core.aspect;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.exception.CoreException;
+import nom.edu.starrism.common.helper.CodeHelper;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
-import nom.edu.starrism.common.support.CodeHelper;
-import nom.edu.starrism.common.support.SeResultCarrier;
+import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.annotation.log.LogWrite;
 import nom.edu.starrism.core.service.LogService;
 import nom.edu.starrism.data.type.RequestType;
@@ -41,15 +41,15 @@ public class LogWriteAspect {
         String method = request.getMethod();
         List<RequestType> requestTypes = Lists.newArrayList(logWrite.allowRequestType());
         Object result = null;
-        SeException error = null;
+        CoreException error = null;
         try {
             result = joinPoint.proceed();
-        } catch (SeException exception) {
+        } catch (CoreException exception) {
             error = exception;
-            result = SeResultCarrier.failed(error.getBaseRestEnum(), error.getMessage());
+            result = Carrier.failed(error.getRequestEnum(), error.getMessage());
         } catch (Throwable exception) {
-            error = new SeException(SeCommonResultCode.FAILED, exception.getMessage());
-            result = SeResultCarrier.failed(error.getBaseRestEnum(), error.getMessage());
+            error = new CoreException(BaseRequest.FAILED, exception.getMessage());
+            result = Carrier.failed(error.getRequestEnum(), error.getMessage());
         }
         String url = request.getRequestURI();
         long endMillis = System.currentTimeMillis();

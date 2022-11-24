@@ -8,11 +8,15 @@ import lombok.Getter;
  * @author hedwing
  * @since 2022/10/21
  **/
-public enum SeCommonResultCode implements SeRestEnum {
+public enum BaseRequest implements RequestEnum {
     /**
      * 信息码
      */
     SUCCESS(200, "操作成功"),
+    /**
+     * 空
+     */
+    EMPTY(205, "未知空操作"),
     /**
      * 操作失败
      */
@@ -46,12 +50,12 @@ public enum SeCommonResultCode implements SeRestEnum {
     @Getter
     private final String message;
 
-    SeCommonResultCode(Long code, String value) {
+    BaseRequest(Long code, String value) {
         this.code = code;
         this.message = value;
     }
 
-    SeCommonResultCode(Integer code, String value) {
+    BaseRequest(Integer code, String value) {
         this.code = Long.valueOf(code);
         this.message = value;
     }

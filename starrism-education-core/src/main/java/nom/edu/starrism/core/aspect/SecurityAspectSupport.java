@@ -1,12 +1,12 @@
 package nom.edu.starrism.core.aspect;
 
 import com.google.common.collect.Sets;
-import nom.edu.starrism.common.enums.SeCommonResultCode;
-import nom.edu.starrism.common.exception.SeException;
+import nom.edu.starrism.common.enums.BaseRequest;
+import nom.edu.starrism.common.exception.CoreException;
+import nom.edu.starrism.common.helper.CodeHelper;
 import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.pool.AuthPool;
-import nom.edu.starrism.common.support.CodeHelper;
 import nom.edu.starrism.common.util.StringUtil;
 import nom.edu.starrism.core.annotation.security.CheckLogin;
 import nom.edu.starrism.core.annotation.security.CheckPermission;
@@ -62,7 +62,7 @@ public class SecurityAspectSupport {
             return joinPoint.proceed(args);
         }
         LOGGER.error("请求[{}]方法[{}]校验登录失败", requestPath, methodName);
-        throw new SeException(SeCommonResultCode.FORBIDDEN);
+        throw new CoreException(BaseRequest.FORBIDDEN);
     }
 
     /**
@@ -98,7 +98,7 @@ public class SecurityAspectSupport {
             return joinPoint.proceed(args);
         }
         LOGGER.error("请求[{}]方法[{}]校验权限{}失败", requestPath, methodName, permissionCodes);
-        throw new SeException(SeCommonResultCode.FORBIDDEN);
+        throw new CoreException(BaseRequest.FORBIDDEN);
     }
 
     /**
@@ -130,7 +130,7 @@ public class SecurityAspectSupport {
             return joinPoint.proceed(args);
         }
         LOGGER.error("请求[{}]方法[{}]校验角色{}失败", requestPath, methodName, roleCodes);
-        throw new SeException(SeCommonResultCode.FORBIDDEN);
+        throw new CoreException(BaseRequest.FORBIDDEN);
     }
 
     /**

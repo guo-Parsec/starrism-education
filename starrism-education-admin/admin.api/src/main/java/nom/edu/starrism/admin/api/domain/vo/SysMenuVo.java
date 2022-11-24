@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.core.context.SeDictContext;
+import nom.edu.starrism.core.context.DictContext;
 import nom.edu.starrism.core.pool.DictPool;
 import nom.edu.starrism.data.domain.vo.AbstractTreelikeDataVo;
 
@@ -73,11 +73,11 @@ public class SysMenuVo extends AbstractTreelikeDataVo<SysMenuVo> {
      */
     @Override
     public String getDataStatusName() {
-        return SeDictContext.convert(DictPool.DICT_CATEGORY_DATA_STATUS, this.dataStatus);
+        return DictContext.convert(DictPool.DICT_CATEGORY_DATA_STATUS, this.dataStatus);
     }
 
     public String getVisibleStatusName() {
-        return SeDictContext.convert(DictPool.DICT_CATEGORY_VISIBLE_STATUS, this.visibleStatus);
+        return DictContext.convert(DictPool.DICT_CATEGORY_VISIBLE_STATUS, this.visibleStatus);
     }
 
     @Override
