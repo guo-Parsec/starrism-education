@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地Mysql
+ Source Server         : 腾讯云
  Source Server Type    : MySQL
- Source Server Version : 80030 (8.0.30)
- Source Host           : localhost:3306
+ Source Server Version : 80029 (8.0.29)
+ Source Host           : 1.15.57.220:9669
  Source Schema         : starrism_education_db
 
  Target Server Type    : MySQL
- Target Server Version : 80030 (8.0.30)
+ Target Server Version : 80029 (8.0.29)
  File Encoding         : 65001
 
- Date: 23/10/2022 22:12:40
+ Date: 25/11/2022 22:38:32
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `se_college`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT ' 创建时间 ',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT ' 修改时间 ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '学院信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '学院信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of se_college
@@ -56,7 +56,7 @@ CREATE TABLE `se_degree_category`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT ' 创建时间 ',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT ' 修改时间 ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '学位分类信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '学位分类信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of se_degree_category
@@ -80,7 +80,7 @@ CREATE TABLE `se_grade`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT ' 创建时间 ',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT ' 修改时间 ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '年级信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '年级信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of se_grade
@@ -107,7 +107,7 @@ CREATE TABLE `se_major`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT ' 创建时间 ',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT ' 修改时间 ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '专业信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '专业信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of se_major
@@ -136,7 +136,7 @@ CREATE TABLE `se_schooling_length`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT ' 创建时间 ',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT ' 修改时间 ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '学制信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '学制信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of se_schooling_length
@@ -163,7 +163,7 @@ CREATE TABLE `sys_dict_category`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统字典类别表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统字典类别表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_category
@@ -171,6 +171,11 @@ CREATE TABLE `sys_dict_category`  (
 INSERT INTO `sys_dict_category` VALUES (1, 'data_status', '数据状态', 10, 0, '2022-10-19 09:28:01', '2022-10-23 18:30:31');
 INSERT INTO `sys_dict_category` VALUES (2, 'sex', '性别字典', 20, 0, '2022-10-23 18:30:26', '2022-10-23 18:32:45');
 INSERT INTO `sys_dict_category` VALUES (3, 'user_type', '用户类型', 30, 0, '2022-10-19 09:56:16', '2022-10-23 18:32:48');
+INSERT INTO `sys_dict_category` VALUES (32983166679650304, 'test_type', '测试数据', 99999, 2, '2022-11-12 00:23:20', '2022-11-17 16:17:31');
+INSERT INTO `sys_dict_category` VALUES (34583360231837696, 'test_dict_1', '测试数据', 60, 2, '2022-11-16 10:21:56', '2022-11-17 16:17:41');
+INSERT INTO `sys_dict_category` VALUES (34969736093765632, 'test111', 'ceshi', 50, 2, '2022-11-17 11:57:15', '2022-11-17 16:17:49');
+INSERT INTO `sys_dict_category` VALUES (34970117091758080, 'test222', 'ceshi', 50, 2, '2022-11-17 11:58:46', '2022-11-17 16:17:54');
+INSERT INTO `sys_dict_category` VALUES (35406823058182144, 'visible_status', '显示状态', 30, 0, '2022-11-18 16:54:04', '2022-11-18 16:54:04');
 
 -- ----------------------------
 -- Table structure for sys_dict_detail
@@ -188,7 +193,7 @@ CREATE TABLE `sys_dict_detail`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统字典详情表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统字典详情表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_detail
@@ -199,6 +204,37 @@ INSERT INTO `sys_dict_detail` VALUES (3, 1, 'delete', '2', '删除状态', 30, N
 INSERT INTO `sys_dict_detail` VALUES (4, 2, 'unknown', '0', '未知', 10, NULL, 0, '2022-10-23 18:34:31', '2022-10-23 18:34:31');
 INSERT INTO `sys_dict_detail` VALUES (5, 2, 'female', '1', '女性', 20, NULL, 0, '2022-10-23 18:34:31', '2022-10-23 18:34:31');
 INSERT INTO `sys_dict_detail` VALUES (6, 2, 'male', '2', '男性', 30, NULL, 0, '2022-10-23 18:34:31', '2022-10-23 18:34:31');
+INSERT INTO `sys_dict_detail` VALUES (35407092705792000, 35406823058182144, 'visible', '0', '可见', 10, NULL, 0, '2022-11-18 16:55:09', '2022-11-18 16:55:09');
+INSERT INTO `sys_dict_detail` VALUES (35407175094505472, 35406823058182144, 'invisible', '1', '不可见', 20, NULL, 0, '2022-11-18 16:55:28', '2022-11-18 16:56:08');
+
+-- ----------------------------
+-- Table structure for sys_log
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_log`;
+CREATE TABLE `sys_log`  (
+  `id` bigint NOT NULL COMMENT '主键',
+  `request_path` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求路径',
+  `op_explain` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '操作说明',
+  `app` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '访问应用',
+  `time_consuming` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '耗时时间(ms)',
+  `request_method` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求类型',
+  `request_param` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '请求参数',
+  `request_result` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '请求结果',
+  `error_code` int NULL DEFAULT NULL COMMENT '错误码',
+  `error_message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '错误信息',
+  `success` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' COMMENT '请求是否成功 1-成功 2-失败',
+  `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
+  `op_user_id` bigint NOT NULL COMMENT '操作人id',
+  `op_user_account` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '操作用户账户',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '日志记录表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+INSERT INTO `sys_log` VALUES (38028691154014208, '/auth/login.do', '登录认证', '认证中心服务', '643', 'POST', '[{\"account\":\"admin\",\"password\":\"123456\",\"verificationCode\":\"string\"}]', '{\"code\":200,\"data\":{\"id\":31135640900997120,\"menuIds\":[1,2,3,4,5,6,7,8],\"permissions\":[\"*:*:*\"],\"roles\":[\"full-admin\"],\"subject\":\"admin\",\"tokenId\":\"Bearer cb462cce-113a-40c6-8d85-3ffbc7cbde77\",\"tokenName\":\"Authorization\",\"urls\":[\"/**\"],\"userEntity\":{\"account\":\"admin\",\"authenticated\":true,\"birthday\":\"2022-10-20\",\"dataStatus\":0,\"dataStatusName\":\"启用状态\",\"gmtCreate\":\"2022-10-19T09:25:24\",\"gmtModify\":\"2022-11-06T22:03:14\",\"id\":31135640900997120,\"nickname\":\"超级管理员\",\"sex\":0,\"sexName\":\"未知\",\"userType\":0}},\"message\":\"操作成功\"}', NULL, NULL, '1', '2022-11-25 22:32:26', 31135640900997120, 'admin');
+INSERT INTO `sys_log` VALUES (38028870485676032, '/auth/login.do', '登录认证', '认证中心服务', '275', 'POST', '[{\"account\":\"admin\",\"password\":\"123456\",\"verificationCode\":\"string\"}]', '{\"code\":200,\"data\":{\"id\":31135640900997120,\"menuIds\":[1,2,3,4,5,6,7,8],\"permissions\":[\"*:*:*\"],\"roles\":[\"full-admin\"],\"subject\":\"admin\",\"tokenId\":\"Bearer 3a8dc258-1b65-4249-87f4-99a516ca1c72\",\"tokenName\":\"Authorization\",\"urls\":[\"/**\"],\"userEntity\":{\"account\":\"admin\",\"authenticated\":true,\"birthday\":\"2022-10-20\",\"dataStatus\":0,\"dataStatusName\":\"启用状态\",\"gmtCreate\":\"2022-10-19T09:25:24\",\"gmtModify\":\"2022-11-06T22:03:14\",\"id\":31135640900997120,\"nickname\":\"超级管理员\",\"sex\":0,\"sexName\":\"未知\",\"userType\":0}},\"message\":\"操作成功\"}', NULL, NULL, '1', '2022-11-25 22:33:09', 31135640900997120, 'admin');
+INSERT INTO `sys_log` VALUES (38029200166359040, '/auth/login.do', '登录认证', '认证中心服务', '538', 'POST', '[{\"account\":\"tjnu_admin\",\"password\":\"123456\",\"verificationCode\":\"string\"}]', '{\"code\":200,\"data\":{\"id\":31135640900997122,\"menuIds\":[],\"permissions\":[],\"roles\":[\"school-level-admin\"],\"subject\":\"tjnu_admin\",\"tokenId\":\"Bearer e348a05d-69dd-48ae-a8ba-1a70a75c83f8\",\"tokenName\":\"Authorization\",\"urls\":[],\"userEntity\":{\"account\":\"tjnu_admin\",\"authenticated\":true,\"birthday\":\"1958-09-10\",\"dataStatus\":0,\"dataStatusName\":\"启用状态\",\"gmtCreate\":\"2022-10-20T11:20:37\",\"gmtModify\":\"2022-11-06T22:03:14\",\"id\":31135640900997122,\"nickname\":\"教务系统管理员\",\"sex\":1,\"sexName\":\"女性\",\"userType\":0}},\"message\":\"操作成功\"}', NULL, NULL, '1', '2022-11-25 22:34:27', 31135640900997122, 'tjnu_admin');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -221,11 +257,19 @@ CREATE TABLE `sys_menu`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统菜单表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
+INSERT INTO `sys_menu` VALUES (1, 0, '/', 'root', '根目录', '', 1, 0, 10, '', '/starrism/edu', '根目录', 0, '2022-11-18 15:52:39', '2022-11-18 15:52:39');
+INSERT INTO `sys_menu` VALUES (2, 1, '/0', 'workbench', '工作台', '', 0, 1, 20, '', '/workbench', '', 0, '2022-11-18 15:56:24', '2022-11-18 15:56:24');
+INSERT INTO `sys_menu` VALUES (3, 1, '/0', 'admin', '系统管理', '', 0, 1, 30, '', '/admin', '', 0, '2022-11-18 15:56:24', '2022-11-18 15:56:24');
+INSERT INTO `sys_menu` VALUES (4, 3, '/0/3', 'user-management ', '用户管理', '', 0, 2, 40, '', '/user', '', 0, '2022-11-18 15:56:24', '2022-11-18 15:56:24');
+INSERT INTO `sys_menu` VALUES (5, 3, '/0/3', 'role-management ', '角色管理', '', 0, 2, 50, '', '/role', '', 0, '2022-11-18 15:58:39', '2022-11-18 15:58:39');
+INSERT INTO `sys_menu` VALUES (6, 3, '/0/3', 'permission-management ', '权限管理', '', 0, 2, 60, '', '/permission', '', 0, '2022-11-18 15:58:39', '2022-11-18 15:58:39');
+INSERT INTO `sys_menu` VALUES (7, 3, '/0/3', 'dict-management', '字典管理', '', 0, 2, 70, '', '', '', 0, '2022-11-18 15:58:40', '2022-11-18 15:58:40');
+INSERT INTO `sys_menu` VALUES (8, 3, '/0/3', 'log-management', '日志管理', '', 0, 2, 80, '', '', '', 0, '2022-11-18 15:58:40', '2022-11-18 15:58:40');
 
 -- ----------------------------
 -- Table structure for sys_param
@@ -241,11 +285,14 @@ CREATE TABLE `sys_param`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统参数表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统参数表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_param
 -- ----------------------------
+INSERT INTO `sys_param` VALUES (1, NULL, NULL, 'DEFAULT_PASSWORD_STRATEGY', 'sePasswordMd5', 0, '2022-11-07 19:26:37', '2022-11-07 19:26:37');
+INSERT INTO `sys_param` VALUES (2, 'PAGE_PARAM_GROUP', '分页参数分组', 'DEFAULT_PAGE_SIZE', '10', 0, '2022-11-11 13:48:45', '2022-11-11 13:48:45');
+INSERT INTO `sys_param` VALUES (3, 'PAGE_PARAM_GROUP', '分页参数分组', 'DEFAULT_CURR_PAGE', '1', 0, '2022-11-11 13:48:45', '2022-11-11 13:48:45');
 
 -- ----------------------------
 -- Table structure for sys_permission_category
@@ -253,7 +300,6 @@ CREATE TABLE `sys_param`  (
 DROP TABLE IF EXISTS `sys_permission_category`;
 CREATE TABLE `sys_permission_category`  (
   `id` bigint NOT NULL COMMENT '主键',
-  `permission_category_id` bigint NOT NULL COMMENT '权限分类id',
   `category_code` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限编码',
   `category_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限名称',
   `sort` int NOT NULL DEFAULT 10 COMMENT '排序',
@@ -262,11 +308,14 @@ CREATE TABLE `sys_permission_category`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统权限类别表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统权限类别表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_permission_category
 -- ----------------------------
+INSERT INTO `sys_permission_category` VALUES (1, 'anonymous', '匿名认证', 10, '无需认证直接登录', 0, '2022-11-04 15:40:02', '2022-11-10 14:37:24');
+INSERT INTO `sys_permission_category` VALUES (2, 'authenticated_common', '登录认证', 20, '登录认证后即放行', 0, '2022-11-04 15:41:08', '2022-11-10 14:35:41');
+INSERT INTO `sys_permission_category` VALUES (3, 'authenticated_permission', '权限认证', 30, '登录后拥有相关权限后可放行', 0, '2022-11-04 15:42:01', '2022-11-10 14:35:41');
 
 -- ----------------------------
 -- Table structure for sys_permission_detail
@@ -279,16 +328,36 @@ CREATE TABLE `sys_permission_detail`  (
   `permission_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '权限名称',
   `request_action_url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '请求操作url',
   `sort` int NOT NULL DEFAULT 10 COMMENT '排序',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '备注信息',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注信息',
   `data_status` int NOT NULL DEFAULT 0 COMMENT '数据状态',
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_permission_detail
 -- ----------------------------
+INSERT INTO `sys_permission_detail` VALUES (1, 3, '*:*:*', '全权限', '/**', 10, NULL, 0, '2022-11-10 16:41:02', '2022-11-18 09:10:54');
+INSERT INTO `sys_permission_detail` VALUES (2, 1, 'logout', '登出', '/auth/logout.do', 20, NULL, 0, '2022-11-10 16:42:03', '2022-11-18 09:10:54');
+INSERT INTO `sys_permission_detail` VALUES (3, 1, 'login', '登录', '/auth/login.do', 30, NULL, 0, '2022-11-06 21:52:46', '2022-11-18 09:10:54');
+INSERT INTO `sys_permission_detail` VALUES (35319636375506944, 3, 'admin:self-role:query', '获取角色码：根据用户id获取', '/admin/sys/role/find/code/by/roles', 40, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636392284160, 3, 'admin:dict-detail:query-page', '字典详情数据分页查询', '/admin/sys/dict/detail/page', 50, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636392284161, 3, 'admin:self-permission:query', '字典类别数据更新', '/admin/sys/permission/find/url/by/roles', 60, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636392284162, 3, 'admin:dict-category:write', '字典类别数据新增', '/admin/sys/dict/category/create.do', 70, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636392284163, 3, 'admin:dict-detail:query-list', '字典详情数据非分页查询', '/admin/sys/dict/detail/list', 80, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636396478464, 3, 'admin:dict-detail:write', '字典详情数据更新', '/admin/sys/dict/detail/put.do', 90, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636396478465, 3, 'admin:self-user:query', '根据账户查询用户', '/admin/sys/user/find/by/account', 100, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636396478466, 3, 'admin:self-permission:query', '字典类别数据更新', '/admin/sys/permission/find/url/by/userId', 110, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636400672768, 3, 'admin:dict-detail:write', '字典详情数据新增', '/admin/sys/dict/detail/create.do', 120, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636400672769, 3, 'admin:dict-category:write', '字典类别数据删除', '/admin/sys/dict/category/delete.do', 130, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636400672770, 3, 'admin:dict-detail:write', '字典详情数据删除', '/admin/sys/dict/detail/delete.do', 140, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636404867072, 3, 'admin:dict-category:write', '字典类别数据更新', '/admin/sys/dict/category/put.do', 150, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636404867073, 3, 'admin:role:query-page', '角色分页查询', '/admin/sys/role/query', 160, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35319636404867074, 3, 'admin:self-permission:query', '查询角色权限：根据用户id查询权限码', '/admin/sys/permission/find/code/by/userId', 170, '', 0, '2022-11-18 11:07:38', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35357115686195200, 3, 'admin:online-user:query', '查询全部在线用户', '/auth/find/all/online/user', 180, '', 0, '2022-11-18 13:36:33', '2022-11-18 13:36:33');
+INSERT INTO `sys_permission_detail` VALUES (35408264875347968, 3, 'admin:self-menu:query', '查询用户的菜单树形结构列表', '/admin/sys/menu/find/menu-tree/of/user-id', 190, '', 0, '2022-11-18 16:59:48', '2022-11-18 16:59:48');
+INSERT INTO `sys_permission_detail` VALUES (35408264883736576, 3, 'admin:self-menu:query', '查询用户的菜单id列表', '/admin/sys/menu/find/menu-ids/of/user-id', 200, '', 0, '2022-11-18 16:59:48', '2022-11-18 16:59:48');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -304,7 +373,7 @@ CREATE TABLE `sys_role`  (
   `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -339,11 +408,19 @@ CREATE TABLE `sys_role_menu`  (
   INDEX `fk_sys_role_menu_menu_id_re_sys_menu_id`(`menu_id` ASC) USING BTREE,
   CONSTRAINT `fk_sys_role_menu_menu_id_re_sys_menu_id` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_sys_role_menu_role_id_re_sys_role_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色菜单关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色菜单关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
+INSERT INTO `sys_role_menu` VALUES (1, 1);
+INSERT INTO `sys_role_menu` VALUES (1, 2);
+INSERT INTO `sys_role_menu` VALUES (1, 3);
+INSERT INTO `sys_role_menu` VALUES (1, 4);
+INSERT INTO `sys_role_menu` VALUES (1, 5);
+INSERT INTO `sys_role_menu` VALUES (1, 6);
+INSERT INTO `sys_role_menu` VALUES (1, 7);
+INSERT INTO `sys_role_menu` VALUES (1, 8);
 
 -- ----------------------------
 -- Table structure for sys_role_permission
@@ -356,11 +433,12 @@ CREATE TABLE `sys_role_permission`  (
   INDEX `fk_sys_role_permission_permission_id_re_sys_permission_id`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `fk_sys_role_permission_permission_id_re_sys_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `sys_permission_detail` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_sys_role_permission_role_id_re_sys_role_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色权限关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色权限关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_permission
 -- ----------------------------
+INSERT INTO `sys_role_permission` VALUES (1, 1);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -380,13 +458,13 @@ CREATE TABLE `sys_user`  (
   `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE COMMENT '账户唯一索引',
   UNIQUE INDEX `index_unique_sys_user_account_id_asce`(`id` ASC) USING BTREE COMMENT '账户唯一索引'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '系统用户表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', '123456', '超级管理员', 0, NULL, '2022-10-20 00:00:00', 0, 0, '2022-10-19 09:25:24', '2022-10-20 11:19:36');
-INSERT INTO `sys_user` VALUES (2, 'tjnu_admin', '123456', '教务系统管理员', 0, NULL, '1958-09-10 00:00:00', 0, 0, '2022-10-20 11:20:37', '2022-10-20 11:20:37');
+INSERT INTO `sys_user` VALUES (31135640900997120, 'admin', '37029f3c646ca4d471884ac903754946', '超级管理员', 0, NULL, '2022-10-20 00:00:00', 0, 0, '2022-10-19 09:25:24', '2022-11-06 22:03:14');
+INSERT INTO `sys_user` VALUES (31135640900997122, 'tjnu_admin', 'e53fd9d14810434b93a248dbfe4bde7d', '教务系统管理员', 1, NULL, '1958-09-10 00:00:00', 0, 0, '2022-10-20 11:20:37', '2022-11-06 22:03:14');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -399,12 +477,12 @@ CREATE TABLE `sys_user_role`  (
   INDEX `fk_sys_user_role_user_id_re_sys_user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_sys_user_role_role_id_re_sys_role_id` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_sys_user_role_user_id_re_sys_user_id` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES (1, 1);
-INSERT INTO `sys_user_role` VALUES (2, 2);
+INSERT INTO `sys_user_role` VALUES (31135640900997120, 1);
+INSERT INTO `sys_user_role` VALUES (31135640900997122, 2);
 
 SET FOREIGN_KEY_CHECKS = 1;
