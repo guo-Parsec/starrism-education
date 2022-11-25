@@ -5,6 +5,8 @@
     <resultMap id="SysLogResultMap" type="nom.edu.starrism.core.domain.entity.SysLog">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="request_path" jdbcType="VARCHAR" property="requestPath"/>
+        <result column="op_explain" jdbcType="VARCHAR" property="opExplain"/>
+        <result column="app" jdbcType="VARCHAR" property="app"/>
         <result column="time_consuming" jdbcType="LONGVARCHAR" property="timeConsuming"/>
         <result column="request_method" jdbcType="VARCHAR" property="requestMethod"/>
         <result column="request_param" jdbcType="LONGVARCHAR" property="requestParam"/>
@@ -21,6 +23,7 @@
         <!--@sql select -->
         sl.id,
         sl.request_path,
+        sl.op_explain,
         sl.time_consuming,
         sl.request_method,
         sl.request_param,

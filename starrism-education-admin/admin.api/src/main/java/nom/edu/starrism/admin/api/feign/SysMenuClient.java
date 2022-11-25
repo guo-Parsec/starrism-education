@@ -1,9 +1,9 @@
 package nom.edu.starrism.admin.api.feign;
 
-import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
 import nom.edu.starrism.common.pool.AppPool;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.Carrier;
+import nom.edu.starrism.core.domain.vo.SysMenuVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

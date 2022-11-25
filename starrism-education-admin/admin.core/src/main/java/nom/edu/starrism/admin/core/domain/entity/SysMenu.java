@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
-import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
+import nom.edu.starrism.core.domain.vo.SysMenuVo;
 import nom.edu.starrism.data.domain.entity.AbstractDataEntity;
 
 /**

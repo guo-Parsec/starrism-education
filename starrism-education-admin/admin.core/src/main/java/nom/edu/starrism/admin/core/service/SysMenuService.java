@@ -1,6 +1,6 @@
 package nom.edu.starrism.admin.core.service;
 
-import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
+import nom.edu.starrism.core.domain.vo.SysMenuVo;
 
 import java.util.Collection;
 import java.util.List;

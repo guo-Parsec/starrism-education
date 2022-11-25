@@ -9,7 +9,9 @@ import nom.edu.starrism.common.logger.SeLogger;
 import nom.edu.starrism.common.logger.SeLoggerFactory;
 import nom.edu.starrism.common.support.Carrier;
 import nom.edu.starrism.core.annotation.log.LogWrite;
+import nom.edu.starrism.core.domain.vo.AuthenticatedUser;
 import nom.edu.starrism.core.service.LogService;
+import nom.edu.starrism.core.type.AppTypes;
 import nom.edu.starrism.data.type.RequestType;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -33,6 +35,7 @@ public class LogWriteAspect {
 
     private LogService logService;
 
+    @SuppressWarnings("unchecked")
     @Around(value = "@annotation(logWrite)", argNames = "joinPoint,logWrite")
     public Object doAround(ProceedingJoinPoint joinPoint, LogWrite logWrite) throws Throwable {
         long startMillis = System.currentTimeMillis();
@@ -53,8 +56,16 @@ public class LogWriteAspect {
         }
         String url = request.getRequestURI();
         long endMillis = System.currentTimeMillis();
+        AppTypes app = logWrite.app();
+        String appName = app.getName();
+        String opExplain = logWrite.value();
+        AuthenticatedUser authenticatedUser = null;
+        if (logWrite.login()) {
+            Carrier<AuthenticatedUser> carrier = (Carrier<AuthenticatedUser>)result;
+            authenticatedUser = Carrier.getSuccessData(carrier);
+        }
         if (Sets.newHashSet(requestTypes).contains(RequestType.findRequestType(method))) {
-            logService.write(url, method, endMillis - startMillis, args, result, error);
+            logService.write(url, method, endMillis - startMillis, args, result, error, appName, opExplain, authenticatedUser);
         }
         return result;
     }

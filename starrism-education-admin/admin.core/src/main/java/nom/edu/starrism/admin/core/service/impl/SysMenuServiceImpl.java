@@ -1,7 +1,7 @@
 package nom.edu.starrism.admin.core.service.impl;
 
 import com.google.common.collect.Lists;
-import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
+import nom.edu.starrism.core.domain.vo.SysMenuVo;
 import nom.edu.starrism.admin.core.domain.entity.SysMenu;
 import nom.edu.starrism.admin.core.mapper.SysMenuMapper;
 import nom.edu.starrism.admin.core.mapper.SysRoleMapper;

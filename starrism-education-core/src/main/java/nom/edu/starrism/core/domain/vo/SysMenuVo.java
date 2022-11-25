@@ -1,4 +1,4 @@
-package nom.edu.starrism.admin.api.domain.vo;
+package nom.edu.starrism.core.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -36,7 +36,7 @@ public class SysDictController {
     private SysDictDetailService dictDetailService;
 
 
-    @LogWrite
+    @LogWrite(value = "字典类别数据新增", app = AppTypes.ADMIN)
     @ApiOperation(value = "字典类别数据新增")
     @PostMapping(value = "/category/create.do")
     @ApiResource(value = "admin:dict-category:write", name = "字典类别数据新增", app = AppTypes.ADMIN)
@@ -44,7 +44,7 @@ public class SysDictController {
         return Carrier.success(dictCategoryService.create(param));
     }
 
-    @LogWrite
+    @LogWrite(value = "字典类别数据更新", app = AppTypes.ADMIN)
     @ApiOperation(value = "字典类别数据更新")
     @PutMapping(value = "/category/put.do")
     @ApiResource(value = "admin:dict-category:write", name = "字典类别数据更新", app = AppTypes.ADMIN)
@@ -52,7 +52,7 @@ public class SysDictController {
         return Carrier.success(dictCategoryService.update(param));
     }
 
-    @LogWrite
+    @LogWrite(value = "字典类别数据删除", app = AppTypes.ADMIN)
     @ApiOperation(value = "字典类别数据删除")
     @DeleteMapping(value = "/category/delete.do")
     @ApiResource(value = "admin:dict-category:write", name = "字典类别数据删除", app = AppTypes.ADMIN)
@@ -60,7 +60,7 @@ public class SysDictController {
         return Carrier.success(dictCategoryService.delete(id));
     }
 
-    @LogWrite
+    @LogWrite(value = "字典详情数据新增", app = AppTypes.ADMIN)
     @ApiOperation(value = "字典详情数据新增")
     @PostMapping(value = "/detail/create.do")
     @ApiResource(value = "admin:dict-detail:write", name = "字典详情数据新增", app = AppTypes.ADMIN)
@@ -68,7 +68,7 @@ public class SysDictController {
         return Carrier.success(dictDetailService.create(param));
     }
 
-    @LogWrite
+    @LogWrite(value = "字典详情数据更新", app = AppTypes.ADMIN)
     @ApiOperation(value = "字典详情数据更新")
     @PutMapping(value = "/detail/put.do")
     @ApiResource(value = "admin:dict-detail:write", name = "字典详情数据更新", app = AppTypes.ADMIN)
@@ -76,7 +76,7 @@ public class SysDictController {
         return Carrier.success(dictDetailService.update(param));
     }
 
-    @LogWrite
+    @LogWrite(value = "字典详情数据删除", app = AppTypes.ADMIN)
     @ApiOperation(value = "字典详情数据删除")
     @DeleteMapping(value = "/detail/delete.do")
     @ApiResource(value = "admin:dict-detail:write", name = "字典详情数据删除", app = AppTypes.ADMIN)

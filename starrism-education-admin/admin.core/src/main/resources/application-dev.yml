@@ -35,8 +35,8 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 5000
+        connectTimeout: 10000
+        readTimeout: 600000
         loggerLevel: basic
 mybatis-plus:
   # 指定 mapper.xml 的位置

@@ -8,6 +8,7 @@ import nom.edu.starrism.core.access.ParamAccess;
 import nom.edu.starrism.core.domain.entity.SysParam;
 import nom.edu.starrism.core.domain.vo.SysParamVo;
 import nom.edu.starrism.core.pool.BeanPool;
+import nom.edu.starrism.core.pool.CacheNamesPool;
 import nom.edu.starrism.core.repository.SysParamRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class ParamAccessImpl implements ParamAccess {
      * @date 2022/10/24 15:54
      */
     @Override
-    @Cacheable(key = "#paramCode", cacheNames = "param:paramCode", unless = "#result == null")
+    @Cacheable(cacheNames = CacheNamesPool.CN_PARAM, key = "'paramCode:'+#paramCode", unless = "#result == null")
     public SysParamVo findByParamCode(String paramCode) {
         SysParam param = sysParamRepository.findByParamCode(paramCode);
         if (SysParam.isEmpty(param)) {
@@ -57,7 +58,7 @@ public class ParamAccessImpl implements ParamAccess {
      * @date 2022/11/11 13:51
      */
     @Override
-    @Cacheable(key = "#groupCode+'-'+#paramCode", cacheNames = "param:group", unless = "#result == null || #result.isEmpty()")
+    @Cacheable(cacheNames = CacheNamesPool.CN_PARAM, key = "'groupCode:'+#groupCode+':paramCode:'+#paramCode", unless = "#result == null || #result.isEmpty()")
     public List<SysParamVo> findByGroupCode(String groupCode, String paramCode) {
         List<SysParam> params = sysParamRepository.findByGroupCode(groupCode, paramCode);
         if (CollectionUtil.isEmpty(params)) {
@@ -76,6 +77,7 @@ public class ParamAccessImpl implements ParamAccess {
      * @date 2022/11/11 13:51
      */
     @Override
+    @Cacheable(cacheNames = CacheNamesPool.CN_PARAM, key = "'groupCode:'+#groupCode", unless = "#result == null || #result.isEmpty()")
     public List<SysParamVo> findByGroupCode(String groupCode) {
         return this.findByGroupCode(groupCode, null);
     }

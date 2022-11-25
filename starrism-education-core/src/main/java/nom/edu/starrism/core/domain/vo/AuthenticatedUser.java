@@ -1,5 +1,6 @@
 package nom.edu.starrism.core.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import nom.edu.starrism.data.pool.SecurityPool;
 import nom.edu.starrism.data.domain.vo.AbstractVo;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,8 +41,9 @@ public class AuthenticatedUser extends AbstractVo {
     @ApiModelProperty(value = "用户所拥有的菜单id")
     private Set<Long> menuIds;
 
+    @JsonIgnore
     @ApiModelProperty(value = "用户所拥有的菜单")
-    private transient Object menus;
+    private transient List<SysMenuVo> menus;
 
     @ApiModelProperty(value = "令牌名称")
     private String tokenName;

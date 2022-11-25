@@ -24,6 +24,16 @@ public class SysLog extends AbstractEntity {
     private String requestPath;
 
     /**
+     * 操作说明
+     */
+    private String opExplain;
+
+    /**
+     * 操作说明
+     */
+    private String app;
+
+    /**
      * 耗时时间(ms)
      */
     private Long timeConsuming;

@@ -33,4 +33,9 @@ public interface CacheNamesPool {
      * 缓存名称 - 菜单
      */
     String CN_SYS_MENU = "sys:menu";
+
+    /**
+     * 缓存名称 - 参数
+     */
+    String CN_PARAM = "sys:param";
 }

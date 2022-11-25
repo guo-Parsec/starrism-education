@@ -15,6 +15,7 @@ import nom.edu.starrism.core.domain.vo.SeUser;
 import nom.edu.starrism.core.helper.SecurityHelper;
 import nom.edu.starrism.core.pool.ParamPool;
 import nom.edu.starrism.data.pool.SecurityPool;
+import nom.edu.starrism.core.domain.vo.SysMenuVo;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,7 @@ public class SecurityContext {
         Long expireHours = ParamContext.findParam(ParamPool.PARAM_CODE_TOKEN_EXPIRE, 6L);
         redisService.setByHour(SecurityHelper.generateSecurityTokenKey(tokenId), authenticatedUser, expireHours);
         redisService.setByHour(SecurityHelper.generateSecurityUserKey(userId), tokenId, expireHours);
+        redisService.setByHour(SecurityHelper.generateMenusOfUser(userId), authenticatedUser.getMenus(), expireHours);
     }
 
     /**
@@ -75,6 +77,9 @@ public class SecurityContext {
         }
         RedisService redisService = SecurityHelper.redisService();
         AuthenticatedUser cert = (AuthenticatedUser) redisService.get(SecurityHelper.generateSecurityTokenKey(tokenId));
+        List<SysMenuVo> menuVos = Lists.newArrayList();
+        CollectionUtil.castCollection(redisService.get(SecurityHelper.generateMenusOfUser(cert.getId())), menuVos, SysMenuVo.class);
+        cert.setMenus(menuVos);
         if (AuthenticatedUser.isEmpty(cert)) {
             LOGGER.error("获取登录凭证信息失败，无法获取到登录信息，可能因为令牌已过期");
             throw new CoreException(BaseRequest.UNAUTHORIZED, "获取登录凭证信息失败");
@@ -126,7 +131,8 @@ public class SecurityContext {
             RedisService redisService = SecurityHelper.redisService();
             String tokenKey = SecurityHelper.generateSecurityTokenKey(tokenId);
             String userKey = SecurityHelper.generateSecurityUserKey(userId);
-            redisService.del(Lists.newArrayList(tokenKey, userKey));
+            String menusKey = SecurityHelper.generateMenusOfUser(userId);
+            redisService.del(Lists.newArrayList(tokenKey, userKey, menusKey));
         } catch (CoreException e) {
             LOGGER.warn("当前用户已退出系统");
             return;
@@ -145,7 +151,8 @@ public class SecurityContext {
         String userKey = SecurityHelper.generateSecurityUserKey(userId);
         String tokenId = (String) redisService.get(SecurityHelper.generateSecurityUserKey(userId));
         String tokenKey = SecurityHelper.generateSecurityTokenKey(tokenId);
-        redisService.del(Lists.newArrayList(tokenKey, userKey));
+        String menusKey = SecurityHelper.generateMenusOfUser(userId);
+        redisService.del(Lists.newArrayList(tokenKey, userKey, menusKey));
     }
 
     /**

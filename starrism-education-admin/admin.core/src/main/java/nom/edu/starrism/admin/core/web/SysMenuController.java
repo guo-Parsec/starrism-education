@@ -2,7 +2,7 @@ package nom.edu.starrism.admin.core.web;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import nom.edu.starrism.admin.api.domain.vo.SysMenuVo;
+import nom.edu.starrism.core.domain.vo.SysMenuVo;
 import nom.edu.starrism.admin.core.service.SysMenuService;
 import nom.edu.starrism.common.pool.UrlPool;
 import nom.edu.starrism.common.support.Carrier;

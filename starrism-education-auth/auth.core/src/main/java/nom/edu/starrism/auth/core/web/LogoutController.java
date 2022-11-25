@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import nom.edu.starrism.auth.core.service.LogoutService;
 import nom.edu.starrism.common.support.Carrier;
+import nom.edu.starrism.core.annotation.log.LogWrite;
+import nom.edu.starrism.core.type.AppTypes;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,7 @@ public class LogoutController {
      * @author guocq
      * @date 2022/11/10 16:45
      */
+    @LogWrite(value = "登出系统", app = AppTypes.AUTH)
     @ApiOperation(value = "登出系统")
     @PostMapping(value = "/logout.do")
     public Carrier<Boolean> logout(@RequestParam(required = false) Long id) {
